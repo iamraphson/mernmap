@@ -22,9 +22,13 @@ module.exports = {
     return localStorage.mern_token
   },
 
+  getUser() {
+      return localStorage.mern_user
+  },
+
   setToken(res){
       localStorage.mern_token = res.token;
-      localStorage.mern_user = res.user;
+      localStorage.mern_user = JSON.stringify(res.user);
   },
 
   logout(cb) {
@@ -35,7 +39,7 @@ module.exports = {
   },
 
   loggedIn() {
-    return !!localStorage.mern_token
+    return !!localStorage.mern_token && localStorage.mern_user;
   },
 
   onChange() {}

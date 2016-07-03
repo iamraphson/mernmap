@@ -7,8 +7,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router';
+import auth from './auth/auth'
 
 export default class Nav extends React.Component{
+    constructor(){
+        super();
+        this.state = {
+            loggedIn: auth.loggedIn(),
+            user: auth.getUser()
+        };
+        //console.log(this.state.user.username);
+    }
+
     render(){
         return (
             <div className="nav-container">
@@ -22,10 +32,34 @@ export default class Nav extends React.Component{
                                     </Link>
                                 </div>
                                 <div className="col-md-3 text-right col-sm-6 col-md-push-6 col-xs-8" >
-                                    <ul className="menu">
-                                        <li><Link to="/user/create">CREATE ACCOUNT</Link></li>
-                                        <li><Link to="/auth/login">LOGIN</Link></li>
-                                    </ul>
+                                    {!this.state.loggedIn ? (
+                                        <ul className="menu">
+                                            <li><Link to="/user/create">CREATE ACCOUNT</Link></li>
+                                            <li><Link to="/auth/login">LOGIN</Link></li>
+                                        </ul>
+                                    ) : (
+                                        <ul className="menu">
+                                            <li className="has-dropdown">
+                                                <a href="#">
+                                                    <img className="header-img-rounded"
+                                                         src={ JSON.parse(this.state.user).user_avi } />{' '}
+                                                    { JSON.parse(this.state.user).username }
+
+                                                    <span className="caret" />
+                                                </a>
+                                                <ul className="subnav">
+                                                    <li><a href="/account"><i className="fa fa-user" />{'  '}My Profile</a></li>
+                                                    <li><a href="/account/edit"><i className="fa fa-pencil-square-o" />{'  '}
+                                                        Edit Profile</a></li>
+                                                    <li><a href="/tutorial/create"><i className="fa fa-leanpub" /> {'  '}
+                                                        Post MERN Tutorial </a></li>
+                                                    <li className="divider" />
+                                                    <li><a style={{cursor: 'pointer'}}><i className="fa fa-sign-out" /> {'  '}
+                                                        Logout</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    )}
                                     <div className="mobile-toggle">
                                         <div className="upper"></div>
                                         <div className="middle"></div>
@@ -34,7 +68,7 @@ export default class Nav extends React.Component{
                                 </div>
                                 <div className="col-md-6 text-center col-md-pull-3 col-sm-12 col-xs-12">
                                     <ul className="menu">
-                                        <li><a href="/">HOME</a></li>
+                                        <li><Link to="/">HOME</Link></li>
                                         <li><a href="/mean-developers">MERN DEVELOPERS</a></li>
                                         <li><a href="/projects">PROJECTS</a></li>
                                         <li><a href="/jobs">JOBS</a></li>

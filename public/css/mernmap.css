@@ -7994,11 +7994,11 @@ nav ul ul {
   background: #fff;
   visibility: hidden;
   z-index: 999;
-  min-width: 150px;
+  min-width: 250px;
   padding: 0;
   border-radius: 3px;
-  top: 100%;
-  left: 0;
+  top: 125%;
+  left: -100px;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
   transition: all 0.3s ease;
   -webkit-transition: all 0.3s ease;
