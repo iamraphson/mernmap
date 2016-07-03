@@ -39,7 +39,7 @@ module.exports = {
             twitter_handle: req.body.twitter
         });
 
-        /*newUser.save(function(err, result){
+        newUser.save(function(err, result){
             console.log(err)
             if(err){
                 return res.status(500).json({message: err.message});
@@ -47,10 +47,7 @@ module.exports = {
                 return res.status(200).json({ success: true,
                     message: "User Registered successfully. Please, login and be MERN" });
             }
-        })*/
-
-        return res.status(200).json({ success: true,
-            message: "User Registered successfully. Please, login and be MERN" });
+        });
     },
 
     /*
