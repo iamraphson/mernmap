@@ -1,0 +1,28 @@
+{
+  "name": "mern",
+  "description": "MERN Map is a directory for mern stack developers all over the world",
+  "main": "server.js",
+  "authors": [
+    "Ayeni Olusegun"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "MERN",
+    "stack",
+    "mernmap",
+    "ReactJS",
+    "ExpressJS",
+    "nodeJS",
+    "mongodb",
+    "developers",
+    "map"
+  ],
+  "homepage": "https://github.com/iamraphson/DevTv",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
