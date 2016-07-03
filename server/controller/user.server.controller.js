@@ -4,6 +4,7 @@
 var user = require('../model/user.server.model');
 var token = require('../../config/token');
 var gravatar = require('gravatar');
+var _  = require('lodash');
 module.exports = {
 
     /*
@@ -66,7 +67,9 @@ module.exports = {
                 if(!isMatch){
                     return res.status(401).json({message : "Invalid Password"});
                 }
-                return res.status(200).send({token : token.createJWT(loginUser)});
+
+                var currUser   = _.pick(loginUser, '_id', 'fullname', 'user_avi', 'username');
+                return res.status(200).send({token : token.createJWT(loginUser), user: currUser});
             });
         });
     },

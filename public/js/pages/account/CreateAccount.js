@@ -1,8 +1,7 @@
 /**
  * Created by Raphson on 7/3/16.
  */
-import React from 'react';
-import {Component, PropTypes, findDOMNode} from 'react';
+import React , {Component, PropTypes, findDOMNode} from 'react';
 import ReactDOM from 'react-dom';
 import {Router, Route, IndexRoute, hashHistory, Link} from 'react-router';
 import set from 'lodash.set';
@@ -12,6 +11,7 @@ import strategy from 'joi-validation-strategy';
 import Request from 'superagent'
 import Notifications, {notify} from 'react-notify-toast';
 import RequestPromised from 'superagent-as-promised';
+
 import Footer from './../Footer';
 import Nav from './../Nav';
 
