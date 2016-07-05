@@ -16,7 +16,6 @@ export default class Nav extends React.Component{
             loggedIn: auth.loggedIn(),
             user: auth.getUser()
         };
-        //console.log(this.state.user.username);
     }
 
     render(){
@@ -49,8 +48,8 @@ export default class Nav extends React.Component{
                                                 </a>
                                                 <ul className="subnav">
                                                     <li><a href="/account"><i className="fa fa-user" />{'  '}My Profile</a></li>
-                                                    <li><a href="/account/edit"><i className="fa fa-pencil-square-o" />{'  '}
-                                                        Edit Profile</a></li>
+                                                    <li><Link to="/account/edit"><i className="fa fa-pencil-square-o" />{'  '}
+                                                        Edit Profile</Link></li>
                                                     <li><a href="/tutorial/create"><i className="fa fa-leanpub" /> {'  '}
                                                         Post MERN Tutorial </a></li>
                                                     <li className="divider" />

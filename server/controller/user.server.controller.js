@@ -95,25 +95,21 @@ module.exports = {
 
     updateLoggedInUserDetail: function(req, res){
         var userDetails = {
-            username : req.body.username,
             fullname: req.body.fullname,
-            email: req.body.email,
-            password: req.body.password,
             website: req.body.website,
             github_profile: req.body.github_profile,
             address: req.body.address,
             hire_status: req.body.hire,
             bio: req.body.bio,
-            user_avi: secureImageUrl,
             twitter_handle: req.body.twitter
         };
-
-        user.update({_id: req.user._id}, userDetails, function(err){
+        //return res.status(200).json({message: 'Update Successful'});
+        //console.log(req.user);
+        user.findByIdAndUpdate({_id: req.user}, userDetails, function(err){
             if(err){
                 return res.status(404).json({message : 'user\s detail not found'})
             }
-
-            return status(200).json({message: 'Update Successful'});
+            return res.status(200).json({message: 'Update Successful'});
         });
     }
 

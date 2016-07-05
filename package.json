@@ -49,6 +49,7 @@
     "nodemailer-smtp-transport": "^2.5.0",
     "react": "^15.2.0",
     "react-dom": "^15.2.0",
+    "react-dropzone": "^3.5.1",
     "react-loading-bar": "0.0.3",
     "react-notify-toast": "^0.1.1",
     "react-router": "^2.5.2",

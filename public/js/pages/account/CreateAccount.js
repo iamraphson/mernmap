@@ -175,7 +175,7 @@ class CreateAccount extends React.Component{
                         email : this.refs.email.value,
                         password : this.refs.password.value,
                         website : this.refs.website.value,
-                        github_url : this.refs.github_url.value,
+                        github_profile : this.refs.github_url.value,
                         address : this.refs.address.value,
                     })
                     .end(function(err, res) {

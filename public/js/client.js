@@ -11,6 +11,7 @@ import IndexPage from './pages/IndexPage';
 import About from './pages/About';
 import Login from './pages/account/Login';
 import CreateAccount from './pages/account/CreateAccount';
+import EditAccount from './pages/account/EditAccount';
 
 const app = document.getElementById('app');
 ReactDOM.render(
@@ -20,5 +21,6 @@ ReactDOM.render(
             <Route path="/auth/login" component={Login}></Route>
             <Route path="/page/about" component={About}></Route>
             <Route path="/user/create" component={CreateAccount}></Route>
+            <Route path="/account/edit" component={EditAccount}></Route>
         </Route>
     </Router>, app);
