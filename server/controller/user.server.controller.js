@@ -5,6 +5,8 @@ var user = require('../model/user.server.model');
 var token = require('../../config/token');
 var gravatar = require('gravatar');
 var _  = require('lodash');
+var cloudinary  = require('cloudinary');
+var  multiparty  = require('multiparty');
 module.exports = {
 
     /*
@@ -94,6 +96,9 @@ module.exports = {
      */
 
     updateLoggedInUserDetail: function(req, res){
+
+        //var form = new multiparty.Form();
+
         var userDetails = {
             fullname: req.body.fullname,
             website: req.body.website,
@@ -103,6 +108,8 @@ module.exports = {
             bio: req.body.bio,
             twitter_handle: req.body.twitter
         };
+
+        console.log(userDetails);
         //return res.status(200).json({message: 'Update Successful'});
         //console.log(req.user);
         user.findByIdAndUpdate({_id: req.user}, userDetails, function(err){
@@ -111,7 +118,49 @@ module.exports = {
             }
             return res.status(200).json({message: 'Update Successful'});
         });
+    },
+
+    /**
+     * Upload a photo to Meanmap's Cloudinary Server
+     * @param  {void} req
+     * @param  {void} res
+     * @return {object}
+     */
+    postPhoto: function(req, res){
+        var fileName = '';
+        var size = '';
+        var tempPath;
+        var extension;
+        var imageName;
+        var destPath = '';
+        var inputStream;
+        var outputStream;
+        var form = new multiparty.Form();
+
+        form.on('error', function(err){
+            console.log('Error parsing form: ' + err.stack);
+        });
+        form.on('part', function(part){
+            if(!part.filename){
+                return;
+            }
+            size = part.byteCount;
+            fileName = part.filename;
+
+        });
+        form.on('file', function(name, file){
+            tempPath     = file.path;
+            console.log(tempPath);
+            /*cloudinary.uploader.upload(tempPath, function(result){
+                var pixUrl = result.url;
+                res.json({ dest: pixUrl });
+            });*/
+        });
+        form.on('close', function(){
+            console.log('Uploaded!!');
+        });
+        form.parse(req);
     }
 
+};
 
-}

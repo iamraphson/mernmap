@@ -12,7 +12,9 @@ import Request from 'superagent'
 import Notifications, {notify} from 'react-notify-toast';
 import RequestPromised from 'superagent-as-promised';
 import auth from './../auth/auth'
+import async from 'async';
 import Dropzone from 'react-dropzone';
+
 
 
 import Footer from './../Footer';
@@ -47,7 +49,8 @@ class EditAccount extends React.Component{
                 bio: '',
                 hire_status: '',
             },
-            data_uri: null
+            data_uri: null,
+            files: []
         };
         RequestPromised(Request);
     }
@@ -95,6 +98,13 @@ class EditAccount extends React.Component{
         };
     }
 
+    onDrop(files) {
+        console.log('Received files: ', files);
+        this.setState({
+            files: files
+        });
+    }
+
     render(){
         return (
             <span>
@@ -130,7 +140,16 @@ class EditAccount extends React.Component{
                                         {/* Profile_image Form Input */}
                                         <div className="form-group">
                                             <label htmlFor="profile_image">Profile Image</label>
-                                            <input type="file" accept="image/*" onChange={this.handleFile} />
+                                            <input type="file" accept="image/!*" onChange={this.handleFile} />
+                                            {/*<div>
+                                                <Dropzone onDrop={this.onDrop} accept="image/!*" >
+                                                    <div>Try dropping some files here, or click to select files to upload.</div>
+                                                </Dropzone>
+                                                {this.state.files.length > 0 ? <div>
+                                                    <h2>Uploading {this.state.files.length} files...</h2>
+                                                    <div>{this.state.files.map((file) => <img src={file.preview} /> )}</div>
+                                                </div> : null}
+                                            </div>*/}
                                         </div>
                                     </div>
                                     <div className="col-md-6">
@@ -208,19 +227,28 @@ class EditAccount extends React.Component{
             if (error) {
                 //alert('form has errors; do not submit');
             } else {
-                Request.put('/api/me')
+                var data = {
+                    fullname: this.refs.fullname.value,
+                    website: this.refs.website.value || '',
+                    github_profile: this.refs.github_profile.value,
+                    address: this.refs.address.value,
+                    hire: this.refs.hire.value,
+                    bio: this.refs.bio.value,
+                    twitter: this.refs.twitter_handle.value
+                };
+
+
+                Request.post('/api/file/upload')
+                    .set("Content-Type", "multipart/form-data; boundary=\"another cool boundary\"")
+                    .send(this.state.data_uri)
+                    .end((err, res) => {
+                        console.log(err);
+                        console.log(res);
+                    });
+                //console.log(data);
+               /* Request.put('/api/me')
                     .set('Authorization', 'Bearer ' + this.state.token)
-                    .set("Content-Type", "application/octet-stream")
-                    .send(file)
-                    .send({
-                        fullname: this.refs.fullname.value,
-                        website: this.refs.website.value || '',
-                        github_profile: this.refs.github_profile.value,
-                        address: this.refs.address.value,
-                        hire: this.refs.hire.value,
-                        bio: this.refs.bio.value,
-                        twitter: this.refs.twitter_handle.value
-                    })
+                    .send(data)
                     .end(function(err, res) {
                         console.log(res.body);
                         if (err || !res.ok) {
@@ -228,7 +256,7 @@ class EditAccount extends React.Component{
                         } else {
                             notify.show(res.body.message);
                         }
-                    });
+                    });*/
             }
         };
         this.props.validate(onValidate);
