@@ -1,3 +1,4 @@
+import int from 'superagent-intercept';
 module.exports = {
 
   getToken() {
@@ -21,8 +22,12 @@ module.exports = {
   },
 
   loggedIn() {
-    return !!localStorage.mern_token && localStorage.mern_user;
+    return !!(localStorage.mern_token && localStorage.mern_user);
   },
 
-  onChange() {}
+    var AuthIntercept = int((err, res) => {
+        if (res.status == 401) {
+            // route to login
+        }
+    })
 };

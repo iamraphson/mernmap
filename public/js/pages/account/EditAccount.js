@@ -237,16 +237,15 @@ class EditAccount extends React.Component{
                     twitter: this.refs.twitter_handle.value
                 };
 
-
-                Request.post('/api/file/upload')
-                    .set("Content-Type", "multipart/form-data; boundary=\"another cool boundary\"")
+                /*Request.post('/api/file/upload')
+                    .set("Content-Type", "multipart/form-data; boundary=AaB03x")
                     .send(this.state.data_uri)
                     .end((err, res) => {
                         console.log(err);
                         console.log(res);
-                    });
+                    });*/
                 //console.log(data);
-               /* Request.put('/api/me')
+                Request.put('/api/me')
                     .set('Authorization', 'Bearer ' + this.state.token)
                     .send(data)
                     .end(function(err, res) {
@@ -256,7 +255,7 @@ class EditAccount extends React.Component{
                         } else {
                             notify.show(res.body.message);
                         }
-                    });*/
+                    });
             }
         };
         this.props.validate(onValidate);
