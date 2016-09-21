@@ -4,7 +4,7 @@
 var cloudinary = require('cloudinary');
 var multiparty  = require('multiparty');
 var slug = require('slug');
-var project = require('../model/project.server.model')
+var project = require('../model/project.server.model');
 module.exports = {
 
     /*

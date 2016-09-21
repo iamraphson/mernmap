@@ -1,39 +1,50 @@
 /**
  * Created by Raphson on 7/2/16.
  */
-var debug = process.env.NODE_ENV !== "production";
-var webpack = require('webpack');
-var path = require('path');
+const debug = process.env.NODE_ENV !== "production";
+const webpack = require('webpack');
+const path = require('path');
+
 
 module.exports = {
-    //context: path.join('__dirname', 'src'),
-    devtool: debug ? "inline-sourcemap" : null,
-    entry: "./public/js/client.js",
+    devtool: 'source-map',
+    entry: [
+        './src/index'
+    ],
+
     output: {
-        path: __dirname + "/public/",
-        filename: "client.min.js"
+        path: path.join(__dirname, 'public'),
+        filename: 'bundle.js',
+        publicPath: '/public/'
     },
-    node: {
-        net: 'empty',
-        tls: 'empty',
-        dns: 'empty'
-    },
+
+    plugins: [
+        new webpack.optimize.DedupePlugin(),
+        new webpack.optimize.UglifyJsPlugin({
+            minimize: true,
+            compress: {
+                warnings: false
+            }
+        }),
+        new webpack.DefinePlugin({
+            'process.env': {
+                'NODE_ENV': JSON.stringify('production')
+            }
+        })
+    ],
+
     module: {
         loaders: [
-            {
-                test: /\.jsx?$/,
-                exclude: /(node_modules|bower_components)/,
-                loader: 'babel-loader',
-                query: {
-                    presets: ['react', 'es2015', 'stage-0'],
-                    plugins: ['react-html-attrs', 'transform-class-properties', 'transform-decorators-legacy'],
-                }
-            }
+            { test: /\.js?$/,
+                loader: 'babel',
+                exclude: /node_modules/ },
+            { test: /\.scss?$/,
+                loader: 'style!css!sass',
+                include: path.join(__dirname, 'src', 'styles') },
+            { test: /\.png$/,
+                loader: 'file' },
+            { test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
+                loader: 'file'}
         ]
-    },
-    plugins: debug ? [] :[
-        new webpack.optimize.DedupePlugin(),
-        new webpack.optimize.OccurenceOrderPlugin(),
-        new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: false }),
-    ]
-}
+    }
+};

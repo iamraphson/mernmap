@@ -16,7 +16,7 @@ var userSchema = mongoose.Schema({
     user_avi: {type: String, default: 'http://s3.amazonaws.com/37assets/svn/765-default-avatar.png'},
     twitter_handle: {type: String, default: ''},
     registered_on: {type: String, default: Date.now()}
-})
+});
 
 userSchema.pre('save', function(next){
     var user = this;

@@ -1,7 +1,7 @@
 /**
  * Created by Raphson on 7/1/16.
  */
-var sendGrid = require('sendgrid-nodejs')("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");
+var sendGrid = require('sendgrid-nodejs')(process.env.SENDGRID_API_KEY);
 module.exports = {
     /**
      * Send An Email To The Admin About Enquiries Made By Users

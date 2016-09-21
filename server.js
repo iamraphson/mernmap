@@ -9,6 +9,7 @@ var mongoose = require('mongoose');
 var cors = require('cors');
 var dbconnection = require('./config/dbconn');
 var routes = require('./server/routes');
+var path = require('path');
 
 /*
  Establish Connection with Mongo DB
@@ -23,6 +24,17 @@ var port = process.env.PORT || 3000;
 //create Express Server
 var app = express();
 
+// using webpack-dev-server and middleware in development environment
+if(process.env.NODE_ENV !== 'production') {
+    var webpackDevMiddleware = require('webpack-dev-middleware');
+    var webpackHotMiddleware = require('webpack-hot-middleware');
+    var webpack = require('webpack');
+    var config = require('./webpack.config');
+    var compiler = webpack(config);
+
+    app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }));
+    app.use(webpackHotMiddleware(compiler));
+}
 /*
  Express Configuration
  */
@@ -47,16 +59,17 @@ app.use(express.static( __dirname + "/public" ));
 
 routes(app);
 
-/*
- Config for frontend routes
- */
-/*app.get('*', function(req, res){
-    res.sendFile(__dirname + '/public/index.html');
-});*/
+app.use(express.static(path.join(__dirname)));
 
-/*
- Start application server
- */
-app.listen(port, function(){
-    console.log("MERN Server Listening on port " + port);
-})
+
+app.get('/', function(request, response) {
+    response.sendFile(__dirname + '/index.html')
+});
+
+app.listen(port, function(error) {
+    if (error) {
+        console.error(error);
+    } else {
+        console.info("=> MERN Listening on port %s. Visit http://localhost:%s/ in your browser.", port, port);
+    }
+});
