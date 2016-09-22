@@ -1,0 +1,21 @@
+.error-e {
+  border: 1px solid red;
+}
+.error-o {
+  border: 0px solid red;
+}
+.has-error {
+  color: #e81e25;
+}
+#submit-btn{
+  background-color:#aa0036;
+  color:#fff;
+}
+.bs-callout {
+  padding: 20px;
+  margin: 20px 0;
+  border: 1px solid #eee;
+  border-left-width: 5px;
+  border-left-color: #ce4844;
+  border-radius: 3px;
+}
