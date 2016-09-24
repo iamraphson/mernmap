@@ -21993,6 +21993,10 @@
 
 	var _index2 = _interopRequireDefault(_index);
 
+	var _Index = __webpack_require__(/*! ../Footer/Index */ 239);
+
+	var _Index2 = _interopRequireDefault(_Index);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -22020,7 +22024,8 @@
 	                'div',
 	                null,
 	                _react2.default.createElement(_index2.default, null),
-	                this.props.children
+	                this.props.children,
+	                _react2.default.createElement(_Index2.default, null)
 	            );
 	        }
 	    }]);
@@ -28048,7 +28053,7 @@
   \*****************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -28081,12 +28086,166 @@
 	    }
 
 	    _createClass(Index, [{
-	        key: 'render',
+	        key: "render",
 	        value: function render() {
 	            return _react2.default.createElement(
-	                'div',
+	                "span",
 	                null,
-	                'Landing Page'
+	                _react2.default.createElement(
+	                    "div",
+	                    { className: "main-container", style: { minHeight: 580 } },
+	                    _react2.default.createElement(
+	                        "div",
+	                        { className: "MeanMap" },
+	                        _react2.default.createElement("div", { style: { border: '1px solid #ccc', boxShadow: '10px 10px #000' } })
+	                    ),
+	                    _react2.default.createElement(
+	                        "section",
+	                        { className: "features features-13" },
+	                        _react2.default.createElement(
+	                            "div",
+	                            { className: "container" },
+	                            _react2.default.createElement(
+	                                "div",
+	                                { className: "row" },
+	                                _react2.default.createElement(
+	                                    "div",
+	                                    { className: "col-md-10 col-md-offset-1 col-sm-12 text-center" },
+	                                    _react2.default.createElement(
+	                                        "h4",
+	                                        { className: "text-white" },
+	                                        "MERN Stack Developers Dominating the Earth",
+	                                        _react2.default.createElement("br", null)
+	                                    )
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                "div",
+	                                { className: "row" },
+	                                _react2.default.createElement(
+	                                    "div",
+	                                    { className: "col-sm-4 feature" },
+	                                    _react2.default.createElement("i", { className: "fa fa-meanpath" }),
+	                                    _react2.default.createElement(
+	                                        "h5",
+	                                        { className: "text-white" },
+	                                        "Built With The MERN Stack"
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        "p",
+	                                        null,
+	                                        "Proudly Built With The MERN Stack. Javascript from Front-End To Back-end.The MERN Stack community is building up."
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    "div",
+	                                    { className: "col-sm-4 feature" },
+	                                    _react2.default.createElement("i", { className: "fa fa-user-secret" }),
+	                                    _react2.default.createElement(
+	                                        "h5",
+	                                        { className: "text-white" },
+	                                        "Developer Publicity"
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        "p",
+	                                        null,
+	                                        "Meet Other MERN Stack Developers like You. Brew Top notch Code and Drink Beer Together. Get Connected and Hired. "
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    "div",
+	                                    { className: "col-sm-4 feature" },
+	                                    _react2.default.createElement("i", { className: "fa fa-laptop" }),
+	                                    _react2.default.createElement(
+	                                        "h5",
+	                                        { className: "text-white" },
+	                                        "Hack, Sweat and Share"
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        "p",
+	                                        null,
+	                                        "Be proud of the applications you've hacked with the MERN Stack, Showcase and share with the Community and World."
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        "section",
+	                        { className: "cta cta-6" },
+	                        _react2.default.createElement(
+	                            "div",
+	                            { className: "container" },
+	                            _react2.default.createElement(
+	                                "div",
+	                                { className: "row v-align-children" },
+	                                _react2.default.createElement(
+	                                    "div",
+	                                    { className: "col-md-8 col-sm-7" },
+	                                    _react2.default.createElement(
+	                                        "h3",
+	                                        null,
+	                                        " MERN Developers are on the Planet.."
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        "p",
+	                                        null,
+	                                        "...The Exhibition Of MERN Stack Developers. ",
+	                                        _react2.default.createElement(
+	                                            "strong",
+	                                            null,
+	                                            "MERN CHAP 2:9 "
+	                                        )
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    "div",
+	                                    { className: "col-md-4 col-sm-5 text-right" },
+	                                    _react2.default.createElement(
+	                                        "a",
+	                                        { className: "btn", href: "page/about" },
+	                                        "More Info"
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        "a",
+	                                        { className: "btn btn-filled", href: "user/create" },
+	                                        "Join Now"
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        "section",
+	                        { className: "social social-1 near-footer" },
+	                        _react2.default.createElement(
+	                            "div",
+	                            { className: "container" },
+	                            _react2.default.createElement(
+	                                "div",
+	                                { className: "row" },
+	                                _react2.default.createElement(
+	                                    "div",
+	                                    { className: "leader col-sm-12 text-center" },
+	                                    _react2.default.createElement(
+	                                        "span",
+	                                        null,
+	                                        _react2.default.createElement("i", { className: "fa fa-quote-left" }),
+	                                        "Any fool can write code that a computer can understand. ",
+	                                        _react2.default.createElement("br", { className: "visible-desktop" }),
+	                                        " Good programmers write code that humans can understand.",
+	                                        _react2.default.createElement("i", { className: "fa fa-quote-right" })
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        "h5",
+	                                        { className: "lead-author" },
+	                                        "- Martin Fowler"
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    )
+	                )
 	            );
 	        }
 	    }]);
@@ -28095,6 +28254,181 @@
 	}(_react2.default.Component);
 
 	exports.default = Index;
+
+/***/ },
+/* 239 */
+/*!****************************************!*\
+  !*** ./src/components/Footer/Index.js ***!
+  \****************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(/*! react */ 2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(/*! react-dom */ 35);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _reactRouter = __webpack_require__(/*! react-router */ 175);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by Raphson on 9/24/16.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+	var Footer = function (_React$Component) {
+	    _inherits(Footer, _React$Component);
+
+	    function Footer() {
+	        _classCallCheck(this, Footer);
+
+	        return _possibleConstructorReturn(this, (Footer.__proto__ || Object.getPrototypeOf(Footer)).call(this));
+	    }
+
+	    _createClass(Footer, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'section',
+	                    { id: 'sidebar', className: 'new_footer' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'container' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'row' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'span3 offset1' },
+	                                _react2.default.createElement(
+	                                    'h5',
+	                                    null,
+	                                    'MORE INFO'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    null,
+	                                    _react2.default.createElement(
+	                                        'a',
+	                                        { href: 'https://twitter.com/iamraphson', target: '_target' },
+	                                        'Twitter'
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    null,
+	                                    _react2.default.createElement(
+	                                        _reactRouter.Link,
+	                                        { to: '/page/about' },
+	                                        'About'
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    null,
+	                                    _react2.default.createElement(
+	                                        'a',
+	                                        { href: 'mailto:nsegun5@gmail.com' },
+	                                        'Help'
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    null,
+	                                    _react2.default.createElement(
+	                                        'a',
+	                                        { href: '/page/contact' },
+	                                        'Contact'
+	                                    )
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'span3' },
+	                                _react2.default.createElement(
+	                                    'h5',
+	                                    null,
+	                                    'CO-PLANETS'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'span',
+	                                    { className: 'white-text' },
+	                                    _react2.default.createElement(
+	                                        'a',
+	                                        { href: 'https://scotch.io/', target: '_blink' },
+	                                        'Scotch.io'
+	                                    )
+	                                ),
+	                                _react2.default.createElement('br', null),
+	                                _react2.default.createElement(
+	                                    'span',
+	                                    { className: 'white-text' },
+	                                    _react2.default.createElement(
+	                                        'a',
+	                                        { href: 'https://react.rocks/', target: '_blink' },
+	                                        'React Rocks'
+	                                    )
+	                                ),
+	                                _react2.default.createElement('br', null)
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'span4' },
+	                                _react2.default.createElement(
+	                                    'h5',
+	                                    null,
+	                                    'THE MEAN PLANET NEWSLETTER'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    null,
+	                                    _react2.default.createElement(
+	                                        'form',
+	                                        { className: 'form-email', name: 'subscribeForm' },
+	                                        _react2.default.createElement('input', { type: 'email', name: 'email', className: 'validate-email signup-email-field', placeholder: 'e.g nsegun5@gmail.com', required: true, style: { marginRight: 10 } }),
+	                                        _react2.default.createElement('input', { type: 'submit', defaultValue: 'Subscribe', className: 'subscribe-btn' })
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'footer',
+	                    { id: 'copyright' },
+	                    'Copyright © 2015 MERNMAP.com was created By ',
+	                    _react2.default.createElement(
+	                        'a',
+	                        { href: 'https://twitter.com/iamraphson' },
+	                        'Ayeni Olusegun'
+	                    ),
+	                    '. MERN Developers Brewing Fire Together'
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Footer;
+	}(_react2.default.Component);
+
+	exports.default = Footer;
 
 /***/ }
 /******/ ]);

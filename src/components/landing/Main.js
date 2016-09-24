@@ -3,6 +3,7 @@
  */
 import React from 'react';
 import NavBar from '../NavBar/index';
+import Footer from '../Footer/Index';
 export default class Main extends React.Component{
     constructor(props){
         super(props)
@@ -13,6 +14,7 @@ export default class Main extends React.Component{
             <div>
                 <NavBar />
                 { this.props.children }
+                <Footer />
             </div>
         );
     }
