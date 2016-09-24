@@ -42,7 +42,8 @@
     "react-dom": "*",
     "react-router": "*",
     "sendgrid-nodejs": "*",
-    "slug": "^0.9.1"
+    "slug": "^0.9.1",
+    "superagent": "^2.3.0"
   },
   "devDependencies": {
     "babel": "*",
