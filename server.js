@@ -65,9 +65,10 @@ routes(app);
 app.use(express.static(path.join(__dirname)));
 
 
-app.get('/', function(request, response) {
+app.get('*', function(request, response) {
     response.sendFile(__dirname + '/index.html')
 });
+
 
 app.listen(port, function(error) {
     if (error) {
