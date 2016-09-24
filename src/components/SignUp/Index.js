@@ -4,6 +4,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import Alert from 'react-s-alert';
+import { hashHistory } from 'react-router'
 import MyInput from '../forms/Input';
 import MyTextarea from '../forms/Textarea';
 import UserStore from '../../stores/UserStore';
@@ -39,7 +40,7 @@ export default class SignUp extends React.Component{
         let data = UserStore.getSignupResult();
         if(data.success){
             Alert.success(data.message, { position: 'top-right' });
-            hashHistory.push('/auth/login');
+            hashHistory.push('/');
         } else {
             Alert.error(data.Error, { position: 'top-right' });
         }
@@ -105,9 +106,9 @@ export default class SignUp extends React.Component{
                                                  title="Website / Blog (Starting with http:// or https://)"
                                                   />
                                         {/* Github_url Form Input */}
-                                        <MyInput className="form-group col-lg-6" name="github_url"
+                                        <MyInput className="form-group col-lg-6" name="github_url" required
                                                  title="GitHub Profile (Starting with http:// or https://)"
-                                                 validationError="Github Url is required." validations="isUrl" required />
+                                                 validationError="Github Url is required." validations="isUrl"  />
 
                                     </div>
                                     <div className="col-lg-12">

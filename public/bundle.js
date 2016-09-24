@@ -29939,7 +29939,7 @@
 	            var data = _UserStore2.default.getSignupResult();
 	            if (data.success) {
 	                _reactSAlert2.default.success(data.message, { position: 'top-right' });
-	                hashHistory.push('/auth/login');
+	                _reactRouter.hashHistory.push('/');
 	            } else {
 	                _reactSAlert2.default.error(data.Error, { position: 'top-right' });
 	            }
@@ -30032,9 +30032,9 @@
 	                                        _react2.default.createElement(_Input2.default, { className: 'form-group col-lg-6', name: 'website',
 	                                            title: 'Website / Blog (Starting with http:// or https://)'
 	                                        }),
-	                                        _react2.default.createElement(_Input2.default, { className: 'form-group col-lg-6', name: 'github_url',
+	                                        _react2.default.createElement(_Input2.default, { className: 'form-group col-lg-6', name: 'github_url', required: true,
 	                                            title: 'GitHub Profile (Starting with http:// or https://)',
-	                                            validationError: 'Github Url is required.', validations: 'isUrl', required: true })
+	                                            validationError: 'Github Url is required.', validations: 'isUrl' })
 	                                    ),
 	                                    _react2.default.createElement(
 	                                        'div',
