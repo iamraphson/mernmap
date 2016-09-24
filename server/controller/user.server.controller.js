@@ -1,7 +1,7 @@
 /**
  * Created by Raphson on 6/30/16.
  */
-var user = require('../model/user.server.model');
+var User = require('../model/user.server.model');
 var token = require('../../config/token');
 var gravatar = require('gravatar');
 var _  = require('lodash');
@@ -26,26 +26,26 @@ module.exports = {
     *
     */
     registerUser: function(req, res){
-
+        var user = new User();
         var secureImageUrl = gravatar.url(req.body.email, {s: '200', r: 'x', d: 'retro'}, true);
-        var newUser = new user({
-            username : req.body.username,
-            fullname: req.body.fullname,
-            email: req.body.email,
-            password: req.body.password,
-            website: req.body.website,
-            github_profile: req.body.github_profile,
-            address: req.body.address,
-            hire_status: req.body.hire,
-            bio: req.body.bio,
-            user_avi: secureImageUrl,
-            twitter_handle: req.body.twitter
-        });
+        user.username       = req.body.username;
+        user.fullname       = req.body.fullname;
+        user.email          = req.body.email;
+        user.password       = req.body.password;
+        user.website        = req.body.website;
+        user.github_profile = req.body.github_profile;
+        user.address        = req.body.address;
+        user.user_avatar    = secureImageUrl;
 
-        newUser.save(function(err, result){
-            console.log(err)
+        user.save(function(err, result){
             if(err){
-                return res.status(500).json({message: err.message});
+                if(err.name == 'MongoError' && err.message.indexOf('$email_1') > 0 ) {
+                    return res.status(200).json({ success: false,
+                        Error: 'Email is already registered. Please choose another' });
+                } else if ( err.name == 'MongoError' && err.message.indexOf('$username_1') > 0) {
+                    return res.status(200).json({ success: false,
+                        Error: 'Username is already taken. Please choose another' });
+                }
             } else {
                 return res.status(200).json({ success: true,
                     message: "User Registered successfully. Please, login and be MERN" });
@@ -121,7 +121,7 @@ module.exports = {
     },
 
     /**
-     * Upload a photo to Meanmap's Cloudinary Server
+     * Upload a photo to MERNMAP's Cloudinary Server
      * @param  {void} req
      * @param  {void} res
      * @return {object}

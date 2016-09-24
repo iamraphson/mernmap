@@ -3,8 +3,13 @@
  */
 import React from 'react';
 import { Link } from 'react-router';
+import Alert from 'react-s-alert';
 import MyInput from '../forms/Input';
 import MyTextarea from '../forms/Textarea';
+import UserStore from '../../stores/UserStore';
+import UserActions from '../../actions/UserActions';
+import 'react-s-alert/dist/s-alert-default.css';
+import 'react-s-alert/dist/s-alert-css-effects/scale.css';
 
 export default class SignUp extends React.Component{
 
@@ -20,7 +25,25 @@ export default class SignUp extends React.Component{
             address: null,
             canSubmit: false
         }
-    };
+    }
+
+    componentDidMount = () => {
+        UserStore.addChangeListener(this.handleSignup, 'signup');
+    }
+
+    componentWillUnmount = () => {
+        UserStore.removeChangeListener(this.handleSignup, 'signup');
+    }
+
+    handleSignup = () => {
+        let data = UserStore.getSignupResult();
+        if(data.success){
+            Alert.success(data.message, { position: 'top-right' });
+            hashHistory.push('/auth/login');
+        } else {
+            Alert.error(data.Error, { position: 'top-right' });
+        }
+    }
 
     enableButton = () => {
         this.setState({ canSubmit: true });
@@ -31,7 +54,17 @@ export default class SignUp extends React.Component{
     };
 
     handleSubmit = (data) => {
-        alert(JSON.stringify(data, null, 4));
+        let userPayload = {
+            username: data.username,
+            fullname: data.fullname,
+            email : data.email,
+            password : data.password,
+            website : data.website,
+            github_profile : data.github_url,
+            address : data.address,
+        };
+        UserActions.signup(userPayload);
+
     };
 
     render(){

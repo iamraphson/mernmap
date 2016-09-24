@@ -5,7 +5,7 @@ let AppDispatcher = require('../dispatcher/AppDispatcher');
 let request = require('superagent');
 
 module.exports = {
-    get: (url: string, actionType: string, token: ? string = null) => {
+    get: (url , actionType, token = null) => {
         request
             .get(url)
             .set('Authorization', 'Bearer ' + token)
@@ -19,7 +19,7 @@ module.exports = {
             });
     },
 
-    delete: (url: string, actionType: string, token: ?string = null) => {
+    delete : (url, actionType, token = null) => {
         request
             .delete(url)
             .set('Authorization', 'Bearer ' + token)
@@ -34,7 +34,7 @@ module.exports = {
             });
     },
 
-    put: (url: string, data: Object, actionType: string, token: ?string = null) => {
+    put: (url , data , actionType , token = null) => {
         request
             .put(url)
             .set('Authorization', 'Bearer ' + token)
@@ -50,7 +50,7 @@ module.exports = {
             });
     },
 
-    post: (url: string, data: Object, actionType: string, token: ?string = null) => {
+    post: (url, data , actionType , token = null) => {
         request
             .post(url)
             .set('Authorization', 'Bearer ' + token)

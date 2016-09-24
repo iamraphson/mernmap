@@ -6,7 +6,7 @@ if (!Object.assign) {
     Object.assign = require('object-assign');
 }
 
-const BaseStore = Object.assign({}, EventEmitter.prototype, {
+let BaseStore = Object.assign({}, EventEmitter.prototype, {
 
     emitChange(event='change') {
         this.emit(event);
