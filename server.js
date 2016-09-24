@@ -26,13 +26,16 @@ var app = express();
 
 // using webpack-dev-server and middleware in development environment
 if(process.env.NODE_ENV !== 'production') {
-    var webpackDevMiddleware = require('webpack-dev-middleware');
-    var webpackHotMiddleware = require('webpack-hot-middleware');
-    var webpack = require('webpack');
-    var config = require('./webpack.config');
-    var compiler = webpack(config);
+    let webpackDevMiddleware = require('webpack-dev-middleware');
+    let webpackHotMiddleware = require('webpack-hot-middleware');
+    let webpack = require('webpack');
+    let config = require('./webpack.config');
+    let compiler = webpack(config);
 
-    app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }));
+    app.use(webpackDevMiddleware(compiler, {
+        noInfo: true,
+        publicPath: config.output.publicPath
+    }));
     app.use(webpackHotMiddleware(compiler));
 }
 /*
