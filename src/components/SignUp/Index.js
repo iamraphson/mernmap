@@ -2,9 +2,8 @@
  * Created by Raphson on 9/24/16.
  */
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, hashHistory } from 'react-router';
 import Alert from 'react-s-alert';
-import { hashHistory } from 'react-router'
 import MyInput from '../forms/Input';
 import MyTextarea from '../forms/Textarea';
 import UserStore from '../../stores/UserStore';

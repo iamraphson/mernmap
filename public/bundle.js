@@ -81,6 +81,10 @@
 
 	var _Index4 = _interopRequireDefault(_Index3);
 
+	var _Index5 = __webpack_require__(/*! ./components/Login/Index */ 281);
+
+	var _Index6 = _interopRequireDefault(_Index5);
+
 	var _reactRouter = __webpack_require__(/*! react-router */ 175);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -92,7 +96,8 @@
 	        _reactRouter.Route,
 	        { path: '/', component: _Main2.default },
 	        _react2.default.createElement(_reactRouter.IndexRoute, { component: _Index2.default }),
-	        _react2.default.createElement(_reactRouter.Route, { path: 'user/create', component: _Index4.default })
+	        _react2.default.createElement(_reactRouter.Route, { path: 'user/create', component: _Index4.default }),
+	        _react2.default.createElement(_reactRouter.Route, { path: 'auth/login', component: _Index6.default })
 	    )
 	), document.getElementById('app'));
 
@@ -33782,6 +33787,248 @@
 
 	// exports
 
+
+/***/ },
+/* 281 */
+/*!***************************************!*\
+  !*** ./src/components/Login/Index.js ***!
+  \***************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(/*! react */ 2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(/*! react-router */ 175);
+
+	var _reactSAlert = __webpack_require__(/*! react-s-alert */ 239);
+
+	var _reactSAlert2 = _interopRequireDefault(_reactSAlert);
+
+	var _Input = __webpack_require__(/*! ../forms/Input */ 254);
+
+	var _Input2 = _interopRequireDefault(_Input);
+
+	__webpack_require__(/*! react-s-alert/dist/s-alert-default.css */ 246);
+
+	__webpack_require__(/*! react-s-alert/dist/s-alert-css-effects/scale.css */ 279);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by Raphson on 9/24/16.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+	var Login = function (_React$Component) {
+	    _inherits(Login, _React$Component);
+
+	    function Login() {
+	        _classCallCheck(this, Login);
+
+	        var _this = _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).call(this));
+
+	        _this.handleLogin = function (data) {
+	            alert(JSON.stringify(data, null, 4));
+	        };
+
+	        _this.enableButton = function () {
+	            _this.setState({ canSubmit: true });
+	        };
+
+	        _this.disableButton = function () {
+	            _this.setState({ canSubmit: false });
+	        };
+
+	        _this.state = {
+	            canSubmit: false
+	        };
+	        return _this;
+	    }
+
+	    _createClass(Login, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'span',
+	                null,
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'main-container', style: { minHeight: 580 } },
+	                    _react2.default.createElement(
+	                        'section',
+	                        { className: 'faq faq-1' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'container' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'col-md-6' },
+	                                _react2.default.createElement(
+	                                    Formsy.Form,
+	                                    { onValidSubmit: this.handleLogin, onValid: this.enableButton,
+	                                        onInvalid: this.disableButton },
+	                                    _react2.default.createElement(_Input2.default, { className: 'form-group col-lg-6', name: 'email', title: 'Email',
+	                                        placeholder: 'e.g johndoe@gmail.com', validations: 'isEmail',
+	                                        validationError: 'Email is required.', required: true }),
+	                                    _react2.default.createElement(_Input2.default, { className: 'form-group col-lg-6', name: 'password', title: 'Password',
+	                                        placeholder: 'Your Password', type: 'password', required: true,
+	                                        validationError: 'Password is required.' }),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { className: 'form-group col-lg-12' },
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'form-group' },
+	                                            _react2.default.createElement(
+	                                                'button',
+	                                                { className: 'form-control btn btn-block', type: 'submit',
+	                                                    disabled: !this.state.canSubmit },
+	                                                'Sign in'
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'form-group col-lg-6' },
+	                                            _react2.default.createElement(
+	                                                'a',
+	                                                { href: '/reset-password', className: 'form-control btn btn-block' },
+	                                                'Reset Password'
+	                                            )
+	                                        )
+	                                    )
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'col-md-6' },
+	                                _react2.default.createElement(
+	                                    'h3',
+	                                    { className: 'dark-grey' },
+	                                    'Sign up now for ',
+	                                    _react2.default.createElement(
+	                                        'strong',
+	                                        null,
+	                                        'FREE'
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    'ul',
+	                                    { className: 'list-unstyled', style: { lineHeight: 2 } },
+	                                    _react2.default.createElement(
+	                                        'li',
+	                                        null,
+	                                        _react2.default.createElement('span', { className: 'fa fa-check text-success' }),
+	                                        ' Place yourself on the map'
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'li',
+	                                        null,
+	                                        _react2.default.createElement('span', { className: 'fa fa-check text-success' }),
+	                                        ' Get to Share Interesting Projects with other developers'
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'li',
+	                                        null,
+	                                        _react2.default.createElement('span', { className: 'fa fa-check text-success' }),
+	                                        ' Get to Share Tutorials'
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'li',
+	                                        null,
+	                                        _react2.default.createElement('span', { className: 'fa fa-check text-success' }),
+	                                        ' Get to Know mean developers around you'
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'li',
+	                                        null,
+	                                        _react2.default.createElement('span', { className: 'fa fa-check text-success' }),
+	                                        ' Get Connected'
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'li',
+	                                        null,
+	                                        _react2.default.createElement('span', { className: 'fa fa-check text-success' }),
+	                                        ' Get Hired Today'
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'li',
+	                                        null,
+	                                        _react2.default.createElement('span', { className: 'fa fa-check text-success' }),
+	                                        ' Become an Alien and reside on the Mean Planet'
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'li',
+	                                        null,
+	                                        _react2.default.createElement('span', { className: 'fa fa-check text-success' }),
+	                                        ' Be a part of the community'
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'li',
+	                                        null,
+	                                        _react2.default.createElement(
+	                                            _reactRouter.Link,
+	                                            { to: '/page/about' },
+	                                            _react2.default.createElement(
+	                                                'u',
+	                                                null,
+	                                                'Read more'
+	                                            )
+	                                        )
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'section',
+	                        { className: 'social social-1 near-footer' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'container' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'row' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'leader col-sm-12 text-center' },
+	                                    _react2.default.createElement(
+	                                        'span',
+	                                        null,
+	                                        _react2.default.createElement('i', { className: 'fa fa-quote-left' }),
+	                                        'A Framework/Technology is only as good as it\'s community',
+	                                        _react2.default.createElement('i', { className: 'fa fa-quote-right' })
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'h5',
+	                                        { className: 'lead-author' },
+	                                        '- Prosper Otemuyiwa'
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Login;
+	}(_react2.default.Component);
+
+	exports.default = Login;
 
 /***/ }
 /******/ ]);
