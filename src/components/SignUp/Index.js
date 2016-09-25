@@ -11,7 +11,7 @@ import MyTextarea from '../forms/Textarea';
 import UserStore from '../../stores/UserStore';
 import UserActions from '../../actions/UserActions';
 import 'react-s-alert/dist/s-alert-default.css';
-import 'react-s-alert/dist/s-alert-css-effects/scale.css';
+import 'react-s-alert/dist/s-alert-css-effects/bouncyflip.css';
 
 export default class SignUp extends React.Component{
 
@@ -40,10 +40,10 @@ export default class SignUp extends React.Component{
     handleSignup = () => {
         let data = UserStore.getSignupResult();
         if(data.success){
-            Alert.success(data.data.message, { position: 'top-right' });
+            Alert.success(data.data.message, { position: 'top-right',  effect: 'bouncyflip'});
             hashHistory.push('auth/login');
         } else {
-            Alert.error(data.data.Error, { position: 'top-right' });
+            Alert.error(data.data.Error, { position: 'top-right',  effect: 'bouncyflip'});
         }
     }
 

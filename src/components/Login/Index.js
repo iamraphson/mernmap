@@ -3,14 +3,14 @@
  */
 import React from 'react';
 import { Link, hashHistory } from 'react-router';
-import Alert from 'react-s-alert';
 import MyInput from '../forms/Input';
 import NavBar from '../NavBar/index';
 import Footer from '../Footer/Index';
 import UserStore from '../../stores/UserStore';
 import UserActions from '../../actions/UserActions';
+import Alert from 'react-s-alert';
 import 'react-s-alert/dist/s-alert-default.css';
-import 'react-s-alert/dist/s-alert-css-effects/scale.css';
+import 'react-s-alert/dist/s-alert-css-effects/bouncyflip.css';
 import Auth from '../../utils/auth';
 
 
@@ -33,11 +33,10 @@ export default class Login extends React.Component {
     handleLogin = () => {
         let data = UserStore.getLoginResult();
         if(data.status == 401){
-            Alert.error(data.data.message, { position: 'top-right' });
+            Alert.error(data.data.message, { position: 'top-right',  effect: 'bouncyflip'});
         } else {
-            localStorage.setItem('mern_token', data.data.token);
-            localStorage.setItem('mern_user', JSON.stringify(data.data.user));
-            //Auth.setToken(data.data);
+            Auth.setToken(data.data);
+            Alert.success('Login Successful', { position: 'top-right',  effect: 'bouncyflip'});
             hashHistory.push('/');
         }
     }

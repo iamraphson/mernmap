@@ -6,6 +6,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link, hashHistory } from 'react-router';
 import Auth from '../../utils/auth';
+import Alert from 'react-s-alert';
+import 'react-s-alert/dist/s-alert-default.css';
+import 'react-s-alert/dist/s-alert-css-effects/bouncyflip.css';
 
 export default class Nav extends React.Component{
 
@@ -31,6 +34,7 @@ export default class Nav extends React.Component{
             user: null
         });
         Auth.logout();
+        Alert.success('You are Logged Out', { position: 'top-right',  effect: 'bouncyflip'});
         hashHistory.push('/');
     }
 

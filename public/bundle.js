@@ -22073,6 +22073,14 @@
 
 	var _auth2 = _interopRequireDefault(_auth);
 
+	var _reactSAlert = __webpack_require__(/*! react-s-alert */ 240);
+
+	var _reactSAlert2 = _interopRequireDefault(_reactSAlert);
+
+	__webpack_require__(/*! react-s-alert/dist/s-alert-default.css */ 247);
+
+	__webpack_require__(/*! react-s-alert/dist/s-alert-css-effects/bouncyflip.css */ 283);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -22098,6 +22106,7 @@
 	                user: null
 	            });
 	            _auth2.default.logout();
+	            _reactSAlert2.default.success('You are Logged Out', { position: 'top-right', effect: 'bouncyflip' });
 	            _reactRouter.hashHistory.push('/');
 	        };
 
@@ -28164,21 +28173,21 @@
 
 	module.exports = {
 	    getToken: function getToken() {
-	        return localStorage.mern_token;
+	        return localStorage.getItem('mern_token');
 	    },
 	    getUser: function getUser() {
-	        return localStorage.mern_user;
+	        return localStorage.getItem('mern_user');
 	    },
 	    setToken: function setToken(res) {
-	        localStorage.mern_token = res.token;
-	        localStorage.mern_user = JSON.stringify(res.user);
+	        localStorage.setItem('mern_token', res.token);
+	        localStorage.setItem('mern_user', JSON.stringify(res.user));
 	    },
 	    logout: function logout() {
-	        delete localStorage.mern_token;
-	        delete localStorage.mern_user;
+	        localStorage.removeItem('mern_token');
+	        localStorage.removeItem('mern_user');
 	    },
 	    loggedIn: function loggedIn() {
-	        return !!(localStorage.mern_token && localStorage.mern_user);
+	        return localStorage.getItem('mern_token') !== null && localStorage.getItem('mern_user') !== null;
 	    },
 	    checkAuthRequired: function checkAuthRequired(res) {
 	        if (res.statusCode == 401) {
@@ -30053,7 +30062,7 @@
 
 	__webpack_require__(/*! react-s-alert/dist/s-alert-default.css */ 247);
 
-	__webpack_require__(/*! react-s-alert/dist/s-alert-css-effects/scale.css */ 280);
+	__webpack_require__(/*! react-s-alert/dist/s-alert-css-effects/bouncyflip.css */ 283);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -30085,10 +30094,10 @@
 	        _this.handleSignup = function () {
 	            var data = _UserStore2.default.getSignupResult();
 	            if (data.success) {
-	                _reactSAlert2.default.success(data.data.message, { position: 'top-right' });
+	                _reactSAlert2.default.success(data.data.message, { position: 'top-right', effect: 'bouncyflip' });
 	                hashHistory.push('auth/login');
 	            } else {
-	                _reactSAlert2.default.error(data.data.Error, { position: 'top-right' });
+	                _reactSAlert2.default.error(data.data.Error, { position: 'top-right', effect: 'bouncyflip' });
 	            }
 	        };
 
@@ -33904,52 +33913,8 @@
 
 
 /***/ },
-/* 280 */
-/*!************************************************************!*\
-  !*** ./~/react-s-alert/dist/s-alert-css-effects/scale.css ***!
-  \************************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(/*! !./../../../css-loader!./scale.css */ 281);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../../../style-loader/addStyles.js */ 250)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../../css-loader/index.js!./scale.css", function() {
-				var newContent = require("!!./../../../css-loader/index.js!./scale.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 281 */
-/*!***************************************************************************!*\
-  !*** ./~/css-loader!./~/react-s-alert/dist/s-alert-css-effects/scale.css ***!
-  \***************************************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(/*! ./../../../css-loader/lib/css-base.js */ 249)();
-	// imports
-
-
-	// module
-	exports.push([module.id, "/* Scale */\n\n.s-alert-effect-scale a {\n    color: #fff;\n}\n\n.s-alert-effect-scale a:hover,\n.s-alert-effect-scale a:focus {\n    color: #fff;\n}\n\n.s-alert-effect-scale .s-alert-close::before,\n.s-alert-effect-scale .s-alert-close::after {\n    background: #fff;\n}\n\n.s-alert-effect-scale .s-alert-close:hover::before,\n.s-alert-effect-scale .s-alert-close:hover::after {\n    background: #fff;\n}\n\n.s-alert-effect-scale.s-alert-show,\n.s-alert-effect-scale.s-alert-hide {\n    -webkit-animation-name: animScale;\n    animation-name: animScale;\n    -webkit-animation-duration: 0.25s;\n    animation-duration: 0.25s;\n}\n\n@-webkit-keyframes animScale {\n    0% { opacity: 0; -webkit-transform: translate3d(0,40px,0) scale3d(0.1,0.6,1); }\n    100% { opacity: 1; -webkit-transform: translate3d(0,0,0) scale3d(1,1,1); }\n}\n\n@keyframes animScale {\n    0% { opacity: 0; -webkit-transform: translate3d(0,40px,0) scale3d(0.1,0.6,1); transform: translate3d(0,40px,0) scale3d(0.1,0.6,1); }\n    100% { opacity: 1; -webkit-transform: translate3d(0,0,0) scale3d(1,1,1); transform: translate3d(0,0,0) scale3d(1,1,1); }\n}", ""]);
-
-	// exports
-
-
-/***/ },
+/* 280 */,
+/* 281 */,
 /* 282 */
 /*!***************************************!*\
   !*** ./src/components/Login/Index.js ***!
@@ -33969,10 +33934,6 @@
 	var _react2 = _interopRequireDefault(_react);
 
 	var _reactRouter = __webpack_require__(/*! react-router */ 175);
-
-	var _reactSAlert = __webpack_require__(/*! react-s-alert */ 240);
-
-	var _reactSAlert2 = _interopRequireDefault(_reactSAlert);
 
 	var _Input = __webpack_require__(/*! ../forms/Input */ 255);
 
@@ -33994,9 +33955,13 @@
 
 	var _UserActions2 = _interopRequireDefault(_UserActions);
 
+	var _reactSAlert = __webpack_require__(/*! react-s-alert */ 240);
+
+	var _reactSAlert2 = _interopRequireDefault(_reactSAlert);
+
 	__webpack_require__(/*! react-s-alert/dist/s-alert-default.css */ 247);
 
-	__webpack_require__(/*! react-s-alert/dist/s-alert-css-effects/scale.css */ 280);
+	__webpack_require__(/*! react-s-alert/dist/s-alert-css-effects/bouncyflip.css */ 283);
 
 	var _auth = __webpack_require__(/*! ../../utils/auth */ 238);
 
@@ -34032,11 +33997,10 @@
 	        _this.handleLogin = function () {
 	            var data = _UserStore2.default.getLoginResult();
 	            if (data.status == 401) {
-	                _reactSAlert2.default.error(data.data.message, { position: 'top-right' });
+	                _reactSAlert2.default.error(data.data.message, { position: 'top-right', effect: 'bouncyflip' });
 	            } else {
-	                localStorage.setItem('mern_token', data.data.token);
-	                localStorage.setItem('mern_user', JSON.stringify(data.data.user));
-	                //Auth.setToken(data.data);
+	                _auth2.default.setToken(data.data);
+	                _reactSAlert2.default.success('Login Successful', { position: 'top-right', effect: 'bouncyflip' });
 	                _reactRouter.hashHistory.push('/');
 	            }
 	        };
@@ -34237,6 +34201,52 @@
 	}(_react2.default.Component);
 
 	exports.default = Login;
+
+/***/ },
+/* 283 */
+/*!*****************************************************************!*\
+  !*** ./~/react-s-alert/dist/s-alert-css-effects/bouncyflip.css ***!
+  \*****************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(/*! !./../../../css-loader!./bouncyflip.css */ 284);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(/*! ./../../../style-loader/addStyles.js */ 250)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../css-loader/index.js!./bouncyflip.css", function() {
+				var newContent = require("!!./../../../css-loader/index.js!./bouncyflip.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 284 */
+/*!********************************************************************************!*\
+  !*** ./~/css-loader!./~/react-s-alert/dist/s-alert-css-effects/bouncyflip.css ***!
+  \********************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(/*! ./../../../css-loader/lib/css-base.js */ 249)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "/* Bouncy Flip adapted from animate.css by Dan Eden: http://daneden.github.io/animate.css/ */\n\n.s-alert-bottom-left.s-alert-effect-bouncyflip,\n.s-alert-bottom-right.s-alert-effect-bouncyflip,\n.s-alert-bottom.s-alert-effect-bouncyflip {\n    -webkit-transform-origin: 50% 100%;\n    transform-origin: 50% 100%;\n}\n.s-alert-top-left.s-alert-effect-bouncyflip,\n.s-alert-top-right.s-alert-effect-bouncyflip\n.s-alert-top.s-alert-effect-bouncyflip {\n    -webkit-transform-origin: 50% 0%;\n    transform-origin: 50% 0%;\n}\n\n.s-alert-effect-bouncyflip p {\n    padding: 0.5em 0.8em 0.5em 0.8em;\n}\n\n.s-alert-effect-bouncyflip .s-alert-close::after,\n.s-alert-effect-bouncyflip .s-alert-close::before {\n    background: #fff;\n}\n\n.s-alert-effect-bouncyflip .s-alert-close:hover::after,\n.s-alert-effect-bouncyflip .s-alert-close:hover::before {\n    background: #fff;\n}\n\n.s-alert-top-left.s-alert-effect-bouncyflip.s-alert-hide,\n.s-alert-top-right.s-alert-effect-bouncyflip.s-alert-hide,\n.s-alert-top-left.s-alert-effect-bouncyflip.s-alert-show,\n.s-alert-top-right.s-alert-effect-bouncyflip.s-alert-show,\n.s-alert-top.s-alert-effect-bouncyflip.s-alert-hide,\n.s-alert-top.s-alert-effect-bouncyflip.s-alert-show  {\n    -webkit-animation-name: flipInXTop;\n    animation-name: flipInXTop;\n    -webkit-animation-duration: 0.8s;\n    animation-duration: 0.8s;\n}\n\n.s-alert-bottom-left.s-alert-effect-bouncyflip.s-alert-hide,\n.s-alert-bottom-right.s-alert-effect-bouncyflip.s-alert-hide,\n.s-alert-bottom-left.s-alert-effect-bouncyflip.s-alert-show,\n.s-alert-bottom-right.s-alert-effect-bouncyflip.s-alert-show,\n.s-alert-bottom.s-alert-effect-bouncyflip.s-alert-show,\n.s-alert-bottom.s-alert-effect-bouncyflip.s-alert-hide {\n    -webkit-animation-name: flipInXBottom;\n    animation-name: flipInXBottom;\n    -webkit-animation-duration: 0.8s;\n    animation-duration: 0.8s;\n}\n\n@-webkit-keyframes flipInXTop {\n    0% {\n        -webkit-transform: perspective(400px) rotate3d(1,0,0,-90deg);\n        -webkit-transition-timing-function: ease-in;\n    }\n\n    40% {\n        -webkit-transform: perspective(400px) rotate3d(1,0,0,20deg);\n        -webkit-transition-timing-function: ease-out;\n    }\n\n    60% {\n        -webkit-transform: perspective(400px) rotate3d(1,0,0,-10deg);\n        -webkit-transition-timing-function: ease-in;\n        opacity: 1;\n    }\n\n    80% {\n        -webkit-transform: perspective(400px) rotate3d(1,0,0,5deg);\n        -webkit-transition-timing-function: ease-out;\n    }\n\n    100% {\n        -webkit-transform: perspective(400px);\n    }\n}\n\n@keyframes flipInXTop {\n    0% {\n        -webkit-transform: perspective(400px) rotate3d(1,0,0,-90deg);\n        transform: perspective(400px) rotate3d(1,0,0,-90deg);\n        -webkit-transition-timing-function: ease-in;\n        transition-timing-function: ease-in;\n    }\n\n    40% {\n        -webkit-transform: perspective(400px) rotate3d(1,0,0,20deg);\n        transform: perspective(400px) rotate3d(1,0,0,20deg);\n        -webkit-transition-timing-function: ease-out;\n        transition-timing-function: ease-out;\n    }\n\n    60% {\n        -webkit-transform: perspective(400px) rotate3d(1,0,0,-10deg);\n        transform: perspective(400px) rotate3d(1,0,0,-10deg);\n        -webkit-transition-timing-function: ease-in;\n        transition-timing-function: ease-in;\n        opacity: 1;\n    }\n\n    80% {\n        -webkit-transform: perspective(400px) rotate3d(1,0,0,5deg);\n        transform: perspective(400px) rotate3d(1,0,0,5deg);\n        -webkit-transition-timing-function: ease-out;\n        transition-timing-function: ease-out;\n    }\n\n    100% {\n        -webkit-transform: perspective(400px);\n        transform: perspective(400px);\n    }\n}\n\n@-webkit-keyframes flipInXBottom {\n    0% {\n        -webkit-transform: perspective(400px) rotate3d(1,0,0,90deg);\n        -webkit-transition-timing-function: ease-in;\n    }\n\n    40% {\n        -webkit-transform: perspective(400px) rotate3d(1,0,0,-20deg);\n        -webkit-transition-timing-function: ease-out;\n    }\n\n    60% {\n        -webkit-transform: perspective(400px) rotate3d(1,0,0,10deg);\n        -webkit-transition-timing-function: ease-in;\n        opacity: 1;\n    }\n\n    80% {\n        -webkit-transform: perspective(400px) rotate3d(1,0,0,-5deg);\n        -webkit-transition-timing-function: ease-out;\n    }\n\n    100% {\n        -webkit-transform: perspective(400px);\n    }\n}\n\n@keyframes flipInXBottom {\n    0% {\n        -webkit-transform: perspective(400px) rotate3d(1,0,0,90deg);\n        transform: perspective(400px) rotate3d(1,0,0,90deg);\n        -webkit-transition-timing-function: ease-in;\n        transition-timing-function: ease-in;\n    }\n\n    40% {\n        -webkit-transform: perspective(400px) rotate3d(1,0,0,-20deg);\n        transform: perspective(400px) rotate3d(1,0,0,-20deg);\n        -webkit-transition-timing-function: ease-out;\n        transition-timing-function: ease-out;\n    }\n\n    60% {\n        -webkit-transform: perspective(400px) rotate3d(1,0,0,10deg);\n        transform: perspective(400px) rotate3d(1,0,0,10deg);\n        -webkit-transition-timing-function: ease-in;\n        transition-timing-function: ease-in;\n        opacity: 1;\n    }\n\n    80% {\n        -webkit-transform: perspective(400px) rotate3d(1,0,0,-5deg);\n        transform: perspective(400px) rotate3d(1,0,0,-5deg);\n        -webkit-transition-timing-function: ease-out;\n        transition-timing-function: ease-out;\n    }\n\n    100% {\n        -webkit-transform: perspective(400px);\n        transform: perspective(400px);\n    }\n}\n\n.s-alert-top-right.s-alert-effect-bouncyflip.s-alert-hide,\n.s-alert-top-left.s-alert-effect-bouncyflip.s-alert-hide,\n.s-alert-top.s-alert-effect-bouncyflip.s-alert-hide {\n    -webkit-animation-name: flipInXSimpleTop;\n    animation-name: flipInXSimpleTop;\n    -webkit-animation-duration: 0.3s;\n    animation-duration: 0.3s;\n}\n.s-alert-bottom-right.s-alert-effect-bouncyflip.s-alert-hide,\n.s-alert-bottom-left.s-alert-effect-bouncyflip.s-alert-hide,\n.s-alert-bottom.s-alert-effect-bouncyflip.s-alert-hide  {\n    -webkit-animation-name: flipInXSimpleBottom;\n    animation-name: flipInXSimpleBottom;\n    -webkit-animation-duration: 0.3s;\n    animation-duration: 0.3s;\n}\n\n@-webkit-keyframes flipInXSimpleTop {\n  0% {\n    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, -90deg);\n    -webkit-transition-timing-function: ease-in;\n  }\n  100% {\n    -webkit-transform: perspective(400px);\n  }\n}\n\n@keyframes flipInXSimpleTop {\n  0% {\n    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, -90deg);\n    transform: perspective(400px) rotate3d(1, 0, 0, -90deg);\n    -webkit-transition-timing-function: ease-in;\n    transition-timing-function: ease-in;\n  }\n  100% {\n    -webkit-transform: perspective(400px);\n    transform: perspective(400px);\n  }\n}\n\n@-webkit-keyframes flipInXSimpleBottom {\n  0% {\n    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 90deg);\n    -webkit-transition-timing-function: ease-in;\n  }\n  100% {\n    -webkit-transform: perspective(400px);\n  }\n}\n\n@keyframes flipInXSimpleBottom {\n  0% {\n    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 90deg);\n    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);\n    -webkit-transition-timing-function: ease-in;\n    transition-timing-function: ease-in;\n  }\n  100% {\n    -webkit-transform: perspective(400px);\n    transform: perspective(400px);\n  }\n}\n\n@media screen and (max-width: 25em) {\n    .s-alert-attached {\n        left: 30px;\n        max-width: none;\n        right: 30px;\n    }\n}", ""]);
+
+	// exports
+
 
 /***/ }
 /******/ ]);
