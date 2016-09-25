@@ -14,7 +14,7 @@ module.exports = {
                 console.log(result);
                 AppDispatcher.dispatch({
                     actionType: actionType,
-                    data: result.body
+                    data: {data :result.body, status: result.statusCode}
                 });
             });
     },
@@ -28,7 +28,7 @@ module.exports = {
                 console.log(result);
                 AppDispatcher.dispatch({
                     actionType: actionType,
-                    data: result.body,
+                    data: {data :result.body, status: result.statusCode},
                     statusCode: result.statusCode
                 });
             });
@@ -44,7 +44,7 @@ module.exports = {
                 console.log(result);
                 AppDispatcher.dispatch({
                     actionType: actionType,
-                    data: result.body,
+                    data: {data :result.body, status: result.statusCode},
                     statusCode: result.statusCode
                 });
             });
@@ -60,7 +60,7 @@ module.exports = {
                 console.log(result);
                 AppDispatcher.dispatch({
                     actionType: actionType,
-                    data: result.body
+                    data: {data :result.body, status: result.statusCode}
                 });
             });
     }

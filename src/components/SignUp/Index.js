@@ -2,7 +2,7 @@
  * Created by Raphson on 9/24/16.
  */
 import React from 'react';
-import { Link, hashHistory } from 'react-router';
+import { Link,  } from 'react-router';
 import Alert from 'react-s-alert';
 import MyInput from '../forms/Input';
 import MyTextarea from '../forms/Textarea';
@@ -38,10 +38,10 @@ export default class SignUp extends React.Component{
     handleSignup = () => {
         let data = UserStore.getSignupResult();
         if(data.success){
-            Alert.success(data.message, { position: 'top-right' });
-            hashHistory.push('/');
+            Alert.success(data.data.message, { position: 'top-right' });
+            hashHistory.push('auth/login');
         } else {
-            Alert.error(data.Error, { position: 'top-right' });
+            Alert.error(data.data.Error, { position: 'top-right' });
         }
     }
 

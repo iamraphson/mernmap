@@ -60,7 +60,7 @@ module.exports = {
      * @return json
      */
     auth: function(req, res){
-        user.findOne({email : req.body.email}, function(err, loginUser){
+        User.findOne({email : req.body.email}, function(err, loginUser){
             if(!loginUser)
                 return res.status(401).json({message : "Invalid Email"});
 

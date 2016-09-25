@@ -5,8 +5,11 @@ import React from 'react';
 import { Link, hashHistory } from 'react-router';
 import Alert from 'react-s-alert';
 import MyInput from '../forms/Input';
+import UserStore from '../../stores/UserStore';
+import UserActions from '../../actions/UserActions';
 import 'react-s-alert/dist/s-alert-default.css';
 import 'react-s-alert/dist/s-alert-css-effects/scale.css';
+import Auth from '../../utils/auth';
 
 
 export default class Login extends React.Component {
@@ -17,8 +20,31 @@ export default class Login extends React.Component {
         }
     }
 
-    handleLogin = (data) => {
-        alert(JSON.stringify(data, null, 4));
+    componentDidMount = () => {
+        UserStore.addChangeListener(this.handleLogin, 'login');
+    }
+
+    componentWillUnmount = () => {
+        UserStore.removeChangeListener(this.handleLogin, 'login');
+    }
+
+    handleLogin = () => {
+        let data = UserStore.getLoginResult();
+        if(data.status == 401){
+            Alert.error(data.data.message, { position: 'top-right' });
+        } else {
+            Auth.setToken(data.data);
+            hashHistory.push('/');
+        }
+    }
+
+    handleSubmit = (data) => {
+        let loginPayload = {
+            email: data.email,
+            password: data.password
+        };
+
+        UserActions.login(loginPayload);
     }
 
     enableButton = () => {
@@ -37,7 +63,7 @@ export default class Login extends React.Component {
                     <section className="faq faq-1">
                         <div className="container">
                             <div className="col-md-6">
-                                <Formsy.Form onValidSubmit={this.handleLogin} onValid={this.enableButton}
+                                <Formsy.Form onValidSubmit={this.handleSubmit} onValid={this.enableButton}
                                              onInvalid={this.disableButton}>
                                     <MyInput className="form-group col-lg-6" name="email" title="Email"
                                              placeholder="e.g johndoe@gmail.com" validations="isEmail"

@@ -7,5 +7,10 @@ let AppConstants = require('../constants/AppConstants'),
 module.exports = {
     signup: (user) => {
         BaseActions.post('/api/register', user, AppConstants.USER_SIGNUP);
+    },
+
+    login: (user) => {
+        BaseActions.post('/api/login', user, AppConstants.USER_LOGIN);
     }
+
 }

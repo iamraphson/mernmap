@@ -29943,10 +29943,10 @@
 	        _this.handleSignup = function () {
 	            var data = _UserStore2.default.getSignupResult();
 	            if (data.success) {
-	                _reactSAlert2.default.success(data.message, { position: 'top-right' });
-	                _reactRouter.hashHistory.push('/');
+	                _reactSAlert2.default.success(data.data.message, { position: 'top-right' });
+	                hashHistory.push('auth/login');
 	            } else {
-	                _reactSAlert2.default.error(data.Error, { position: 'top-right' });
+	                _reactSAlert2.default.error(data.data.Error, { position: 'top-right' });
 	            }
 	        };
 
@@ -31263,7 +31263,15 @@
 	}
 	var UserStore = Object.assign({}, _BaseStore2.default, {
 	    signupResult: null,
+	    loginResult: null,
 
+	    setLoginResult: function setLoginResult(loginResult) {
+	        this.loginResult = loginResult;
+	        this.emitChange('login');
+	    },
+	    getLoginResult: function getLoginResult() {
+	        return this.loginResult;
+	    },
 	    setSignupResult: function setSignupResult(signupResult) {
 	        this.signupResult = signupResult;
 	        this.emitChange('signup');
@@ -31277,6 +31285,9 @@
 	    switch (action.actionType) {
 	        case AppConstants.USER_SIGNUP:
 	            UserStore.setSignupResult(action.data);
+	            break;
+	        case AppConstants.USER_LOGIN:
+	            UserStore.setLoginResult(action.data);
 	            break;
 	        default:
 	        // no default action
@@ -31651,7 +31662,8 @@
 	 */
 	var keyMirror = __webpack_require__(/*! keymirror */ 267);
 	module.exports = keyMirror({
-	  USER_SIGNUP: null
+	  USER_SIGNUP: null,
+	  USER_LOGIN: null
 	});
 
 /***/ },
@@ -32067,7 +32079,12 @@
 	module.exports = {
 	    signup: function signup(user) {
 	        BaseActions.post('/api/register', user, AppConstants.USER_SIGNUP);
+	    },
+
+	    login: function login(user) {
+	        BaseActions.post('/api/login', user, AppConstants.USER_LOGIN);
 	    }
+
 	};
 
 /***/ },
@@ -32094,7 +32111,7 @@
 	            console.log(result);
 	            AppDispatcher.dispatch({
 	                actionType: actionType,
-	                data: result.body
+	                data: { data: result.body, status: result.statusCode }
 	            });
 	        });
 	    },
@@ -32107,7 +32124,7 @@
 	            console.log(result);
 	            AppDispatcher.dispatch({
 	                actionType: actionType,
-	                data: result.body,
+	                data: { data: result.body, status: result.statusCode },
 	                statusCode: result.statusCode
 	            });
 	        });
@@ -32121,7 +32138,7 @@
 	            console.log(result);
 	            AppDispatcher.dispatch({
 	                actionType: actionType,
-	                data: result.body,
+	                data: { data: result.body, status: result.statusCode },
 	                statusCode: result.statusCode
 	            });
 	        });
@@ -32135,7 +32152,7 @@
 	            console.log(result);
 	            AppDispatcher.dispatch({
 	                actionType: actionType,
-	                data: result.body
+	                data: { data: result.body, status: result.statusCode }
 	            });
 	        });
 	    }
@@ -33817,9 +33834,21 @@
 
 	var _Input2 = _interopRequireDefault(_Input);
 
+	var _UserStore = __webpack_require__(/*! ../../stores/UserStore */ 263);
+
+	var _UserStore2 = _interopRequireDefault(_UserStore);
+
+	var _UserActions = __webpack_require__(/*! ../../actions/UserActions */ 272);
+
+	var _UserActions2 = _interopRequireDefault(_UserActions);
+
 	__webpack_require__(/*! react-s-alert/dist/s-alert-default.css */ 246);
 
 	__webpack_require__(/*! react-s-alert/dist/s-alert-css-effects/scale.css */ 279);
+
+	var _auth = __webpack_require__(/*! ../../utils/auth */ 282);
+
+	var _auth2 = _interopRequireDefault(_auth);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -33840,8 +33869,31 @@
 
 	        var _this = _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).call(this));
 
-	        _this.handleLogin = function (data) {
-	            alert(JSON.stringify(data, null, 4));
+	        _this.componentDidMount = function () {
+	            _UserStore2.default.addChangeListener(_this.handleLogin, 'login');
+	        };
+
+	        _this.componentWillUnmount = function () {
+	            _UserStore2.default.removeChangeListener(_this.handleLogin, 'login');
+	        };
+
+	        _this.handleLogin = function () {
+	            var data = _UserStore2.default.getLoginResult();
+	            if (data.status == 401) {
+	                _reactSAlert2.default.error(data.data.message, { position: 'top-right' });
+	            } else {
+	                _auth2.default.setToken(data.data);
+	                _reactRouter.hashHistory.push('/');
+	            }
+	        };
+
+	        _this.handleSubmit = function (data) {
+	            var loginPayload = {
+	                email: data.email,
+	                password: data.password
+	            };
+
+	            _UserActions2.default.login(loginPayload);
 	        };
 
 	        _this.enableButton = function () {
@@ -33878,7 +33930,7 @@
 	                                { className: 'col-md-6' },
 	                                _react2.default.createElement(
 	                                    Formsy.Form,
-	                                    { onValidSubmit: this.handleLogin, onValid: this.enableButton,
+	                                    { onValidSubmit: this.handleSubmit, onValid: this.enableButton,
 	                                        onInvalid: this.disableButton },
 	                                    _react2.default.createElement(_Input2.default, { className: 'form-group col-lg-6', name: 'email', title: 'Email',
 	                                        placeholder: 'e.g johndoe@gmail.com', validations: 'isEmail',
@@ -34029,6 +34081,44 @@
 	}(_react2.default.Component);
 
 	exports.default = Login;
+
+/***/ },
+/* 282 */
+/*!***************************!*\
+  !*** ./src/utils/auth.js ***!
+  \***************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _reactRouter = __webpack_require__(/*! react-router */ 175);
+
+	module.exports = {
+	    getToken: function getToken() {
+	        return localStorage.mern_token;
+	    },
+	    getUser: function getUser() {
+	        return localStorage.mern_user;
+	    },
+	    setToken: function setToken(res) {
+	        localStorage.mern_token = res.token;
+	        localStorage.mern_user = JSON.stringify(res.user);
+	    },
+	    logout: function logout() {
+	        delete localStorage.mern_token;
+	        delete localStorage.mern_user;
+	    },
+	    loggedIn: function loggedIn() {
+	        return !!(localStorage.mern_token && localStorage.mern_user);
+	    },
+	    checkAuthRequired: function checkAuthRequired(res) {
+	        if (res.statusCode == 401) {
+	            console.log("CauthR - 1 " + res.statusCode);
+	            logout();
+	            _reactRouter.Router.navigate('/auth/login');
+	        }
+	    }
+	};
 
 /***/ }
 /******/ ]);

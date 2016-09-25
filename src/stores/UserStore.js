@@ -10,6 +10,16 @@ let AppConstants = require('../constants/AppConstants'),
     }
 let UserStore = Object.assign({}, BaseStore, {
     signupResult: null,
+    loginResult: null,
+
+    setLoginResult(loginResult) {
+        this.loginResult = loginResult;
+        this.emitChange('login');
+    },
+
+    getLoginResult()  {
+        return this.loginResult
+    },
 
     setSignupResult(signupResult) {
         this.signupResult = signupResult;
@@ -25,6 +35,9 @@ AppDispatcher.register((action) => {
     switch (action.actionType){
         case AppConstants.USER_SIGNUP :
             UserStore.setSignupResult(action.data);
+            break;
+        case AppConstants.USER_LOGIN :
+            UserStore.setLoginResult(action.data);
             break;
         default:
         // no default action
