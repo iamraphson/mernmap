@@ -73,15 +73,15 @@
 
 	var _Main2 = _interopRequireDefault(_Main);
 
-	var _Index = __webpack_require__(/*! ./components/landing/Index */ 252);
+	var _Index = __webpack_require__(/*! ./components/landing/Index */ 253);
 
 	var _Index2 = _interopRequireDefault(_Index);
 
-	var _Index3 = __webpack_require__(/*! ./components/SignUp/Index */ 253);
+	var _Index3 = __webpack_require__(/*! ./components/SignUp/Index */ 254);
 
 	var _Index4 = _interopRequireDefault(_Index3);
 
-	var _Index5 = __webpack_require__(/*! ./components/Login/Index */ 281);
+	var _Index5 = __webpack_require__(/*! ./components/Login/Index */ 282);
 
 	var _Index6 = _interopRequireDefault(_Index5);
 
@@ -21999,21 +21999,13 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _index = __webpack_require__(/*! ../NavBar/index */ 174);
-
-	var _index2 = _interopRequireDefault(_index);
-
-	var _Index = __webpack_require__(/*! ../Footer/Index */ 238);
-
-	var _Index2 = _interopRequireDefault(_Index);
-
-	var _reactSAlert = __webpack_require__(/*! react-s-alert */ 239);
+	var _reactSAlert = __webpack_require__(/*! react-s-alert */ 240);
 
 	var _reactSAlert2 = _interopRequireDefault(_reactSAlert);
 
-	__webpack_require__(/*! react-s-alert/dist/s-alert-default.css */ 246);
+	__webpack_require__(/*! react-s-alert/dist/s-alert-default.css */ 247);
 
-	__webpack_require__(/*! react-s-alert/dist/s-alert-css-effects/slide.css */ 250);
+	__webpack_require__(/*! react-s-alert/dist/s-alert-css-effects/slide.css */ 251);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22041,9 +22033,7 @@
 	            return _react2.default.createElement(
 	                'div',
 	                null,
-	                _react2.default.createElement(_index2.default, null),
 	                this.props.children,
-	                _react2.default.createElement(_Index2.default, null),
 	                _react2.default.createElement(_reactSAlert2.default, { stack: { limit: 3 } })
 	            );
 	        }
@@ -22079,6 +22069,10 @@
 
 	var _reactRouter = __webpack_require__(/*! react-router */ 175);
 
+	var _auth = __webpack_require__(/*! ../../utils/auth */ 238);
+
+	var _auth2 = _interopRequireDefault(_auth);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -22095,10 +22089,34 @@
 	    function Nav(props) {
 	        _classCallCheck(this, Nav);
 
-	        return _possibleConstructorReturn(this, (Nav.__proto__ || Object.getPrototypeOf(Nav)).call(this, props));
+	        var _this = _possibleConstructorReturn(this, (Nav.__proto__ || Object.getPrototypeOf(Nav)).call(this, props));
+
+	        _this.handleLogoutResult = function (e) {
+	            e.preventDefault();
+	            _this.setState({
+	                loggedIn: null,
+	                user: null
+	            });
+	            _auth2.default.logout();
+	            _reactRouter.hashHistory.push('/');
+	        };
+
+	        _this.state = {
+	            loggedIn: null,
+	            user: null
+	        };
+	        return _this;
 	    }
 
 	    _createClass(Nav, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            this.setState({
+	                loggedIn: _auth2.default.loggedIn(),
+	                user: _auth2.default.getUser()
+	            });
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
@@ -22128,7 +22146,7 @@
 	                                _react2.default.createElement(
 	                                    'div',
 	                                    { className: 'col-md-3 text-right col-sm-6 col-md-push-6 col-xs-8' },
-	                                    _react2.default.createElement(
+	                                    !this.state.loggedIn ? _react2.default.createElement(
 	                                        'ul',
 	                                        { className: 'menu' },
 	                                        _react2.default.createElement(
@@ -22147,6 +22165,74 @@
 	                                                _reactRouter.Link,
 	                                                { to: '/auth/login' },
 	                                                'LOGIN'
+	                                            )
+	                                        )
+	                                    ) : _react2.default.createElement(
+	                                        'ul',
+	                                        { className: 'menu' },
+	                                        _react2.default.createElement(
+	                                            'li',
+	                                            { className: 'has-dropdown' },
+	                                            _react2.default.createElement(
+	                                                'a',
+	                                                { href: '#' },
+	                                                _react2.default.createElement('img', { className: 'header-img-rounded',
+	                                                    src: JSON.parse(this.state.user).user_avi }),
+	                                                ' ',
+	                                                JSON.parse(this.state.user).username,
+	                                                _react2.default.createElement('span', { className: 'caret' })
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'ul',
+	                                                { className: 'subnav' },
+	                                                _react2.default.createElement(
+	                                                    'li',
+	                                                    null,
+	                                                    _react2.default.createElement(
+	                                                        'a',
+	                                                        { href: '/account' },
+	                                                        _react2.default.createElement('i', { className: 'fa fa-user' }),
+	                                                        '  ',
+	                                                        'My Profile'
+	                                                    )
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    'li',
+	                                                    null,
+	                                                    _react2.default.createElement(
+	                                                        _reactRouter.Link,
+	                                                        { to: '/account/edit' },
+	                                                        _react2.default.createElement('i', { className: 'fa fa-pencil-square-o' }),
+	                                                        '  ',
+	                                                        'Edit Profile'
+	                                                    )
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    'li',
+	                                                    null,
+	                                                    _react2.default.createElement(
+	                                                        'a',
+	                                                        { href: '/tutorial/create' },
+	                                                        _react2.default.createElement('i', { className: 'fa fa-leanpub' }),
+	                                                        ' ',
+	                                                        '  ',
+	                                                        'Post MERN Tutorial '
+	                                                    )
+	                                                ),
+	                                                _react2.default.createElement('li', { className: 'divider' }),
+	                                                _react2.default.createElement(
+	                                                    'li',
+	                                                    null,
+	                                                    _react2.default.createElement(
+	                                                        'a',
+	                                                        { href: '/#', style: { cursor: 'pointer' },
+	                                                            onClick: this.handleLogoutResult },
+	                                                        _react2.default.createElement('i', { className: 'fa fa-sign-out' }),
+	                                                        ' ',
+	                                                        '  ',
+	                                                        'Logout'
+	                                                    )
+	                                                )
 	                                            )
 	                                        )
 	                                    ),
@@ -28067,6 +28153,44 @@
 
 /***/ },
 /* 238 */
+/*!***************************!*\
+  !*** ./src/utils/auth.js ***!
+  \***************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _reactRouter = __webpack_require__(/*! react-router */ 175);
+
+	module.exports = {
+	    getToken: function getToken() {
+	        return localStorage.mern_token;
+	    },
+	    getUser: function getUser() {
+	        return localStorage.mern_user;
+	    },
+	    setToken: function setToken(res) {
+	        localStorage.mern_token = res.token;
+	        localStorage.mern_user = JSON.stringify(res.user);
+	    },
+	    logout: function logout() {
+	        delete localStorage.mern_token;
+	        delete localStorage.mern_user;
+	    },
+	    loggedIn: function loggedIn() {
+	        return !!(localStorage.mern_token && localStorage.mern_user);
+	    },
+	    checkAuthRequired: function checkAuthRequired(res) {
+	        if (res.statusCode == 401) {
+	            console.log("CauthR - 1 " + res.statusCode);
+	            logout();
+	            _reactRouter.Router.navigate('/auth/login');
+	        }
+	    }
+	};
+
+/***/ },
+/* 239 */
 /*!****************************************!*\
   !*** ./src/components/Footer/Index.js ***!
   \****************************************/
@@ -28241,16 +28365,16 @@
 	exports.default = Footer;
 
 /***/ },
-/* 239 */
+/* 240 */
 /*!**********************************!*\
   !*** ./~/react-s-alert/index.js ***!
   \**********************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(/*! ./dist/SAlert */ 240);
+	module.exports = __webpack_require__(/*! ./dist/SAlert */ 241);
 
 /***/ },
-/* 240 */
+/* 241 */
 /*!****************************************!*\
   !*** ./~/react-s-alert/dist/SAlert.js ***!
   \****************************************/
@@ -28258,7 +28382,7 @@
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (global, factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(/*! react */ 2), __webpack_require__(/*! ./SAlertContent */ 241), __webpack_require__(/*! ./s-alert-parts/s-alert-store */ 243), __webpack_require__(/*! ./s-alert-parts/s-alert-tools */ 242), __webpack_require__(/*! ./s-alert-parts/s-alert-data-prep */ 245)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(/*! react */ 2), __webpack_require__(/*! ./SAlertContent */ 242), __webpack_require__(/*! ./s-alert-parts/s-alert-store */ 244), __webpack_require__(/*! ./s-alert-parts/s-alert-tools */ 243), __webpack_require__(/*! ./s-alert-parts/s-alert-data-prep */ 246)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	    } else if (typeof exports !== "undefined") {
 	        factory(exports, require('react'), require('./SAlertContent'), require('./s-alert-parts/s-alert-store'), require('./s-alert-parts/s-alert-tools'), require('./s-alert-parts/s-alert-data-prep'));
 	    } else {
@@ -28556,7 +28680,7 @@
 	});
 
 /***/ },
-/* 241 */
+/* 242 */
 /*!***********************************************!*\
   !*** ./~/react-s-alert/dist/SAlertContent.js ***!
   \***********************************************/
@@ -28564,7 +28688,7 @@
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (global, factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(/*! react */ 2), __webpack_require__(/*! react-dom */ 35), __webpack_require__(/*! ./s-alert-parts/s-alert-tools */ 242), __webpack_require__(/*! ./s-alert-parts/s-alert-store */ 243), __webpack_require__(/*! ./SAlertContentTmpl */ 244)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(/*! react */ 2), __webpack_require__(/*! react-dom */ 35), __webpack_require__(/*! ./s-alert-parts/s-alert-tools */ 243), __webpack_require__(/*! ./s-alert-parts/s-alert-store */ 244), __webpack_require__(/*! ./SAlertContentTmpl */ 245)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	    } else if (typeof exports !== "undefined") {
 	        factory(exports, require('react'), require('react-dom'), require('./s-alert-parts/s-alert-tools'), require('./s-alert-parts/s-alert-store'), require('./SAlertContentTmpl'));
 	    } else {
@@ -28779,7 +28903,7 @@
 	});
 
 /***/ },
-/* 242 */
+/* 243 */
 /*!*************************************************************!*\
   !*** ./~/react-s-alert/dist/s-alert-parts/s-alert-tools.js ***!
   \*************************************************************/
@@ -28858,7 +28982,7 @@
 	});
 
 /***/ },
-/* 243 */
+/* 244 */
 /*!*************************************************************!*\
   !*** ./~/react-s-alert/dist/s-alert-parts/s-alert-store.js ***!
   \*************************************************************/
@@ -28960,7 +29084,7 @@
 	});
 
 /***/ },
-/* 244 */
+/* 245 */
 /*!***************************************************!*\
   !*** ./~/react-s-alert/dist/SAlertContentTmpl.js ***!
   \***************************************************/
@@ -29082,7 +29206,7 @@
 	});
 
 /***/ },
-/* 245 */
+/* 246 */
 /*!*****************************************************************!*\
   !*** ./~/react-s-alert/dist/s-alert-parts/s-alert-data-prep.js ***!
   \*****************************************************************/
@@ -29090,7 +29214,7 @@
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (global, factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(/*! react */ 2), __webpack_require__(/*! react-dom */ 35), __webpack_require__(/*! ../SAlertContent */ 241), __webpack_require__(/*! ./s-alert-store */ 243), __webpack_require__(/*! ./s-alert-tools */ 242)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(/*! react */ 2), __webpack_require__(/*! react-dom */ 35), __webpack_require__(/*! ../SAlertContent */ 242), __webpack_require__(/*! ./s-alert-store */ 244), __webpack_require__(/*! ./s-alert-tools */ 243)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	    } else if (typeof exports !== "undefined") {
 	        factory(exports, require('react'), require('react-dom'), require('../SAlertContent'), require('./s-alert-store'), require('./s-alert-tools'));
 	    } else {
@@ -29254,7 +29378,7 @@
 	});
 
 /***/ },
-/* 246 */
+/* 247 */
 /*!**************************************************!*\
   !*** ./~/react-s-alert/dist/s-alert-default.css ***!
   \**************************************************/
@@ -29263,10 +29387,10 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(/*! !./../../css-loader!./s-alert-default.css */ 247);
+	var content = __webpack_require__(/*! !./../../css-loader!./s-alert-default.css */ 248);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../../style-loader/addStyles.js */ 249)(content, {});
+	var update = __webpack_require__(/*! ./../../style-loader/addStyles.js */ 250)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -29283,13 +29407,13 @@
 	}
 
 /***/ },
-/* 247 */
+/* 248 */
 /*!*****************************************************************!*\
   !*** ./~/css-loader!./~/react-s-alert/dist/s-alert-default.css ***!
   \*****************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ./../../css-loader/lib/css-base.js */ 248)();
+	exports = module.exports = __webpack_require__(/*! ./../../css-loader/lib/css-base.js */ 249)();
 	// imports
 
 
@@ -29300,7 +29424,7 @@
 
 
 /***/ },
-/* 248 */
+/* 249 */
 /*!**************************************!*\
   !*** ./~/css-loader/lib/css-base.js ***!
   \**************************************/
@@ -29359,7 +29483,7 @@
 
 
 /***/ },
-/* 249 */
+/* 250 */
 /*!*************************************!*\
   !*** ./~/style-loader/addStyles.js ***!
   \*************************************/
@@ -29614,7 +29738,7 @@
 
 
 /***/ },
-/* 250 */
+/* 251 */
 /*!************************************************************!*\
   !*** ./~/react-s-alert/dist/s-alert-css-effects/slide.css ***!
   \************************************************************/
@@ -29623,10 +29747,10 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../css-loader!./slide.css */ 251);
+	var content = __webpack_require__(/*! !./../../../css-loader!./slide.css */ 252);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../../../style-loader/addStyles.js */ 249)(content, {});
+	var update = __webpack_require__(/*! ./../../../style-loader/addStyles.js */ 250)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -29643,13 +29767,13 @@
 	}
 
 /***/ },
-/* 251 */
+/* 252 */
 /*!***************************************************************************!*\
   !*** ./~/css-loader!./~/react-s-alert/dist/s-alert-css-effects/slide.css ***!
   \***************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ./../../../css-loader/lib/css-base.js */ 248)();
+	exports = module.exports = __webpack_require__(/*! ./../../../css-loader/lib/css-base.js */ 249)();
 	// imports
 
 
@@ -29660,13 +29784,13 @@
 
 
 /***/ },
-/* 252 */
+/* 253 */
 /*!*****************************************!*\
   !*** ./src/components/landing/Index.js ***!
   \*****************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -29677,6 +29801,14 @@
 	var _react = __webpack_require__(/*! react */ 2);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _index = __webpack_require__(/*! ../NavBar/index */ 174);
+
+	var _index2 = _interopRequireDefault(_index);
+
+	var _Index = __webpack_require__(/*! ../Footer/Index */ 239);
+
+	var _Index2 = _interopRequireDefault(_Index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -29699,166 +29831,168 @@
 	    }
 
 	    _createClass(Index, [{
-	        key: "render",
+	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
-	                "span",
+	                'span',
 	                null,
+	                _react2.default.createElement(_index2.default, null),
 	                _react2.default.createElement(
-	                    "div",
-	                    { className: "main-container", style: { minHeight: 580 } },
+	                    'div',
+	                    { className: 'main-container', style: { minHeight: 580 } },
 	                    _react2.default.createElement(
-	                        "div",
-	                        { className: "MeanMap" },
-	                        _react2.default.createElement("div", { style: { border: '1px solid #ccc', boxShadow: '10px 10px #000' } })
+	                        'div',
+	                        { className: 'MeanMap' },
+	                        _react2.default.createElement('div', { style: { border: '1px solid #ccc', boxShadow: '10px 10px #000' } })
 	                    ),
 	                    _react2.default.createElement(
-	                        "section",
-	                        { className: "features features-13" },
+	                        'section',
+	                        { className: 'features features-13' },
 	                        _react2.default.createElement(
-	                            "div",
-	                            { className: "container" },
+	                            'div',
+	                            { className: 'container' },
 	                            _react2.default.createElement(
-	                                "div",
-	                                { className: "row" },
+	                                'div',
+	                                { className: 'row' },
 	                                _react2.default.createElement(
-	                                    "div",
-	                                    { className: "col-md-10 col-md-offset-1 col-sm-12 text-center" },
+	                                    'div',
+	                                    { className: 'col-md-10 col-md-offset-1 col-sm-12 text-center' },
 	                                    _react2.default.createElement(
-	                                        "h4",
-	                                        { className: "text-white" },
-	                                        "MERN Stack Developers Dominating the Earth",
-	                                        _react2.default.createElement("br", null)
+	                                        'h4',
+	                                        { className: 'text-white' },
+	                                        'MERN Stack Developers Dominating the Earth',
+	                                        _react2.default.createElement('br', null)
 	                                    )
 	                                )
 	                            ),
 	                            _react2.default.createElement(
-	                                "div",
-	                                { className: "row" },
+	                                'div',
+	                                { className: 'row' },
 	                                _react2.default.createElement(
-	                                    "div",
-	                                    { className: "col-sm-4 feature" },
-	                                    _react2.default.createElement("i", { className: "fa fa-meanpath" }),
+	                                    'div',
+	                                    { className: 'col-sm-4 feature' },
+	                                    _react2.default.createElement('i', { className: 'fa fa-meanpath' }),
 	                                    _react2.default.createElement(
-	                                        "h5",
-	                                        { className: "text-white" },
-	                                        "Built With The MERN Stack"
+	                                        'h5',
+	                                        { className: 'text-white' },
+	                                        'Built With The MERN Stack'
 	                                    ),
 	                                    _react2.default.createElement(
-	                                        "p",
+	                                        'p',
 	                                        null,
-	                                        "Proudly Built With The MERN Stack. Javascript from Front-End To Back-end.The MERN Stack community is building up."
+	                                        'Proudly Built With The MERN Stack. Javascript from Front-End To Back-end.The MERN Stack community is building up.'
 	                                    )
 	                                ),
 	                                _react2.default.createElement(
-	                                    "div",
-	                                    { className: "col-sm-4 feature" },
-	                                    _react2.default.createElement("i", { className: "fa fa-user-secret" }),
+	                                    'div',
+	                                    { className: 'col-sm-4 feature' },
+	                                    _react2.default.createElement('i', { className: 'fa fa-user-secret' }),
 	                                    _react2.default.createElement(
-	                                        "h5",
-	                                        { className: "text-white" },
-	                                        "Developer Publicity"
+	                                        'h5',
+	                                        { className: 'text-white' },
+	                                        'Developer Publicity'
 	                                    ),
 	                                    _react2.default.createElement(
-	                                        "p",
+	                                        'p',
 	                                        null,
-	                                        "Meet Other MERN Stack Developers like You. Brew Top notch Code and Drink Beer Together. Get Connected and Hired. "
+	                                        'Meet Other MERN Stack Developers like You. Brew Top notch Code and Drink Beer Together. Get Connected and Hired. '
 	                                    )
 	                                ),
 	                                _react2.default.createElement(
-	                                    "div",
-	                                    { className: "col-sm-4 feature" },
-	                                    _react2.default.createElement("i", { className: "fa fa-laptop" }),
+	                                    'div',
+	                                    { className: 'col-sm-4 feature' },
+	                                    _react2.default.createElement('i', { className: 'fa fa-laptop' }),
 	                                    _react2.default.createElement(
-	                                        "h5",
-	                                        { className: "text-white" },
-	                                        "Hack, Sweat and Share"
+	                                        'h5',
+	                                        { className: 'text-white' },
+	                                        'Hack, Sweat and Share'
 	                                    ),
 	                                    _react2.default.createElement(
-	                                        "p",
+	                                        'p',
 	                                        null,
-	                                        "Be proud of the applications you've hacked with the MERN Stack, Showcase and share with the Community and World."
+	                                        'Be proud of the applications you\'ve hacked with the MERN Stack, Showcase and share with the Community and World.'
 	                                    )
 	                                )
 	                            )
 	                        )
 	                    ),
 	                    _react2.default.createElement(
-	                        "section",
-	                        { className: "cta cta-6" },
+	                        'section',
+	                        { className: 'cta cta-6' },
 	                        _react2.default.createElement(
-	                            "div",
-	                            { className: "container" },
+	                            'div',
+	                            { className: 'container' },
 	                            _react2.default.createElement(
-	                                "div",
-	                                { className: "row v-align-children" },
+	                                'div',
+	                                { className: 'row v-align-children' },
 	                                _react2.default.createElement(
-	                                    "div",
-	                                    { className: "col-md-8 col-sm-7" },
+	                                    'div',
+	                                    { className: 'col-md-8 col-sm-7' },
 	                                    _react2.default.createElement(
-	                                        "h3",
+	                                        'h3',
 	                                        null,
-	                                        " MERN Developers are on the Planet.."
+	                                        ' MERN Developers are on the Planet..'
 	                                    ),
 	                                    _react2.default.createElement(
-	                                        "p",
+	                                        'p',
 	                                        null,
-	                                        "...The Exhibition Of MERN Stack Developers. ",
+	                                        '...The Exhibition Of MERN Stack Developers. ',
 	                                        _react2.default.createElement(
-	                                            "strong",
+	                                            'strong',
 	                                            null,
-	                                            "MERN CHAP 2:9 "
+	                                            'MERN CHAP 2:9 '
 	                                        )
 	                                    )
 	                                ),
 	                                _react2.default.createElement(
-	                                    "div",
-	                                    { className: "col-md-4 col-sm-5 text-right" },
+	                                    'div',
+	                                    { className: 'col-md-4 col-sm-5 text-right' },
 	                                    _react2.default.createElement(
-	                                        "a",
-	                                        { className: "btn", href: "page/about" },
-	                                        "More Info"
+	                                        'a',
+	                                        { className: 'btn', href: 'page/about' },
+	                                        'More Info'
 	                                    ),
 	                                    _react2.default.createElement(
-	                                        "a",
-	                                        { className: "btn btn-filled", href: "user/create" },
-	                                        "Join Now"
+	                                        'a',
+	                                        { className: 'btn btn-filled', href: 'user/create' },
+	                                        'Join Now'
 	                                    )
 	                                )
 	                            )
 	                        )
 	                    ),
 	                    _react2.default.createElement(
-	                        "section",
-	                        { className: "social social-1 near-footer" },
+	                        'section',
+	                        { className: 'social social-1 near-footer' },
 	                        _react2.default.createElement(
-	                            "div",
-	                            { className: "container" },
+	                            'div',
+	                            { className: 'container' },
 	                            _react2.default.createElement(
-	                                "div",
-	                                { className: "row" },
+	                                'div',
+	                                { className: 'row' },
 	                                _react2.default.createElement(
-	                                    "div",
-	                                    { className: "leader col-sm-12 text-center" },
+	                                    'div',
+	                                    { className: 'leader col-sm-12 text-center' },
 	                                    _react2.default.createElement(
-	                                        "span",
+	                                        'span',
 	                                        null,
-	                                        _react2.default.createElement("i", { className: "fa fa-quote-left" }),
-	                                        "Any fool can write code that a computer can understand. ",
-	                                        _react2.default.createElement("br", { className: "visible-desktop" }),
-	                                        " Good programmers write code that humans can understand.",
-	                                        _react2.default.createElement("i", { className: "fa fa-quote-right" })
+	                                        _react2.default.createElement('i', { className: 'fa fa-quote-left' }),
+	                                        'Any fool can write code that a computer can understand. ',
+	                                        _react2.default.createElement('br', { className: 'visible-desktop' }),
+	                                        ' Good programmers write code that humans can understand.',
+	                                        _react2.default.createElement('i', { className: 'fa fa-quote-right' })
 	                                    ),
 	                                    _react2.default.createElement(
-	                                        "h5",
-	                                        { className: "lead-author" },
-	                                        "- Martin Fowler"
+	                                        'h5',
+	                                        { className: 'lead-author' },
+	                                        '- Martin Fowler'
 	                                    )
 	                                )
 	                            )
 	                        )
 	                    )
-	                )
+	                ),
+	                _react2.default.createElement(_Index2.default, null)
 	            );
 	        }
 	    }]);
@@ -29869,7 +30003,7 @@
 	exports.default = Index;
 
 /***/ },
-/* 253 */
+/* 254 */
 /*!****************************************!*\
   !*** ./src/components/SignUp/Index.js ***!
   \****************************************/
@@ -29889,29 +30023,37 @@
 
 	var _reactRouter = __webpack_require__(/*! react-router */ 175);
 
-	var _reactSAlert = __webpack_require__(/*! react-s-alert */ 239);
+	var _reactSAlert = __webpack_require__(/*! react-s-alert */ 240);
 
 	var _reactSAlert2 = _interopRequireDefault(_reactSAlert);
 
-	var _Input = __webpack_require__(/*! ../forms/Input */ 254);
+	var _Input = __webpack_require__(/*! ../forms/Input */ 255);
 
 	var _Input2 = _interopRequireDefault(_Input);
 
-	var _Textarea = __webpack_require__(/*! ../forms/Textarea */ 262);
+	var _index = __webpack_require__(/*! ../NavBar/index */ 174);
+
+	var _index2 = _interopRequireDefault(_index);
+
+	var _Index = __webpack_require__(/*! ../Footer/Index */ 239);
+
+	var _Index2 = _interopRequireDefault(_Index);
+
+	var _Textarea = __webpack_require__(/*! ../forms/Textarea */ 263);
 
 	var _Textarea2 = _interopRequireDefault(_Textarea);
 
-	var _UserStore = __webpack_require__(/*! ../../stores/UserStore */ 263);
+	var _UserStore = __webpack_require__(/*! ../../stores/UserStore */ 264);
 
 	var _UserStore2 = _interopRequireDefault(_UserStore);
 
-	var _UserActions = __webpack_require__(/*! ../../actions/UserActions */ 272);
+	var _UserActions = __webpack_require__(/*! ../../actions/UserActions */ 273);
 
 	var _UserActions2 = _interopRequireDefault(_UserActions);
 
-	__webpack_require__(/*! react-s-alert/dist/s-alert-default.css */ 246);
+	__webpack_require__(/*! react-s-alert/dist/s-alert-default.css */ 247);
 
-	__webpack_require__(/*! react-s-alert/dist/s-alert-css-effects/scale.css */ 279);
+	__webpack_require__(/*! react-s-alert/dist/s-alert-css-effects/scale.css */ 280);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -29990,6 +30132,7 @@
 	            return _react2.default.createElement(
 	                'span',
 	                null,
+	                _react2.default.createElement(_index2.default, null),
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'main-container', style: { minHeight: 580 } },
@@ -30123,7 +30266,8 @@
 	                            )
 	                        )
 	                    )
-	                )
+	                ),
+	                _react2.default.createElement(_Index2.default, null)
 	            );
 	        }
 	    }]);
@@ -30134,7 +30278,7 @@
 	exports.default = SignUp;
 
 /***/ },
-/* 254 */
+/* 255 */
 /*!***************************************!*\
   !*** ./src/components/forms/Input.js ***!
   \***************************************/
@@ -30150,7 +30294,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _formsyReact = __webpack_require__(/*! formsy-react */ 255);
+	var _formsyReact = __webpack_require__(/*! formsy-react */ 256);
 
 	var _formsyReact2 = _interopRequireDefault(_formsyReact);
 
@@ -30212,7 +30356,7 @@
 	exports.default = MyInput;
 
 /***/ },
-/* 255 */
+/* 256 */
 /*!************************************!*\
   !*** ./~/formsy-react/lib/main.js ***!
   \************************************/
@@ -30228,12 +30372,12 @@
 
 	var React = global.React || __webpack_require__(/*! react */ 2);
 	var Formsy = {};
-	var validationRules = __webpack_require__(/*! ./validationRules.js */ 256);
-	var formDataToObject = __webpack_require__(/*! form-data-to-object */ 257);
-	var utils = __webpack_require__(/*! ./utils.js */ 258);
-	var Mixin = __webpack_require__(/*! ./Mixin.js */ 259);
-	var HOC = __webpack_require__(/*! ./HOC.js */ 260);
-	var Decorator = __webpack_require__(/*! ./Decorator.js */ 261);
+	var validationRules = __webpack_require__(/*! ./validationRules.js */ 257);
+	var formDataToObject = __webpack_require__(/*! form-data-to-object */ 258);
+	var utils = __webpack_require__(/*! ./utils.js */ 259);
+	var Mixin = __webpack_require__(/*! ./Mixin.js */ 260);
+	var HOC = __webpack_require__(/*! ./HOC.js */ 261);
+	var Decorator = __webpack_require__(/*! ./Decorator.js */ 262);
 	var options = {};
 	var emptyArray = [];
 
@@ -30681,7 +30825,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 256 */
+/* 257 */
 /*!***********************************************!*\
   !*** ./~/formsy-react/lib/validationRules.js ***!
   \***********************************************/
@@ -30769,7 +30913,7 @@
 	module.exports = validations;
 
 /***/ },
-/* 257 */
+/* 258 */
 /*!****************************************!*\
   !*** ./~/form-data-to-object/index.js ***!
   \****************************************/
@@ -30823,7 +30967,7 @@
 	}
 
 /***/ },
-/* 258 */
+/* 259 */
 /*!*************************************!*\
   !*** ./~/formsy-react/lib/utils.js ***!
   \*************************************/
@@ -30888,7 +31032,7 @@
 	};
 
 /***/ },
-/* 259 */
+/* 260 */
 /*!*************************************!*\
   !*** ./~/formsy-react/lib/Mixin.js ***!
   \*************************************/
@@ -30896,7 +31040,7 @@
 
 	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
 
-	var utils = __webpack_require__(/*! ./utils.js */ 258);
+	var utils = __webpack_require__(/*! ./utils.js */ 259);
 	var React = global.React || __webpack_require__(/*! react */ 2);
 
 	var convertValidationsToObject = function convertValidationsToObject(validations) {
@@ -31071,7 +31215,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 260 */
+/* 261 */
 /*!***********************************!*\
   !*** ./~/formsy-react/lib/HOC.js ***!
   \***********************************/
@@ -31082,7 +31226,7 @@
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 	var React = global.React || __webpack_require__(/*! react */ 2);
-	var Mixin = __webpack_require__(/*! ./Mixin.js */ 259);
+	var Mixin = __webpack_require__(/*! ./Mixin.js */ 260);
 	module.exports = function (Component) {
 	  return React.createClass({
 	    displayName: 'Formsy(' + getDisplayName(Component) + ')',
@@ -31115,7 +31259,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 261 */
+/* 262 */
 /*!*****************************************!*\
   !*** ./~/formsy-react/lib/Decorator.js ***!
   \*****************************************/
@@ -31126,7 +31270,7 @@
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 	var React = global.React || __webpack_require__(/*! react */ 2);
-	var Mixin = __webpack_require__(/*! ./Mixin.js */ 259);
+	var Mixin = __webpack_require__(/*! ./Mixin.js */ 260);
 	module.exports = function () {
 	  return function (Component) {
 	    return React.createClass({
@@ -31156,7 +31300,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 262 */
+/* 263 */
 /*!******************************************!*\
   !*** ./src/components/forms/Textarea.js ***!
   \******************************************/
@@ -31172,7 +31316,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _formsyReact = __webpack_require__(/*! formsy-react */ 255);
+	var _formsyReact = __webpack_require__(/*! formsy-react */ 256);
 
 	var _formsyReact2 = _interopRequireDefault(_formsyReact);
 
@@ -31238,7 +31382,7 @@
 	exports.default = MyTextarea;
 
 /***/ },
-/* 263 */
+/* 264 */
 /*!*********************************!*\
   !*** ./src/stores/UserStore.js ***!
   \*********************************/
@@ -31246,14 +31390,14 @@
 
 	'use strict';
 
-	var _BaseStore = __webpack_require__(/*! ./BaseStore */ 264);
+	var _BaseStore = __webpack_require__(/*! ./BaseStore */ 265);
 
 	var _BaseStore2 = _interopRequireDefault(_BaseStore);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var AppConstants = __webpack_require__(/*! ../constants/AppConstants */ 266),
-	    AppDispatcher = __webpack_require__(/*! ../dispatcher/AppDispatcher */ 268); /**
+	var AppConstants = __webpack_require__(/*! ../constants/AppConstants */ 267),
+	    AppDispatcher = __webpack_require__(/*! ../dispatcher/AppDispatcher */ 269); /**
 	                                                             * Created by Raphson on 9/24/16.
 	                                                             */
 
@@ -31298,7 +31442,7 @@
 	module.exports = UserStore;
 
 /***/ },
-/* 264 */
+/* 265 */
 /*!*********************************!*\
   !*** ./src/stores/BaseStore.js ***!
   \*********************************/
@@ -31312,7 +31456,7 @@
 	/**
 	 * Created by Raphson on 9/24/16.
 	 */
-	var EventEmitter = __webpack_require__(/*! events */ 265).EventEmitter;
+	var EventEmitter = __webpack_require__(/*! events */ 266).EventEmitter;
 	if (!Object.assign) {
 	    Object.assign = __webpack_require__(/*! object-assign */ 5);
 	}
@@ -31338,7 +31482,7 @@
 	exports.default = BaseStore;
 
 /***/ },
-/* 265 */
+/* 266 */
 /*!****************************!*\
   !*** ./~/events/events.js ***!
   \****************************/
@@ -31649,7 +31793,7 @@
 
 
 /***/ },
-/* 266 */
+/* 267 */
 /*!***************************************!*\
   !*** ./src/constants/AppConstants.js ***!
   \***************************************/
@@ -31660,14 +31804,14 @@
 	/**
 	 * Created by Raphson on 9/24/16.
 	 */
-	var keyMirror = __webpack_require__(/*! keymirror */ 267);
+	var keyMirror = __webpack_require__(/*! keymirror */ 268);
 	module.exports = keyMirror({
 	  USER_SIGNUP: null,
 	  USER_LOGIN: null
 	});
 
 /***/ },
-/* 267 */
+/* 268 */
 /*!******************************!*\
   !*** ./~/keymirror/index.js ***!
   \******************************/
@@ -31729,7 +31873,7 @@
 
 
 /***/ },
-/* 268 */
+/* 269 */
 /*!*****************************************!*\
   !*** ./src/dispatcher/AppDispatcher.js ***!
   \*****************************************/
@@ -31740,12 +31884,12 @@
 	 */
 	'use strict';
 
-	var Dispatcher = __webpack_require__(/*! flux */ 269).Dispatcher;
+	var Dispatcher = __webpack_require__(/*! flux */ 270).Dispatcher;
 
 	module.exports = new Dispatcher();
 
 /***/ },
-/* 269 */
+/* 270 */
 /*!*************************!*\
   !*** ./~/flux/index.js ***!
   \*************************/
@@ -31760,11 +31904,11 @@
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 */
 
-	module.exports.Dispatcher = __webpack_require__(/*! ./lib/Dispatcher */ 270);
+	module.exports.Dispatcher = __webpack_require__(/*! ./lib/Dispatcher */ 271);
 
 
 /***/ },
-/* 270 */
+/* 271 */
 /*!**********************************!*\
   !*** ./~/flux/lib/Dispatcher.js ***!
   \**********************************/
@@ -31789,7 +31933,7 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 271);
+	var invariant = __webpack_require__(/*! fbjs/lib/invariant */ 272);
 
 	var _prefix = 'ID_';
 
@@ -32004,7 +32148,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./~/process/browser.js */ 4)))
 
 /***/ },
-/* 271 */
+/* 272 */
 /*!*********************************!*\
   !*** ./~/fbjs/lib/invariant.js ***!
   \*********************************/
@@ -32062,7 +32206,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./~/process/browser.js */ 4)))
 
 /***/ },
-/* 272 */
+/* 273 */
 /*!************************************!*\
   !*** ./src/actions/UserActions.js ***!
   \************************************/
@@ -32073,8 +32217,8 @@
 	/**
 	 * Created by Raphson on 9/24/16.
 	 */
-	var AppConstants = __webpack_require__(/*! ../constants/AppConstants */ 266),
-	    BaseActions = __webpack_require__(/*! ./BaseActions */ 273);
+	var AppConstants = __webpack_require__(/*! ../constants/AppConstants */ 267),
+	    BaseActions = __webpack_require__(/*! ./BaseActions */ 274);
 
 	module.exports = {
 	    signup: function signup(user) {
@@ -32088,7 +32232,7 @@
 	};
 
 /***/ },
-/* 273 */
+/* 274 */
 /*!************************************!*\
   !*** ./src/actions/BaseActions.js ***!
   \************************************/
@@ -32099,8 +32243,8 @@
 	/**
 	 * Created by Raphson on 9/24/16.
 	 */
-	var AppDispatcher = __webpack_require__(/*! ../dispatcher/AppDispatcher */ 268);
-	var request = __webpack_require__(/*! superagent */ 274);
+	var AppDispatcher = __webpack_require__(/*! ../dispatcher/AppDispatcher */ 269);
+	var request = __webpack_require__(/*! superagent */ 275);
 
 	module.exports = {
 	    get: function get(url, actionType) {
@@ -32159,7 +32303,7 @@
 	};
 
 /***/ },
-/* 274 */
+/* 275 */
 /*!************************************!*\
   !*** ./~/superagent/lib/client.js ***!
   \************************************/
@@ -32179,9 +32323,9 @@
 	  root = this;
 	}
 
-	var Emitter = __webpack_require__(/*! emitter */ 275);
-	var requestBase = __webpack_require__(/*! ./request-base */ 276);
-	var isObject = __webpack_require__(/*! ./is-object */ 277);
+	var Emitter = __webpack_require__(/*! emitter */ 276);
+	var requestBase = __webpack_require__(/*! ./request-base */ 277);
+	var isObject = __webpack_require__(/*! ./is-object */ 278);
 
 	/**
 	 * Noop.
@@ -32193,7 +32337,7 @@
 	 * Expose `request`.
 	 */
 
-	var request = module.exports = __webpack_require__(/*! ./request */ 278).bind(null, Request);
+	var request = module.exports = __webpack_require__(/*! ./request */ 279).bind(null, Request);
 
 	/**
 	 * Determine XHR.
@@ -33144,7 +33288,7 @@
 
 
 /***/ },
-/* 275 */
+/* 276 */
 /*!**************************************!*\
   !*** ./~/component-emitter/index.js ***!
   \**************************************/
@@ -33316,7 +33460,7 @@
 
 
 /***/ },
-/* 276 */
+/* 277 */
 /*!******************************************!*\
   !*** ./~/superagent/lib/request-base.js ***!
   \******************************************/
@@ -33325,7 +33469,7 @@
 	/**
 	 * Module of mixed-in functions shared between node and client code
 	 */
-	var isObject = __webpack_require__(/*! ./is-object */ 277);
+	var isObject = __webpack_require__(/*! ./is-object */ 278);
 
 	/**
 	 * Clear previous timeout.
@@ -33697,7 +33841,7 @@
 
 
 /***/ },
-/* 277 */
+/* 278 */
 /*!***************************************!*\
   !*** ./~/superagent/lib/is-object.js ***!
   \***************************************/
@@ -33719,7 +33863,7 @@
 
 
 /***/ },
-/* 278 */
+/* 279 */
 /*!*************************************!*\
   !*** ./~/superagent/lib/request.js ***!
   \*************************************/
@@ -33760,7 +33904,7 @@
 
 
 /***/ },
-/* 279 */
+/* 280 */
 /*!************************************************************!*\
   !*** ./~/react-s-alert/dist/s-alert-css-effects/scale.css ***!
   \************************************************************/
@@ -33769,10 +33913,10 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../css-loader!./scale.css */ 280);
+	var content = __webpack_require__(/*! !./../../../css-loader!./scale.css */ 281);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../../../style-loader/addStyles.js */ 249)(content, {});
+	var update = __webpack_require__(/*! ./../../../style-loader/addStyles.js */ 250)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -33789,13 +33933,13 @@
 	}
 
 /***/ },
-/* 280 */
+/* 281 */
 /*!***************************************************************************!*\
   !*** ./~/css-loader!./~/react-s-alert/dist/s-alert-css-effects/scale.css ***!
   \***************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ./../../../css-loader/lib/css-base.js */ 248)();
+	exports = module.exports = __webpack_require__(/*! ./../../../css-loader/lib/css-base.js */ 249)();
 	// imports
 
 
@@ -33806,7 +33950,7 @@
 
 
 /***/ },
-/* 281 */
+/* 282 */
 /*!***************************************!*\
   !*** ./src/components/Login/Index.js ***!
   \***************************************/
@@ -33826,27 +33970,35 @@
 
 	var _reactRouter = __webpack_require__(/*! react-router */ 175);
 
-	var _reactSAlert = __webpack_require__(/*! react-s-alert */ 239);
+	var _reactSAlert = __webpack_require__(/*! react-s-alert */ 240);
 
 	var _reactSAlert2 = _interopRequireDefault(_reactSAlert);
 
-	var _Input = __webpack_require__(/*! ../forms/Input */ 254);
+	var _Input = __webpack_require__(/*! ../forms/Input */ 255);
 
 	var _Input2 = _interopRequireDefault(_Input);
 
-	var _UserStore = __webpack_require__(/*! ../../stores/UserStore */ 263);
+	var _index = __webpack_require__(/*! ../NavBar/index */ 174);
+
+	var _index2 = _interopRequireDefault(_index);
+
+	var _Index = __webpack_require__(/*! ../Footer/Index */ 239);
+
+	var _Index2 = _interopRequireDefault(_Index);
+
+	var _UserStore = __webpack_require__(/*! ../../stores/UserStore */ 264);
 
 	var _UserStore2 = _interopRequireDefault(_UserStore);
 
-	var _UserActions = __webpack_require__(/*! ../../actions/UserActions */ 272);
+	var _UserActions = __webpack_require__(/*! ../../actions/UserActions */ 273);
 
 	var _UserActions2 = _interopRequireDefault(_UserActions);
 
-	__webpack_require__(/*! react-s-alert/dist/s-alert-default.css */ 246);
+	__webpack_require__(/*! react-s-alert/dist/s-alert-default.css */ 247);
 
-	__webpack_require__(/*! react-s-alert/dist/s-alert-css-effects/scale.css */ 279);
+	__webpack_require__(/*! react-s-alert/dist/s-alert-css-effects/scale.css */ 280);
 
-	var _auth = __webpack_require__(/*! ../../utils/auth */ 282);
+	var _auth = __webpack_require__(/*! ../../utils/auth */ 238);
 
 	var _auth2 = _interopRequireDefault(_auth);
 
@@ -33882,7 +34034,9 @@
 	            if (data.status == 401) {
 	                _reactSAlert2.default.error(data.data.message, { position: 'top-right' });
 	            } else {
-	                _auth2.default.setToken(data.data);
+	                localStorage.setItem('mern_token', data.data.token);
+	                localStorage.setItem('mern_user', JSON.stringify(data.data.user));
+	                //Auth.setToken(data.data);
 	                _reactRouter.hashHistory.push('/');
 	            }
 	        };
@@ -33916,6 +34070,7 @@
 	            return _react2.default.createElement(
 	                'span',
 	                null,
+	                _react2.default.createElement(_index2.default, null),
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'main-container', style: { minHeight: 580 } },
@@ -34072,7 +34227,8 @@
 	                            )
 	                        )
 	                    )
-	                )
+	                ),
+	                _react2.default.createElement(_Index2.default, null)
 	            );
 	        }
 	    }]);
@@ -34081,44 +34237,6 @@
 	}(_react2.default.Component);
 
 	exports.default = Login;
-
-/***/ },
-/* 282 */
-/*!***************************!*\
-  !*** ./src/utils/auth.js ***!
-  \***************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _reactRouter = __webpack_require__(/*! react-router */ 175);
-
-	module.exports = {
-	    getToken: function getToken() {
-	        return localStorage.mern_token;
-	    },
-	    getUser: function getUser() {
-	        return localStorage.mern_user;
-	    },
-	    setToken: function setToken(res) {
-	        localStorage.mern_token = res.token;
-	        localStorage.mern_user = JSON.stringify(res.user);
-	    },
-	    logout: function logout() {
-	        delete localStorage.mern_token;
-	        delete localStorage.mern_user;
-	    },
-	    loggedIn: function loggedIn() {
-	        return !!(localStorage.mern_token && localStorage.mern_user);
-	    },
-	    checkAuthRequired: function checkAuthRequired(res) {
-	        if (res.statusCode == 401) {
-	            console.log("CauthR - 1 " + res.statusCode);
-	            logout();
-	            _reactRouter.Router.navigate('/auth/login');
-	        }
-	    }
-	};
 
 /***/ }
 /******/ ]);

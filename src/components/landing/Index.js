@@ -2,6 +2,8 @@
  * Created by Raphson on 9/23/16.
  */
 import React from 'react';
+import NavBar from '../NavBar/index';
+import Footer from '../Footer/Index';
 export default class Index extends React.Component{
     constructor(){
         super()
@@ -10,6 +12,7 @@ export default class Index extends React.Component{
     render(){
         return(
             <span>
+                <NavBar />
                 <div className="main-container" style={{minHeight: 580}}>
                     <div className="MeanMap">
                         <div style={{border: '1px solid #ccc', boxShadow: '10px 10px #000'}}>
@@ -74,6 +77,7 @@ export default class Index extends React.Component{
                         </div>
                     </section>
                 </div>
+                <Footer />
             </span>
         );
     }

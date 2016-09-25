@@ -5,6 +5,8 @@ import React from 'react';
 import { Link, hashHistory } from 'react-router';
 import Alert from 'react-s-alert';
 import MyInput from '../forms/Input';
+import NavBar from '../NavBar/index';
+import Footer from '../Footer/Index';
 import UserStore from '../../stores/UserStore';
 import UserActions from '../../actions/UserActions';
 import 'react-s-alert/dist/s-alert-default.css';
@@ -33,7 +35,9 @@ export default class Login extends React.Component {
         if(data.status == 401){
             Alert.error(data.data.message, { position: 'top-right' });
         } else {
-            Auth.setToken(data.data);
+            localStorage.setItem('mern_token', data.data.token);
+            localStorage.setItem('mern_user', JSON.stringify(data.data.user));
+            //Auth.setToken(data.data);
             hashHistory.push('/');
         }
     }
@@ -58,6 +62,7 @@ export default class Login extends React.Component {
     render(){
         return (
             <span>
+                <NavBar />
                 {/* Main container for Login Page View */}
                 <div className="main-container" style={{minHeight: 580}}>
                     <section className="faq faq-1">
@@ -116,6 +121,7 @@ export default class Login extends React.Component {
                     </section>
                 </div>
                 {/* End Main Container for Login Page View */}
+                <Footer />
             </span>
         );
     }

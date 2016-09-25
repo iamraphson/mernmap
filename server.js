@@ -62,11 +62,11 @@ app.use(express.static( __dirname + "/public" ));
 
 routes(app);
 
-app.use(express.static(path.join(__dirname)));
+//app.use(express.static(path.join(__dirname)));
 
 
 app.get('*', function(request, response) {
-    response.sendFile(__dirname + '/index.html')
+    response.sendFile(__dirname + '/public/index.html')
 });
 
 

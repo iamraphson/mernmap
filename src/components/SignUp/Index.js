@@ -5,6 +5,8 @@ import React from 'react';
 import { Link,  } from 'react-router';
 import Alert from 'react-s-alert';
 import MyInput from '../forms/Input';
+import NavBar from '../NavBar/index';
+import Footer from '../Footer/Index';
 import MyTextarea from '../forms/Textarea';
 import UserStore from '../../stores/UserStore';
 import UserActions from '../../actions/UserActions';
@@ -70,6 +72,7 @@ export default class SignUp extends React.Component{
     render(){
         return(
             <span>
+                <NavBar />
                 <div className="main-container" style={{minHeight: 580}}>
                     <section className="faq faq-1">
                         <div className="container">
@@ -137,6 +140,7 @@ export default class SignUp extends React.Component{
                         </div>
                     </section>
                 </div>
+                <Footer />
             </span>
         );
     }

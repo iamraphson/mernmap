@@ -4,12 +4,34 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Link } from 'react-router';
+import { Link, hashHistory } from 'react-router';
+import Auth from '../../utils/auth';
 
 export default class Nav extends React.Component{
 
     constructor(props){
-        super(props)
+        super(props);
+        this.state = {
+            loggedIn: null,
+            user: null
+        };
+    }
+
+    componentDidMount() {
+        this.setState({
+            loggedIn: Auth.loggedIn(),
+            user: Auth.getUser()
+        });
+    }
+
+    handleLogoutResult = (e) => {
+        e.preventDefault();
+        this.setState({
+            loggedIn: null,
+            user: null
+        });
+        Auth.logout();
+        hashHistory.push('/');
     }
 
     render(){
@@ -25,10 +47,37 @@ export default class Nav extends React.Component{
                                     </Link>
                                 </div>
                                 <div className="col-md-3 text-right col-sm-6 col-md-push-6 col-xs-8" >
-                                    <ul className="menu">
-                                        <li><Link to="/user/create">CREATE ACCOUNT</Link></li>
-                                        <li><Link to="/auth/login">LOGIN</Link></li>
-                                    </ul>
+                                    {!this.state.loggedIn ? (
+                                        <ul className="menu">
+                                            <li><Link to="/user/create">CREATE ACCOUNT</Link></li>
+                                            <li><Link to="/auth/login">LOGIN</Link></li>
+                                        </ul>
+                                    ) : (
+                                        <ul className="menu">
+                                            <li className="has-dropdown">
+                                                <a href="#">
+                                                    <img className="header-img-rounded"
+                                                         src={ JSON.parse(this.state.user).user_avi } />{' '}
+                                                    { JSON.parse(this.state.user).username }
+
+                                                    <span className="caret" />
+                                                </a>
+                                                <ul className="subnav">
+                                                    <li><a href="/account"><i className="fa fa-user" />{'  '}My Profile</a></li>
+                                                    <li><Link to="/account/edit"><i className="fa fa-pencil-square-o" />{'  '}
+                                                        Edit Profile</Link></li>
+                                                    <li><a href="/tutorial/create"><i className="fa fa-leanpub" /> {'  '}
+                                                        Post MERN Tutorial </a></li>
+                                                    <li className="divider" />
+                                                    <li><a href="/#" style={{cursor: 'pointer'}}
+                                                           onClick={this.handleLogoutResult}>
+                                                        <i className="fa fa-sign-out" /> {'  '}
+                                                        Logout</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    )}
                                     <div className="mobile-toggle">
                                         <div className="upper"></div>
                                         <div className="middle"></div>
