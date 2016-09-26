@@ -41,6 +41,7 @@
     "path": "^0.12.7",
     "react": "*",
     "react-dom": "*",
+    "react-dropzone": "^3.6.0",
     "react-redux-toastr": "^3.8.3",
     "react-router": "*",
     "react-s-alert": "^1.2.0",

@@ -15,12 +15,19 @@ import Alert from 'react-s-alert';
 import 'react-s-alert/dist/s-alert-default.css';
 import 'react-s-alert/dist/s-alert-css-effects/bouncyflip.css';
 import Auth from '../../utils/auth';
+import Dropzone from 'react-dropzone';
+import request from 'superagent';
+
+const CLOUDINARY_UPLOAD_PRESET = 'pelfl4js';
+const CLOUDINARY_UPLOAD_URL = '	https://api.cloudinary.com/v1_1/dloyv1pjb/upload';
 
 export default class EditIndex extends React.Component {
     constructor(){
         super();
         this.state = {
             token: Auth.getToken(),
+            uploadedFile: null,
+            uploadedFileCloudinaryUrl: ''
         }
     }
 
@@ -33,10 +40,36 @@ export default class EditIndex extends React.Component {
         UserStore.removeChangeListener(this.handleAuthUserFetch);
     }
 
+    onImageDrop(files) {
+        this.setState({
+            uploadedFile: files[0]
+        });
+        this.handleImageUpload(files[0]);
+    }
+
+    handleImageUpload(file) {
+        console.log("handleImg");
+        let upload = request.post(CLOUDINARY_UPLOAD_URL)
+            .field('upload_preset', CLOUDINARY_UPLOAD_PRESET)
+            .field('file', file);
+
+        upload.end((err, response) => {
+            console.log("response -> " + response);
+            if (err) {
+                console.error(err);
+            }
+            if (response.body.secure_url !== '') {
+                this.setState({
+                    uploadedFileCloudinaryUrl: response.body.secure_url
+                });
+                console.log("name -> " + this.state.uploadedFile );
+                console.log("url -> " + this.state.uploadedFileCloudinaryUrl );
+            }
+        });
+    }
     handleAuthUserFetch = () => {
         let authUser = UserStore.getAuthUserResult();
         Auth.checkAuthRequired(authUser);
-
     }
 
     render(){
@@ -71,16 +104,14 @@ export default class EditIndex extends React.Component {
                                         {/* Profile_image Form Input */}
                                         <div className="form-group">
                                             <label htmlFor="profile_image">Profile Image</label>
-                                            <input type="file" accept="image/!*" onChange="" />
-                                            {/*<div>
-                                             <Dropzone onDrop={this.onDrop} accept="image/!*" >
-                                             <div>Try dropping some files here, or click to select files to upload.</div>
-                                             </Dropzone>
-                                             {this.state.files.length > 0 ? <div>
-                                             <h2>Uploading {this.state.files.length} files...</h2>
-                                             <div>{this.state.files.map((file) => <img src={file.preview} /> )}</div>
-                                             </div> : null}
-                                             </div>*/}
+                                            <Dropzone
+                                                multiple={false}
+                                                accept="image/*"
+                                                onDrop={this.onImageDrop.bind(this)}>
+                                                <p style={{textAlign: 'center'}}>
+                                                    Drop an image or click to select a file to upload.
+                                                </p>
+                                            </Dropzone>
                                         </div>
                                     </div>
                                     <div className="col-md-6">
