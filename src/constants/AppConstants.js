@@ -5,4 +5,5 @@ let keyMirror = require('keymirror');
 module.exports = keyMirror({
     USER_SIGNUP : null,
     USER_LOGIN : null,
+    AUTH_USER : null,
 });

@@ -11,6 +11,10 @@ module.exports = {
 
     login: (user) => {
         BaseActions.post('/api/login', user, AppConstants.USER_LOGIN);
+    },
+
+    fetchAuthUser: (token) => {
+        BaseActions.get('/api/me', AppConstants.AUTH_USER, token);
     }
 
 }

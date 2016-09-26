@@ -10,14 +10,23 @@ import Main from './components/landing/Main';
 import Landing from './components/landing/Index';
 import SignUp from './components/SignUp/Index';
 import Login from './components/Login/Index';
+import EditAccount from './components/Account/EditIndex';
+import Auth from './utils/auth';
 import {Router, Route, hashHistory, Redirect, IndexRoute} from 'react-router';
 
+const requireAuth = (nextState, replace) => {
+    if (!Auth.loggedIn()) {
+        // Redirect to Home page if not an auth user
+        replace({ pathname: '/' })
+    }
+}
 render(
     <Router history={hashHistory}>
         <Route path="/" component={Main} >
             <IndexRoute component={Landing} />
             <Route path="user/create" component={SignUp} />
             <Route path="auth/login" component={Login} />
+            <Route path="account/edit" component={EditAccount} onEnter={requireAuth} />
         </Route>
     </Router>,
     document.getElementById('app')

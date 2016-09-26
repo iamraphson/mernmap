@@ -83,7 +83,7 @@ module.exports = {
     * @return json
      */
     getCurrentLoggedUser: function(req, res){
-        user.findById(req.user, function(err, result){
+        User.findById(req.user, function(err, result){
             return res.status(200).send(result);
         });
     },
@@ -112,7 +112,7 @@ module.exports = {
         console.log(userDetails);
         //return res.status(200).json({message: 'Update Successful'});
         //console.log(req.user);
-        user.findByIdAndUpdate({_id: req.user}, userDetails, function(err){
+        User.findByIdAndUpdate({_id: req.user}, userDetails, function(err){
             if(err){
                 return res.status(404).json({message : 'user\s detail not found'})
             }

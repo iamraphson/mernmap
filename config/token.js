@@ -9,7 +9,7 @@ function createJWT(user){
     var payload = {
         sub: user._id,
         iat: moment().unix(),
-        exp: moment().add(0.1, 'days').unix()
+        exp: moment().add(0.5, 'days').unix()
     };
     return jwt.encode(payload, secrets.TOKEN_SECRET);
 }

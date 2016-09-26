@@ -24,11 +24,9 @@ module.exports = {
     },
 
     checkAuthRequired(res){
-        if(res.statusCode == 401){
-            console.log("CauthR - 1 " + res.statusCode);
-            logout();
-            Router.navigate('/auth/login');
+        if(res.status == 401){
+            this.logout();
+            hashHistory.push('auth/login');
         }
-
-    },
+    }
 };

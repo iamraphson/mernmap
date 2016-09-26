@@ -13,6 +13,7 @@ import UserActions from '../../actions/UserActions';
 import 'react-s-alert/dist/s-alert-default.css';
 import 'react-s-alert/dist/s-alert-css-effects/bouncyflip.css';
 
+
 export default class SignUp extends React.Component{
 
     constructor(){
