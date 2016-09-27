@@ -41,10 +41,12 @@ export default class EditIndex extends React.Component {
     componentDidMount() {
         UserActions.fetchAuthUser(this.state.token);
         UserStore.addChangeListener(this.handleAuthUserFetch);
+        UserStore.addChangeListener(this.handleEditResult, 'update');
     }
 
     componentWillUnmount() {
         UserStore.removeChangeListener(this.handleAuthUserFetch);
+        UserStore.removeChangeListener(this.handleEditResult, 'update');
     }
 
     onImageDrop(files) {
@@ -70,10 +72,18 @@ export default class EditIndex extends React.Component {
             }
         });
     }
+    handleEditResult = () => {
+        let result = UserStore.getUpdateResult();
+        Auth.checkAuthRequired(result);
+        if(result.status == 200){
+            Alert.success(result.data.message, { position: 'top-right',  effect: 'bouncyflip'});
+        } else {
+            Alert.error(result.data.message, { position: 'top-right',  effect: 'bouncyflip'});
+        }
+    }
     handleAuthUserFetch = () => {
         let authUser = UserStore.getAuthUserResult();
         Auth.checkAuthRequired(authUser);
-        console.log(authUser);
         this.setState({
             fullName: authUser.data.fullname,
             hireStatus: authUser.data.hire_status,
@@ -94,7 +104,17 @@ export default class EditIndex extends React.Component {
     }
 
     handleSubmit = (data) => {
-        alert(JSON.stringify(data));
+        var userPayload = {
+            fullname: data.name,
+            website: data.website,
+            github_profile: data.github_url,
+            address: data.address,
+            hire_status: data.hire,
+            bio: data.bio,
+            twitter_handle: data.twitter,
+            uploadedFileURL: this.state.uploadedFileCloudinaryUrl
+        };
+        UserActions.update(userPayload, this.state.token);
     }
 
     render(){
@@ -119,8 +139,8 @@ export default class EditIndex extends React.Component {
                                         <MySelect name="hire" title="Available for hire"
                                               className="form-group" value={this.state.hireStatus}
                                               options={[
-                                                        { value: "YES", title: "YES" },
-                                                        { value: "NO", title: "NO" }
+                                                        { value: "NO", title: "NO" },
+                                                        { value: "YES", title: "YES" }
                                                       ]}
                                         />
                                         {/* Profile_image Form Input */}

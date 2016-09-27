@@ -12,6 +12,16 @@ let UserStore = Object.assign({}, BaseStore, {
     signupResult: null,
     loginResult: null,
     AuthUserResult: null,
+    updateResult: null,
+
+    setUpdateResult(updateResult) {
+        this.updateResult = updateResult;
+        this.emitChange('update');
+    },
+
+    getUpdateResult()  {
+        return this.updateResult
+    },
 
     setAuthUserResult(AuthUserResult) {
         this.AuthUserResult = AuthUserResult;
@@ -51,6 +61,9 @@ AppDispatcher.register((action) => {
             break;
         case AppConstants.AUTH_USER :
             UserStore.setAuthUserResult(action.data);
+            break;
+        case AppConstants.USER_UPDATE :
+            UserStore.setUpdateResult(action.data);
             break;
         default:
         // no default action

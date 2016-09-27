@@ -7,4 +7,5 @@ module.exports = keyMirror({
     USER_SIGNUP : null,
     USER_LOGIN : null,
     AUTH_USER : null,
+    USER_UPDATE : null,
 });

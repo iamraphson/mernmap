@@ -104,12 +104,16 @@ module.exports = {
             website: req.body.website,
             github_profile: req.body.github_profile,
             address: req.body.address,
-            hire_status: req.body.hire,
+            hire_status: req.body.hire_status,
             bio: req.body.bio,
-            twitter_handle: req.body.twitter
+            twitter_handle: req.body.twitter_handle
         };
-
         console.log(userDetails);
+
+        if(req.body.uploadedFileURL)
+            userDetails.user_avi = req.body.uploadedFileURL;
+
+        //console.log(userDetails);
         User.findByIdAndUpdate({_id: req.user}, userDetails, function(err){
             if(err){
                 return res.status(404).json({message : 'user\s detail not found'})

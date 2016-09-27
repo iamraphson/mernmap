@@ -31476,7 +31476,15 @@
 	    signupResult: null,
 	    loginResult: null,
 	    AuthUserResult: null,
+	    updateResult: null,
 
+	    setUpdateResult: function setUpdateResult(updateResult) {
+	        this.updateResult = updateResult;
+	        this.emitChange('update');
+	    },
+	    getUpdateResult: function getUpdateResult() {
+	        return this.updateResult;
+	    },
 	    setAuthUserResult: function setAuthUserResult(AuthUserResult) {
 	        this.AuthUserResult = AuthUserResult;
 	        this.emitChange();
@@ -31510,6 +31518,9 @@
 	            break;
 	        case AppConstants.AUTH_USER:
 	            UserStore.setAuthUserResult(action.data);
+	            break;
+	        case AppConstants.USER_UPDATE:
+	            UserStore.setUpdateResult(action.data);
 	            break;
 	        default:
 	        // no default action
@@ -31887,7 +31898,8 @@
 	module.exports = keyMirror({
 	    USER_SIGNUP: null,
 	    USER_LOGIN: null,
-	    AUTH_USER: null
+	    AUTH_USER: null,
+	    USER_UPDATE: null
 	});
 
 /***/ },
@@ -49235,6 +49247,10 @@
 
 	    fetchAuthUser: function fetchAuthUser(token) {
 	        BaseActions.get('/api/me', AppConstants.AUTH_USER, token);
+	    },
+
+	    update: function update(userPayload, token) {
+	        BaseActions.put('/api/me', userPayload, AppConstants.USER_UPDATE, token);
 	    }
 
 	};
@@ -51290,10 +51306,19 @@
 
 	        var _this = _possibleConstructorReturn(this, (EditIndex.__proto__ || Object.getPrototypeOf(EditIndex)).call(this));
 
+	        _this.handleEditResult = function () {
+	            var result = _UserStore2.default.getUpdateResult();
+	            _auth2.default.checkAuthRequired(result);
+	            if (result.status == 200) {
+	                _reactSAlert2.default.success(result.data.message, { position: 'top-right', effect: 'bouncyflip' });
+	            } else {
+	                _reactSAlert2.default.error(result.data.message, { position: 'top-right', effect: 'bouncyflip' });
+	            }
+	        };
+
 	        _this.handleAuthUserFetch = function () {
 	            var authUser = _UserStore2.default.getAuthUserResult();
 	            _auth2.default.checkAuthRequired(authUser);
-	            console.log(authUser);
 	            _this.setState({
 	                fullName: authUser.data.fullname,
 	                hireStatus: authUser.data.hire_status,
@@ -51314,7 +51339,17 @@
 	        };
 
 	        _this.handleSubmit = function (data) {
-	            alert(JSON.stringify(data));
+	            var userPayload = {
+	                fullname: data.name,
+	                website: data.website,
+	                github_profile: data.github_url,
+	                address: data.address,
+	                hire_status: data.hire,
+	                bio: data.bio,
+	                twitter_handle: data.twitter,
+	                uploadedFileURL: _this.state.uploadedFileCloudinaryUrl
+	            };
+	            _UserActions2.default.update(userPayload, _this.state.token);
 	        };
 
 	        _this.state = {
@@ -51338,11 +51373,13 @@
 	        value: function componentDidMount() {
 	            _UserActions2.default.fetchAuthUser(this.state.token);
 	            _UserStore2.default.addChangeListener(this.handleAuthUserFetch);
+	            _UserStore2.default.addChangeListener(this.handleEditResult, 'update');
 	        }
 	    }, {
 	        key: 'componentWillUnmount',
 	        value: function componentWillUnmount() {
 	            _UserStore2.default.removeChangeListener(this.handleAuthUserFetch);
+	            _UserStore2.default.removeChangeListener(this.handleEditResult, 'update');
 	        }
 	    }, {
 	        key: 'onImageDrop',
@@ -51408,7 +51445,7 @@
 	                                            value: this.state.fullName }),
 	                                        _react2.default.createElement(_Select2.default, { name: 'hire', title: 'Available for hire',
 	                                            className: 'form-group', value: this.state.hireStatus,
-	                                            options: [{ value: "YES", title: "YES" }, { value: "NO", title: "NO" }]
+	                                            options: [{ value: "NO", title: "NO" }, { value: "YES", title: "YES" }]
 	                                        }),
 	                                        _react2.default.createElement(
 	                                            'div',

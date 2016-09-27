@@ -15,6 +15,10 @@ module.exports = {
 
     fetchAuthUser: (token) => {
         BaseActions.get('/api/me', AppConstants.AUTH_USER, token);
+    },
+
+    update:(userPayload, token) =>{
+        BaseActions.put('/api/me', userPayload, AppConstants.USER_UPDATE, token);
     }
 
 }
