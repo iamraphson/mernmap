@@ -9,5 +9,4 @@ module.exports = function(app){
     app.post('/api/register', userCtrl.registerUser);
     app.get('/api/me', token.ensureAuthenticated, userCtrl.getCurrentLoggedUser);
     app.put('/api/me', token.ensureAuthenticated, userCtrl.updateLoggedInUserDetail);
-    app.post('/api/file/upload', userCtrl.postPhoto);
 }

@@ -83,7 +83,10 @@ module.exports = {
     * @return json
      */
     getCurrentLoggedUser: function(req, res){
-        User.findById(req.user, function(err, result){
+        var query = User.findById(req.user)
+            .select('fullname hire_status address twitter_handle website github_profile bio');
+
+        query.exec(function(err, result){
             return res.status(200).send(result);
         });
     },
@@ -96,9 +99,6 @@ module.exports = {
      */
 
     updateLoggedInUserDetail: function(req, res){
-
-        //var form = new multiparty.Form();
-
         var userDetails = {
             fullname: req.body.fullname,
             website: req.body.website,
@@ -110,56 +110,12 @@ module.exports = {
         };
 
         console.log(userDetails);
-        //return res.status(200).json({message: 'Update Successful'});
-        //console.log(req.user);
         User.findByIdAndUpdate({_id: req.user}, userDetails, function(err){
             if(err){
                 return res.status(404).json({message : 'user\s detail not found'})
             }
             return res.status(200).json({message: 'Update Successful'});
         });
-    },
-
-    /**
-     * Upload a photo to MERNMAP's Cloudinary Server
-     * @param  {void} req
-     * @param  {void} res
-     * @return {object}
-     */
-    postPhoto: function(req, res){
-        var fileName = '';
-        var size = '';
-        var tempPath;
-        var extension;
-        var imageName;
-        var destPath = '';
-        var inputStream;
-        var outputStream;
-        var form = new multiparty.Form();
-
-        form.on('error', function(err){
-            console.log('Error parsing form: ' + err.stack);
-        });
-        form.on('part', function(part){
-            if(!part.filename){
-                return;
-            }
-            size = part.byteCount;
-            fileName = part.filename;
-
-        });
-        form.on('file', function(name, file){
-            tempPath     = file.path;
-            console.log(tempPath);
-            /*cloudinary.uploader.upload(tempPath, function(result){
-                var pixUrl = result.url;
-                res.json({ dest: pixUrl });
-            });*/
-        });
-        form.on('close', function(){
-            console.log('Uploaded!!');
-        });
-        form.parse(req);
     }
 
 };
