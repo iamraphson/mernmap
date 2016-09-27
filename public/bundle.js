@@ -34488,22 +34488,31 @@
 	                                        _react2.default.createElement(
 	                                            'div',
 	                                            { className: 'form-group' },
-	                                            _react2.default.createElement(
-	                                                'label',
-	                                                { htmlFor: 'profile_image' },
-	                                                'Profile Image'
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                _reactDropzone2.default,
-	                                                {
-	                                                    multiple: false,
-	                                                    accept: 'image/*',
-	                                                    onDrop: this.onImageDrop.bind(this) },
+	                                            this.state.uploadedFileCloudinaryUrl === '' ? _react2.default.createElement(
+	                                                'span',
+	                                                null,
 	                                                _react2.default.createElement(
-	                                                    'p',
-	                                                    { style: { textAlign: 'center' } },
-	                                                    'Drop an image or click to select a file to upload.'
+	                                                    'label',
+	                                                    { htmlFor: 'profile_image' },
+	                                                    'Profile Image'
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    _reactDropzone2.default,
+	                                                    {
+	                                                        multiple: false,
+	                                                        accept: 'image/*',
+	                                                        onDrop: this.onImageDrop.bind(this) },
+	                                                    _react2.default.createElement(
+	                                                        'p',
+	                                                        { style: { textAlign: 'center' } },
+	                                                        'Drop an image or click to select a file to upload.'
+	                                                    )
 	                                                )
+	                                            ) : _react2.default.createElement(
+	                                                'span',
+	                                                null,
+	                                                _react2.default.createElement('img', { className: 'editProfile-preview',
+	                                                    src: this.state.uploadedFileCloudinaryUrl })
 	                                            )
 	                                        )
 	                                    ),

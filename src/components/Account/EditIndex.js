@@ -103,15 +103,22 @@ export default class EditIndex extends React.Component {
                                         </div>
                                         {/* Profile_image Form Input */}
                                         <div className="form-group">
-                                            <label htmlFor="profile_image">Profile Image</label>
-                                            <Dropzone
-                                                multiple={false}
-                                                accept="image/*"
-                                                onDrop={this.onImageDrop.bind(this)}>
-                                                <p style={{textAlign: 'center'}}>
-                                                    Drop an image or click to select a file to upload.
-                                                </p>
-                                            </Dropzone>
+                                            {(this.state.uploadedFileCloudinaryUrl === '') ?
+                                                <span>
+                                                    <label htmlFor="profile_image">Profile Image</label>
+                                                    <Dropzone
+                                                        multiple={false}
+                                                        accept="image/*"
+                                                        onDrop={this.onImageDrop.bind(this)}>
+                                                        <p style={{textAlign: 'center'}}>
+                                                            Drop an image or click to select a file to upload.
+                                                        </p>
+                                                    </Dropzone>
+                                                </span> : <span>
+                                                    <img className="editProfile-preview"
+                                                         src={this.state.uploadedFileCloudinaryUrl} />
+                                                </span>
+                                            }
                                         </div>
                                     </div>
                                     <div className="col-md-6">

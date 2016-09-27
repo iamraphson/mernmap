@@ -11204,4 +11204,10 @@ footer .container {
     padding: 0;
   }
 }
-/*# sourceMappingURL=all.css.map */
+
+.editProfile-preview {
+  width: 200px !important;
+  height: 200px;
+  border-radius: 5px;
+  margin-top: 10px;
+}
