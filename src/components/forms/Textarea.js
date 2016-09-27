@@ -38,9 +38,8 @@ const MyTextarea = React.createClass({
                     onChange={this.changeValue}
                     className="form-control"
                     placeholder={this.props.placeholder || ''}
-                    checked={this.props.type === 'checkbox' && this.getValue() ? 'checked' : null}
-                >
-                </textarea>
+                    value={this.getValue() || ''}
+                    checked={this.props.type === 'checkbox' && this.getValue() ? 'checked' : null} />
                 <span className='validation-error text-danger'>{errorMessage}</span>
             </div>
         );
