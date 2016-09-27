@@ -7,6 +7,7 @@
 import React from 'react';
 import { Link, hashHistory } from 'react-router';
 import MyInput from '../forms/Input';
+import MySelect from '../forms/Select';
 import NavBar from '../NavBar/index';
 import Footer from '../Footer/Index';
 import UserStore from '../../stores/UserStore';
@@ -26,8 +27,13 @@ export default class EditIndex extends React.Component {
         super();
         this.state = {
             token: Auth.getToken(),
+            canSubmit: false,
             uploadedFile: null,
-            uploadedFileCloudinaryUrl: ''
+            uploadedFileCloudinaryUrl: '',
+            fullName: '',
+            hireStatus: 'No',
+            twitter:'',
+            website: '',
         }
     }
 
@@ -48,13 +54,11 @@ export default class EditIndex extends React.Component {
     }
 
     handleImageUpload(file) {
-        console.log("handleImg");
         let upload = request.post(CLOUDINARY_UPLOAD_URL)
             .field('upload_preset', CLOUDINARY_UPLOAD_PRESET)
             .field('file', file);
 
         upload.end((err, response) => {
-            console.log("response -> " + response);
             if (err) {
                 console.error(err);
             }
@@ -62,14 +66,31 @@ export default class EditIndex extends React.Component {
                 this.setState({
                     uploadedFileCloudinaryUrl: response.body.secure_url
                 });
-                console.log("name -> " + this.state.uploadedFile );
-                console.log("url -> " + this.state.uploadedFileCloudinaryUrl );
             }
         });
     }
     handleAuthUserFetch = () => {
         let authUser = UserStore.getAuthUserResult();
         Auth.checkAuthRequired(authUser);
+        console.log(authUser);
+        this.setState({
+            fullName: authUser.data.fullname,
+            hireStatus: authUser.data.hire_status,
+            twitter: authUser.data.twitter_handle,
+            website: authUser.data.website,
+        });
+    }
+
+    enableButton = () => {
+        this.setState({ canSubmit: true });
+    }
+
+    disableButton = () => {
+        this.setState({ canSubmit: false });
+    }
+
+    handleSubmit = (data) => {
+
     }
 
     render(){
@@ -83,24 +104,21 @@ export default class EditIndex extends React.Component {
                             <h1>Edit Profile </h1>
                             <hr />
                             <div className="row">
-                                <form name="editProfileForm" onSubmit="" encType="multipart/form-data">
+                                <Formsy.Form name="editProfileForm" onValidSubmit={this.handleSubmit}
+                                     onValid={this.enableButton} onInvalid={this.disableButton}>
                                     <div className="col-md-6">
                                         {/* Name Form Input */}
-                                        <div className="form-group">
-                                            <label htmlFor="name">Name</label>
-                                            <input className="form-control" name="name" type="text"
-                                                   ref="fullname" value=""
-                                                   onChange="" id="name" />
-                                        </div>
-                                        <div className="form-group">
-                                            <label htmlFor="hire">Available for hire</label>
-                                            <select className="form-control" id="hire" ref="hire"
-                                                    value="" name="hire"
-                                                    onChange="">
-                                                <option value="YES">Yes</option>
-                                                <option value="NO">No</option>
-                                            </select>
-                                        </div>
+                                        <MyInput className="form-group" name="name" title="Name"
+                                                 placeholder="Name" validations="minLength:1"
+                                                 validationError="Name is required."
+                                                 value={this.state.fullName} />
+                                        <MySelect name="hire" title="Available for hire"
+                                              className="form-group" value={this.state.hireStatus}
+                                              options={[
+                                                        { value: "YES", title: "YES" },
+                                                        { value: "NO", title: "NO" }
+                                                      ]}
+                                        />
                                         {/* Profile_image Form Input */}
                                         <div className="form-group">
                                             {(this.state.uploadedFileCloudinaryUrl === '') ?
@@ -129,20 +147,16 @@ export default class EditIndex extends React.Component {
                                                    onChange="" />
 
                                         </div>
-                                        <div className="form-group">
-                                            <label htmlFor="twitter">Twitter</label>
-                                            <small>(Starting with http:// or https://)</small>
-                                            <input className="form-control" name="twitter" type="text" ref="twitter_handle"
-                                                   value="" id="twitter"
-                                                   onChange=""/>
-                                        </div>
-                                        <div className="form-group">
-                                            <label htmlFor="website">Website</label>
-                                            <small>(Starting with http:// or https://)</small>
-                                            <input className="form-control" name="website" type="text" ref="website"
-                                                   value="" id="website"
-                                                   onChange=""/>
-                                        </div>
+                                        <MyInput className="form-group" name="twitter" value={this.state.twitter}
+                                             title="Twitter (Starting with http:// or https://)"
+                                             placeholder="Twitter" validations="isUrl"
+                                             validationError="Twitter URL is required."
+                                        />
+                                        <MyInput className="form-group" name="website" value={this.state.website}
+                                                 title="Website (Starting with http:// or https://)"
+                                                 placeholder="Website" validations="isUrl"
+                                                 validationError="Website URL is required."
+                                        />
                                         <div className="form-group">
                                             <label htmlFor="github_url">Github Url</label>
                                             <small>(Starting with http:// or https://)</small>
@@ -161,7 +175,7 @@ export default class EditIndex extends React.Component {
                                     <div className="form-group">
                                         <button className="form-control btn btn-block" type="submit">Save Changes</button>
                                     </div>
-                                </form>
+                                </Formsy.Form>
                             </div>
                         </div>
                     </section>

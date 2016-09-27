@@ -1,9 +1,6 @@
 /**
  * Created by Raphson on 9/24/16.
  */
-/**
- * Created by Raphson on 9/24/16.
- */
 import React from 'react';
 import Formsy from 'formsy-react';
 

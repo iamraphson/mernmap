@@ -30251,7 +30251,7 @@
 	                                        }),
 	                                        _react2.default.createElement(_Input2.default, { className: 'form-group col-lg-6', name: 'github_url', required: true,
 	                                            title: 'GitHub Profile (Starting with http:// or https://)',
-	                                            validationError: 'Github Url is required.', validations: 'isUrl' })
+	                                            validationError: 'Github URL is required.', validations: 'isUrl' })
 	                                    ),
 	                                    _react2.default.createElement(
 	                                        'div',
@@ -30411,6 +30411,7 @@
 	                onChange: this.changeValue,
 	                className: 'form-control',
 	                placeholder: this.props.placeholder || '',
+	                value: this.getValue() || '',
 	                checked: this.props.type === 'checkbox' && this.getValue() ? 'checked' : null
 	            }),
 	            _react2.default.createElement(
@@ -31391,9 +31392,6 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	/**
-	 * Created by Raphson on 9/24/16.
-	 */
 	/**
 	 * Created by Raphson on 9/24/16.
 	 */
@@ -34302,6 +34300,10 @@
 
 	var _Input2 = _interopRequireDefault(_Input);
 
+	var _Select = __webpack_require__(/*! ../forms/Select */ 287);
+
+	var _Select2 = _interopRequireDefault(_Select);
+
 	var _index = __webpack_require__(/*! ../NavBar/index */ 188);
 
 	var _index2 = _interopRequireDefault(_index);
@@ -34366,12 +34368,34 @@
 	        _this.handleAuthUserFetch = function () {
 	            var authUser = _UserStore2.default.getAuthUserResult();
 	            _auth2.default.checkAuthRequired(authUser);
+	            console.log(authUser);
+	            _this.setState({
+	                fullName: authUser.data.fullname,
+	                hireStatus: authUser.data.hire_status,
+	                twitter: authUser.data.twitter_handle,
+	                website: authUser.data.website
+	            });
 	        };
+
+	        _this.enableButton = function () {
+	            _this.setState({ canSubmit: true });
+	        };
+
+	        _this.disableButton = function () {
+	            _this.setState({ canSubmit: false });
+	        };
+
+	        _this.handleSubmit = function (data) {};
 
 	        _this.state = {
 	            token: _auth2.default.getToken(),
+	            canSubmit: false,
 	            uploadedFile: null,
-	            uploadedFileCloudinaryUrl: ''
+	            uploadedFileCloudinaryUrl: '',
+	            fullName: '',
+	            hireStatus: 'No',
+	            twitter: '',
+	            website: ''
 	        };
 	        return _this;
 	    }
@@ -34400,11 +34424,9 @@
 	        value: function handleImageUpload(file) {
 	            var _this2 = this;
 
-	            console.log("handleImg");
 	            var upload = _superagent2.default.post(CLOUDINARY_UPLOAD_URL).field('upload_preset', CLOUDINARY_UPLOAD_PRESET).field('file', file);
 
 	            upload.end(function (err, response) {
-	                console.log("response -> " + response);
 	                if (err) {
 	                    console.error(err);
 	                }
@@ -34412,8 +34434,6 @@
 	                    _this2.setState({
 	                        uploadedFileCloudinaryUrl: response.body.secure_url
 	                    });
-	                    console.log("name -> " + _this2.state.uploadedFile);
-	                    console.log("url -> " + _this2.state.uploadedFileCloudinaryUrl);
 	                }
 	            });
 	        }
@@ -34443,48 +34463,20 @@
 	                                'div',
 	                                { className: 'row' },
 	                                _react2.default.createElement(
-	                                    'form',
-	                                    { name: 'editProfileForm', onSubmit: '', encType: 'multipart/form-data' },
+	                                    Formsy.Form,
+	                                    { name: 'editProfileForm', onValidSubmit: this.handleSubmit,
+	                                        onValid: this.enableButton, onInvalid: this.disableButton },
 	                                    _react2.default.createElement(
 	                                        'div',
 	                                        { className: 'col-md-6' },
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'form-group' },
-	                                            _react2.default.createElement(
-	                                                'label',
-	                                                { htmlFor: 'name' },
-	                                                'Name'
-	                                            ),
-	                                            _react2.default.createElement('input', { className: 'form-control', name: 'name', type: 'text',
-	                                                ref: 'fullname', value: '',
-	                                                onChange: '', id: 'name' })
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'form-group' },
-	                                            _react2.default.createElement(
-	                                                'label',
-	                                                { htmlFor: 'hire' },
-	                                                'Available for hire'
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                'select',
-	                                                { className: 'form-control', id: 'hire', ref: 'hire',
-	                                                    value: '', name: 'hire',
-	                                                    onChange: '' },
-	                                                _react2.default.createElement(
-	                                                    'option',
-	                                                    { value: 'YES' },
-	                                                    'Yes'
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    'option',
-	                                                    { value: 'NO' },
-	                                                    'No'
-	                                                )
-	                                            )
-	                                        ),
+	                                        _react2.default.createElement(_Input2.default, { className: 'form-group', name: 'name', title: 'Name',
+	                                            placeholder: 'Name', validations: 'minLength:1',
+	                                            validationError: 'Name is required.',
+	                                            value: this.state.fullName }),
+	                                        _react2.default.createElement(_Select2.default, { name: 'hire', title: 'Available for hire',
+	                                            className: 'form-group', value: this.state.hireStatus,
+	                                            options: [{ value: "YES", title: "YES" }, { value: "NO", title: "NO" }]
+	                                        }),
 	                                        _react2.default.createElement(
 	                                            'div',
 	                                            { className: 'form-group' },
@@ -34537,40 +34529,16 @@
 	                                                value: '', id: 'address',
 	                                                onChange: '' })
 	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'form-group' },
-	                                            _react2.default.createElement(
-	                                                'label',
-	                                                { htmlFor: 'twitter' },
-	                                                'Twitter'
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                'small',
-	                                                null,
-	                                                '(Starting with http:// or https://)'
-	                                            ),
-	                                            _react2.default.createElement('input', { className: 'form-control', name: 'twitter', type: 'text', ref: 'twitter_handle',
-	                                                value: '', id: 'twitter',
-	                                                onChange: '' })
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'form-group' },
-	                                            _react2.default.createElement(
-	                                                'label',
-	                                                { htmlFor: 'website' },
-	                                                'Website'
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                'small',
-	                                                null,
-	                                                '(Starting with http:// or https://)'
-	                                            ),
-	                                            _react2.default.createElement('input', { className: 'form-control', name: 'website', type: 'text', ref: 'website',
-	                                                value: '', id: 'website',
-	                                                onChange: '' })
-	                                        ),
+	                                        _react2.default.createElement(_Input2.default, { className: 'form-group', name: 'twitter', value: this.state.twitter,
+	                                            title: 'Twitter (Starting with http:// or https://)',
+	                                            placeholder: 'Twitter', validations: 'isUrl',
+	                                            validationError: 'Twitter URL is required.'
+	                                        }),
+	                                        _react2.default.createElement(_Input2.default, { className: 'form-group', name: 'website', value: this.state.website,
+	                                            title: 'Website (Starting with http:// or https://)',
+	                                            placeholder: 'Website', validations: 'isUrl',
+	                                            validationError: 'Website URL is required.'
+	                                        }),
 	                                        _react2.default.createElement(
 	                                            'div',
 	                                            { className: 'form-group' },
@@ -51969,6 +51937,77 @@
 		return module;
 	}
 
+
+/***/ },
+/* 287 */
+/*!****************************************!*\
+  !*** ./src/components/forms/Select.js ***!
+  \****************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(/*! react */ 2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _formsyReact = __webpack_require__(/*! formsy-react */ 258);
+
+	var _formsyReact2 = _interopRequireDefault(_formsyReact);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * Created by Raphson on 9/27/16.
+	 */
+	var MySelect = _react2.default.createClass({
+	    displayName: 'MySelect',
+
+	    mixins: [_formsyReact2.default.Mixin],
+
+	    changeValue: function changeValue(event) {
+	        this.setValue(event.currentTarget.value);
+	    },
+	    render: function render() {
+	        var className = (this.props.className || '  ') + (this.showRequired() ? ' required' : this.showError() ? ' error' : '');
+	        var errorMessage = this.getErrorMessage();
+
+	        var options = this.props.options.map(function (option, i) {
+	            return _react2.default.createElement(
+	                'option',
+	                { key: option.title + option.value, value: option.value },
+	                option.title
+	            );
+	        });
+
+	        return _react2.default.createElement(
+	            'div',
+	            { className: className },
+	            _react2.default.createElement(
+	                'label',
+	                { htmlFor: this.props.name },
+	                this.props.title
+	            ),
+	            _react2.default.createElement(
+	                'select',
+	                { name: this.props.name, onChange: this.changeValue, value: this.getValue() || '',
+	                    className: 'form-control' },
+	                options
+	            ),
+	            _react2.default.createElement(
+	                'span',
+	                { className: 'validation-error' },
+	                errorMessage
+	            )
+	        );
+	    }
+	});
+
+	exports.default = MySelect;
 
 /***/ }
 /******/ ]);

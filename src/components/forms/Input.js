@@ -37,6 +37,7 @@ const MyInput = React.createClass({
                     onChange={this.changeValue}
                     className="form-control"
                     placeholder={this.props.placeholder || ''}
+                    value={this.getValue() || ''}
                     checked={this.props.type === 'checkbox' && this.getValue() ? 'checked' : null}
                 />
                 <span className='validation-error'>{errorMessage}</span>

@@ -111,13 +111,13 @@ export default class SignUp extends React.Component{
                                         {/* Github_url Form Input */}
                                         <MyInput className="form-group col-lg-6" name="github_url" required
                                                  title="GitHub Profile (Starting with http:// or https://)"
-                                                 validationError="Github Url is required." validations="isUrl"  />
+                                                 validationError="Github URL is required." validations="isUrl"  />
 
                                     </div>
                                     <div className="col-lg-12">
                                         {/* Address Form Input */}
                                         <MyTextarea className="form-group col-lg-12" title="Address (For the map)"
-                                                placeholder="e.g. Class 7, Herbert Macaulay, Sabo Yaba, Lagos, Nigeria"
+                                            placeholder="e.g. Class 7, Herbert Macaulay, Sabo Yaba, Lagos, Nigeria"
                                                 name="address" validationError="Address is required." required />
                                     </div>
                                     {/* Sign up Form Input */}
