@@ -89,6 +89,10 @@
 
 	var _EditIndex2 = _interopRequireDefault(_EditIndex);
 
+	var _index = __webpack_require__(/*! ./components/Account/index */ 288);
+
+	var _index2 = _interopRequireDefault(_index);
+
 	var _auth = __webpack_require__(/*! ./utils/auth */ 252);
 
 	var _auth2 = _interopRequireDefault(_auth);
@@ -112,7 +116,8 @@
 	        _react2.default.createElement(_reactRouter.IndexRoute, { component: _Index2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'user/create', component: _Index4.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'auth/login', component: _Index6.default }),
-	        _react2.default.createElement(_reactRouter.Route, { path: 'account/edit', component: _EditIndex2.default, onEnter: requireAuth })
+	        _react2.default.createElement(_reactRouter.Route, { path: 'account/edit', component: _EditIndex2.default, onEnter: requireAuth }),
+	        _react2.default.createElement(_reactRouter.Route, { path: 'account', component: _index2.default, onEnter: requireAuth })
 	    )
 	), document.getElementById('app'));
 
@@ -52009,6 +52014,90 @@
 	});
 	;
 	//# sourceMappingURL=index.js.map
+
+/***/ },
+/* 288 */
+/*!*****************************************!*\
+  !*** ./src/components/Account/index.js ***!
+  \*****************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(/*! react */ 2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(/*! react-router */ 189);
+
+	var _index = __webpack_require__(/*! ../NavBar/index */ 188);
+
+	var _index2 = _interopRequireDefault(_index);
+
+	var _Index = __webpack_require__(/*! ../Footer/Index */ 255);
+
+	var _Index2 = _interopRequireDefault(_Index);
+
+	var _UserStore = __webpack_require__(/*! ../../stores/UserStore */ 266);
+
+	var _UserStore2 = _interopRequireDefault(_UserStore);
+
+	var _UserActions = __webpack_require__(/*! ../../actions/UserActions */ 277);
+
+	var _UserActions2 = _interopRequireDefault(_UserActions);
+
+	var _auth = __webpack_require__(/*! ../../utils/auth */ 252);
+
+	var _auth2 = _interopRequireDefault(_auth);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by Raphson on 9/28/16.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+	var EditIndex = function (_React$Component) {
+	    _inherits(EditIndex, _React$Component);
+
+	    function EditIndex() {
+	        _classCallCheck(this, EditIndex);
+
+	        return _possibleConstructorReturn(this, (EditIndex.__proto__ || Object.getPrototypeOf(EditIndex)).call(this));
+	    }
+
+	    _createClass(EditIndex, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {}
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {}
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'span',
+	                null,
+	                _react2.default.createElement(_index2.default, null),
+	                _react2.default.createElement(_Index2.default, null)
+	            );
+	        }
+	    }]);
+
+	    return EditIndex;
+	}(_react2.default.Component);
+
+	exports.default = EditIndex;
 
 /***/ }
 /******/ ]);

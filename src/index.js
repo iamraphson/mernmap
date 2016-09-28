@@ -11,6 +11,7 @@ import Landing from './components/landing/Index';
 import SignUp from './components/SignUp/Index';
 import Login from './components/Login/Index';
 import EditAccount from './components/Account/EditIndex';
+import Account from './components/Account/index';
 import Auth from './utils/auth';
 import {Router, Route, hashHistory, Redirect, IndexRoute} from 'react-router';
 
@@ -27,6 +28,7 @@ render(
             <Route path="user/create" component={SignUp} />
             <Route path="auth/login" component={Login} />
             <Route path="account/edit" component={EditAccount} onEnter={requireAuth} />
+            <Route path="account" component={Account} onEnter={requireAuth} />
         </Route>
     </Router>,
     document.getElementById('app')
