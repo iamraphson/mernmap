@@ -81,6 +81,7 @@ export default class EditIndex extends React.Component {
             Alert.error(result.data.message, { position: 'top-right',  effect: 'bouncyflip'});
         }
     }
+
     handleAuthUserFetch = () => {
         let authUser = UserStore.getAuthUserResult();
         Auth.checkAuthRequired(authUser);

@@ -8,23 +8,45 @@ import Footer from '../Footer/Index';
 import UserStore from '../../stores/UserStore';
 import UserActions from '../../actions/UserActions';
 import Auth from '../../utils/auth';
+import marked from 'marked';
 export default class EditIndex extends React.Component {
     constructor() {
         super();
-        let user = JSON.parse(Auth.getUser());
         this.state = {
-            displayImage: user.user_avi,
-            fullName: user.fullname,
-            hireStatus: user.hire_status,
+            token: Auth.getToken(),
+            displayImage: '',
+            fullName: '',
+            hireStatus: 'No',
+            twitter:'',
+            website: '',
+            github: '',
+            bio: '',
+            address: ''
         }
     }
 
     componentDidMount() {
-
+        UserActions.fetchAuthUser(this.state.token);
+        UserStore.addChangeListener(this.handleAuthUserFetch);
     }
 
     componentWillUnmount() {
+        UserStore.removeChangeListener(this.handleAuthUserFetch);
+    }
 
+    handleAuthUserFetch = () => {
+        let authUser = UserStore.getAuthUserResult();
+        Auth.checkAuthRequired(authUser);
+        this.setState({
+            fullName: authUser.data.fullname,
+            hireStatus: authUser.data.hire_status,
+            twitter: authUser.data.twitter_handle,
+            website: authUser.data.website,
+            github: authUser.data.github_profile,
+            bio: authUser.data.bio,
+            address: authUser.data.address,
+            displayImage: authUser.data.user_avi
+        });
     }
 
     render(){
@@ -76,11 +98,11 @@ export default class EditIndex extends React.Component {
                                 <div className="col-sm-6">
                                     <div className="faq">
                                         <h5>Tell Us About Yourself</h5>
-                                        <p>bio</p>
+                                        <p dangerouslySetInnerHTML={{__html: marked(this.state.bio) }} />
                                     </div>
                                     <div className="faq">
                                         <h5>Location</h5>
-                                        <div ng-controller="MapController">
+                                        <div>
                                             map oh
                                         </div>
                                     </div>
