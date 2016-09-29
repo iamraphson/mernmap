@@ -23856,8 +23856,8 @@
 	                                                    'li',
 	                                                    null,
 	                                                    _react2.default.createElement(
-	                                                        'a',
-	                                                        { href: '/account' },
+	                                                        _reactRouter.Link,
+	                                                        { to: 'account' },
 	                                                        _react2.default.createElement('i', { className: 'fa fa-user' }),
 	                                                        '  ',
 	                                                        'My Profile'
@@ -52073,7 +52073,15 @@
 	    function EditIndex() {
 	        _classCallCheck(this, EditIndex);
 
-	        return _possibleConstructorReturn(this, (EditIndex.__proto__ || Object.getPrototypeOf(EditIndex)).call(this));
+	        var _this = _possibleConstructorReturn(this, (EditIndex.__proto__ || Object.getPrototypeOf(EditIndex)).call(this));
+
+	        var user = JSON.parse(_auth2.default.getUser());
+	        _this.state = {
+	            displayImage: user.user_avi,
+	            fullName: user.fullname,
+	            hireStatus: user.hire_status
+	        };
+	        return _this;
 	    }
 
 	    _createClass(EditIndex, [{
@@ -52089,6 +52097,165 @@
 	                'span',
 	                null,
 	                _react2.default.createElement(_index2.default, null),
+	                _react2.default.createElement(
+	                    'div',
+	                    { style: { minHeight: 580 }, className: 'main-container' },
+	                    _react2.default.createElement(
+	                        'section',
+	                        { className: 'header header-12' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'container' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'row' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'col-sm-12 text-white' },
+	                                    _react2.default.createElement(
+	                                        'h4',
+	                                        { className: 'text-white' },
+	                                        this.state.fullName
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'ul',
+	                                        null,
+	                                        _react2.default.createElement(
+	                                            'li',
+	                                            null,
+	                                            _react2.default.createElement('i', { className: 'fa fa-clock-o' }),
+	                                            ' Member since',
+	                                            _react2.default.createElement(
+	                                                'span',
+	                                                null,
+	                                                '2016-09-28'
+	                                            )
+	                                        )
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'section',
+	                        { className: 'faq faq-1' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'container' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'row' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'col-sm-6' },
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { className: 'faq' },
+	                                        _react2.default.createElement('img', { width: 200, height: 200, src: this.state.displayImage,
+	                                            alt: this.state.fullName, className: 'img-rounded' })
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { className: 'faq' },
+	                                        _react2.default.createElement(
+	                                            'h5',
+	                                            null,
+	                                            this.state.fullName
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'ul',
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                'li',
+	                                                null,
+	                                                _react2.default.createElement(
+	                                                    'a',
+	                                                    { target: '_blank', href: '' },
+	                                                    _react2.default.createElement('i', { className: 'fa fa-github' }),
+	                                                    ' GitHub'
+	                                                )
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'li',
+	                                                null,
+	                                                _react2.default.createElement(
+	                                                    'a',
+	                                                    { target: '_blank', href: '' },
+	                                                    _react2.default.createElement('i', { className: 'fa fa-globe' }),
+	                                                    ' Website / Blog'
+	                                                )
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement('br', null),
+	                                        _react2.default.createElement(
+	                                            'ul',
+	                                            null,
+	                                            this.state.hireStatus == 'yes' ? _react2.default.createElement(
+	                                                'li',
+	                                                null,
+	                                                _react2.default.createElement('i', { className: 'fa fa-suitcase' }),
+	                                                ' Not Available for Hire'
+	                                            ) : _react2.default.createElement(
+	                                                'li',
+	                                                null,
+	                                                _react2.default.createElement('i', { className: 'fa fa-suitcase' }),
+	                                                ' Available for Hire'
+	                                            ),
+	                                            _react2.default.createElement('br', null)
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'ul',
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                'li',
+	                                                null,
+	                                                _react2.default.createElement('i', { className: 'fa fa-project' }),
+	                                                _react2.default.createElement(
+	                                                    'a',
+	                                                    { className: 'btn btn-default' },
+	                                                    'Share Project'
+	                                                )
+	                                            ),
+	                                            _react2.default.createElement('br', null)
+	                                        )
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'col-sm-6' },
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { className: 'faq' },
+	                                        _react2.default.createElement(
+	                                            'h5',
+	                                            null,
+	                                            'Tell Us About Yourself'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'p',
+	                                            null,
+	                                            'bio'
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { className: 'faq' },
+	                                        _react2.default.createElement(
+	                                            'h5',
+	                                            null,
+	                                            'Location'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { 'ng-controller': 'MapController' },
+	                                            'map oh'
+	                                        )
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    )
+	                ),
 	                _react2.default.createElement(_Index2.default, null)
 	            );
 	        }

@@ -67,7 +67,7 @@ export default class Nav extends React.Component{
                                                     <span className="caret" />
                                                 </a>
                                                 <ul className="subnav">
-                                                    <li><a href="/account"><i className="fa fa-user" />{'  '}My Profile</a></li>
+                                                    <li><Link to="account"><i className="fa fa-user" />{'  '}My Profile</Link></li>
                                                     <li><Link to="/account/edit"><i className="fa fa-pencil-square-o" />{'  '}
                                                         Edit Profile</Link></li>
                                                     <li><a href="/tutorial/create"><i className="fa fa-leanpub" /> {'  '}
