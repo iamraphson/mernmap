@@ -9,6 +9,7 @@ import UserStore from '../../stores/UserStore';
 import UserActions from '../../actions/UserActions';
 import Auth from '../../utils/auth';
 import marked from 'marked';
+import moment from 'moment';
 export default class EditIndex extends React.Component {
     constructor() {
         super();
@@ -21,7 +22,8 @@ export default class EditIndex extends React.Component {
             website: '',
             github: '',
             bio: '',
-            address: ''
+            address: '',
+            registered_on: '1454521239279'
         }
     }
 
@@ -45,7 +47,8 @@ export default class EditIndex extends React.Component {
             github: authUser.data.github_profile,
             bio: authUser.data.bio,
             address: authUser.data.address,
-            displayImage: authUser.data.user_avi
+            displayImage: authUser.data.user_avi,
+            registered_on: authUser.data.registered_on
         });
     }
 
@@ -61,7 +64,7 @@ export default class EditIndex extends React.Component {
                                     <h4 className="text-white">{this.state.fullName}</h4>
                                     <ul>
                                         <li><i className="fa fa-clock-o" /> Member since
-                                            <span>2016-09-28</span></li>
+                                            <span> { moment(this.state.registered_on, "x").format("DD MMM YYYY")} </span></li>
                                     </ul>
                                 </div>
                             </div>
