@@ -78,8 +78,15 @@ export default class EditIndex extends React.Component {
                                     <div className="faq">
                                         <h5>{this.state.fullName}</h5>
                                         <ul>
-                                            <li><a target="_blank" href=""><i className="fa fa-github" /> GitHub</a></li>
-                                            <li><a target="_blank" href=""><i className="fa fa-globe" /> Website / Blog</a></li>
+                                            {(this.state.github != '') ?
+                                                <li><a target="_blank" href={this.state.github}>
+                                                    <i className="fa fa-github" /> GitHub</a></li>
+                                                : null }
+                                            {(this.state.website != '') ?
+                                                <li><a target="_blank" href={this.state.website}>
+                                                    <i className="fa fa-globe" /> Website / Blog</a></li>
+                                                : null }
+
                                         </ul>
                                         <br />
                                         <ul>

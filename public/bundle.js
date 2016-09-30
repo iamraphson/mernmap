@@ -52194,26 +52194,26 @@
 	                                        _react2.default.createElement(
 	                                            'ul',
 	                                            null,
-	                                            _react2.default.createElement(
+	                                            this.state.github != '' ? _react2.default.createElement(
 	                                                'li',
 	                                                null,
 	                                                _react2.default.createElement(
 	                                                    'a',
-	                                                    { target: '_blank', href: '' },
+	                                                    { target: '_blank', href: this.state.github },
 	                                                    _react2.default.createElement('i', { className: 'fa fa-github' }),
 	                                                    ' GitHub'
 	                                                )
-	                                            ),
-	                                            _react2.default.createElement(
+	                                            ) : null,
+	                                            this.state.website != '' ? _react2.default.createElement(
 	                                                'li',
 	                                                null,
 	                                                _react2.default.createElement(
 	                                                    'a',
-	                                                    { target: '_blank', href: '' },
+	                                                    { target: '_blank', href: this.state.website },
 	                                                    _react2.default.createElement('i', { className: 'fa fa-globe' }),
 	                                                    ' Website / Blog'
 	                                                )
-	                                            )
+	                                            ) : null
 	                                        ),
 	                                        _react2.default.createElement('br', null),
 	                                        _react2.default.createElement(
