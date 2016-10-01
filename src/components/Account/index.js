@@ -10,10 +10,14 @@ import UserActions from '../../actions/UserActions';
 import Auth from '../../utils/auth';
 import marked from 'marked';
 import moment from 'moment';
+import Leaflet from 'leaflet'
+import { Map, TileLayer, Marker, Popup, PropTypes as MapPropTypes } from 'react-leaflet';
 export default class EditIndex extends React.Component {
     constructor() {
         super();
+        Leaflet.Icon.Default.imagePath = "//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/";
         this.state = {
+            geocoder: new google.maps.Geocoder(),
             token: Auth.getToken(),
             displayImage: '',
             fullName: '',
@@ -23,7 +27,9 @@ export default class EditIndex extends React.Component {
             github: '',
             bio: '',
             address: '',
-            registered_on: '1454521239279'
+            registered_on: '1454521239279',
+            longitude: 3.540790900000047300,
+            latitude: 6.523276500000000000
         }
     }
 
@@ -50,9 +56,29 @@ export default class EditIndex extends React.Component {
             displayImage: authUser.data.user_avi,
             registered_on: authUser.data.registered_on
         });
+        this.handleAddressResolve();
     }
 
+    handleAddressResolve = () => {
+        console.log("resolve");
+        this.state.geocoder.geocode({'address': this.state.address}, this.handleAddressResolveSuccess);
+    }
+
+    handleAddressResolveSuccess = (results, status) => {
+        console.log("resolve success");
+        if (status == google.maps.GeocoderStatus.OK) {
+            let result = results[0].geometry.location;
+            this.setState({
+                longitude: result.lng(),
+                latitude: result.lat()
+            });
+        }
+    }
+
+
     render(){
+        const position = [this.state.latitude, this.state.longitude];
+        const zoom = 13;
         return (
             <span>
                 <NavBar />
@@ -113,7 +139,17 @@ export default class EditIndex extends React.Component {
                                     <div className="faq">
                                         <h5>Location</h5>
                                         <div>
-                                            map oh
+                                            <Map center={position} zoom={13}>
+                                                <TileLayer
+                                                    url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
+                                                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                                                />
+                                                <Marker position={position}>
+                                                    <Popup>
+                                                        <span>A pretty CSS3 popup.<br/>Easily customizable.</span>
+                                                    </Popup>
+                                                </Marker>
+                                            </Map>
                                         </div>
                                     </div>
                                 </div>

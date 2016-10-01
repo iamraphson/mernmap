@@ -13,7 +13,7 @@ import Login from './components/Login/Index';
 import EditAccount from './components/Account/EditIndex';
 import Account from './components/Account/index';
 import Auth from './utils/auth';
-import {Router, Route, hashHistory, Redirect, IndexRoute} from 'react-router';
+import {Router, Route, hashHistory, Redirect, IndexRoute, browserHistory} from 'react-router';
 
 const requireAuth = (nextState, replace) => {
     if (!Auth.loggedIn()) {
