@@ -11213,6 +11213,6 @@ footer .container {
 }
 .leaflet-container {
   height: 400px;
-  width: 80%;
+  width: 100%;
   margin: 0 auto;
 }
