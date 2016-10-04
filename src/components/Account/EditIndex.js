@@ -5,6 +5,7 @@ import React from 'react';
 import { Link, hashHistory } from 'react-router';
 import MyInput from '../forms/Input';
 import MySelect from '../forms/Select';
+import Formsy from 'formsy-react';
 import MyTextarea from '../forms/Textarea';
 import NavBar from '../NavBar/index';
 import Footer from '../Footer/Index';

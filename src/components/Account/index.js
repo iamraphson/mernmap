@@ -93,6 +93,11 @@ export default class Account extends React.Component {
         this.refs.modal.hide();
     }
 
+    handleProjectShare = (data) => {
+        console.log(JSON.stringify(data));
+    }
+
+
     render(){
         return (
             <span>
@@ -145,7 +150,8 @@ export default class Account extends React.Component {
                                                 <a onClick={this.showModal}
                                                    className="btn btn-default">Share Project</a>
                                                 <Modal ref="modal" contentStyle={contentStyle}>
-                                                    <CreateIndex onClose={this.hideModal} />
+                                                    <CreateIndex onClose={this.hideModal}
+                                                         onDataSubmit={this.handleProjectShare} />
                                                 </Modal>
                                             </li>
                                             <br />

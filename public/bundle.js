@@ -51249,6 +51249,10 @@
 
 	var _Select2 = _interopRequireDefault(_Select);
 
+	var _formsyReact = __webpack_require__(/*! formsy-react */ 258);
+
+	var _formsyReact2 = _interopRequireDefault(_formsyReact);
+
 	var _Textarea = __webpack_require__(/*! ../forms/Textarea */ 265);
 
 	var _Textarea2 = _interopRequireDefault(_Textarea);
@@ -51438,7 +51442,7 @@
 	                                'div',
 	                                { className: 'row' },
 	                                _react2.default.createElement(
-	                                    Formsy.Form,
+	                                    _formsyReact2.default.Form,
 	                                    { name: 'editProfileForm', onValidSubmit: this.handleSubmit,
 	                                        onValid: this.enableButton, onInvalid: this.disableButton, className: 'col-md-8' },
 	                                    _react2.default.createElement(
@@ -52142,6 +52146,10 @@
 	            _this.refs.modal.hide();
 	        };
 
+	        _this.handleProjectShare = function (data) {
+	            console.log(JSON.stringify(data));
+	        };
+
 	        _leaflet2.default.Icon.Default.imagePath = "//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/";
 	        _this.state = {
 	            geocoder: new google.maps.Geocoder(),
@@ -52306,7 +52314,8 @@
 	                                                _react2.default.createElement(
 	                                                    _FlyModal2.default,
 	                                                    { ref: 'modal', contentStyle: contentStyle },
-	                                                    _react2.default.createElement(_CreateIndex2.default, { onClose: this.hideModal })
+	                                                    _react2.default.createElement(_CreateIndex2.default, { onClose: this.hideModal,
+	                                                        onDataSubmit: this.handleProjectShare })
 	                                                )
 	                                            ),
 	                                            _react2.default.createElement('br', null)
@@ -82093,6 +82102,18 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
+	var _Input = __webpack_require__(/*! ../forms/Input */ 257);
+
+	var _Input2 = _interopRequireDefault(_Input);
+
+	var _Textarea = __webpack_require__(/*! ../forms/Textarea */ 265);
+
+	var _Textarea2 = _interopRequireDefault(_Textarea);
+
+	var _formsyReact = __webpack_require__(/*! formsy-react */ 258);
+
+	var _formsyReact2 = _interopRequireDefault(_formsyReact);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -82110,7 +82131,24 @@
 	    function Create() {
 	        _classCallCheck(this, Create);
 
-	        return _possibleConstructorReturn(this, (Create.__proto__ || Object.getPrototypeOf(Create)).call(this));
+	        var _this = _possibleConstructorReturn(this, (Create.__proto__ || Object.getPrototypeOf(Create)).call(this));
+
+	        _this.enableButton = function () {
+	            _this.setState({ canSubmit: true });
+	        };
+
+	        _this.disableButton = function () {
+	            _this.setState({ canSubmit: false });
+	        };
+
+	        _this.handleSubmit = function (data) {
+	            _this.props.onDataSubmit(data);
+	        };
+
+	        _this.state = {
+	            canSubmit: false
+	        };
+	        return _this;
 	    }
 
 	    _createClass(Create, [{
@@ -82132,58 +82170,25 @@
 	                    'div',
 	                    { style: { padding: '3%' }, className: 'modal-body' },
 	                    _react2.default.createElement(
-	                        'form',
-	                        { name: 'createProjectForm', style: { width: '100%' } },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group' },
-	                            _react2.default.createElement(
-	                                'label',
-	                                { htmlFor: 'username' },
-	                                'Project Name'
-	                            ),
-	                            _react2.default.createElement('input', { type: 'text', id: 'name', name: 'name', placeholder: 'name e.g Meanmap',
-	                                className: 'form-control input-lg' })
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group' },
-	                            _react2.default.createElement(
-	                                'label',
-	                                { htmlFor: 'email' },
-	                                'Project Url ',
-	                                _react2.default.createElement(
-	                                    'em',
-	                                    null,
-	                                    '( Append http(s):// )'
-	                                )
-	                            ),
-	                            _react2.default.createElement('input', { type: 'url', id: 'url', name: 'url', placeholder: 'url e.g http://meanmap.com',
-	                                className: 'form-control input-lg' })
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group' },
-	                            _react2.default.createElement(
-	                                'label',
-	                                { htmlFor: 'name' },
-	                                'Project Description ',
-	                                _react2.default.createElement(
-	                                    'em',
-	                                    null,
-	                                    '*Markdown Supported'
-	                                )
-	                            ),
-	                            _react2.default.createElement('textarea', { id: 'description', name: 'description', placeholder: 'Description e.g Meanmap is..',
-	                                rows: 5, className: 'form-control input-lg' })
-	                        ),
+	                        _formsyReact2.default.Form,
+	                        { name: 'createProjectForm', style: { width: '100%' }, onValidSubmit: this.handleSubmit,
+	                            onValid: this.enableButton, onInvalid: this.disableButton },
+	                        _react2.default.createElement(_Input2.default, { className: 'form-group', name: 'project_name', title: 'Project Name',
+	                            placeholder: 'Project Name e.g MERNMAP', validations: 'minLength:1', required: true,
+	                            validationError: 'Project Name is required.' }),
+	                        _react2.default.createElement(_Input2.default, { className: 'form-group', name: 'project_url', title: 'Project Url ( Append http(s):// )',
+	                            placeholder: 'url e.g http://mernmap.com', validations: 'isUrl', required: true,
+	                            validationError: 'Project URL is required.' }),
+	                        _react2.default.createElement(_Textarea2.default, { className: 'form-group', title: 'Project Description *Markdown Supported',
+	                            placeholder: 'Description e.g Meanmap is..', rows: '5', name: 'project_description',
+	                            validationError: 'Description is required.', required: true }),
 	                        _react2.default.createElement(
 	                            'p',
 	                            null,
 	                            _react2.default.createElement(
 	                                'button',
-	                                { type: 'submit', id: 'submit-btn', className: 'btn btn-default btn-lg col-md-6'
-	                                },
+	                                { type: 'submit', id: 'submit-btn', disabled: !this.state.canSubmit,
+	                                    className: 'btn btn-default btn-lg col-md-6' },
 	                                'Share'
 	                            ),
 	                            _react2.default.createElement(
