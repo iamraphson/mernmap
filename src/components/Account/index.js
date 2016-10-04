@@ -11,9 +11,13 @@ import Auth from '../../utils/auth';
 import marked from 'marked';
 import moment from 'moment';
 import L from 'leaflet'
-import  ExtendedMarker from '../../utils/ExtendedMarker';
+import Modal from 'boron/FlyModal';
+import CreateIndex from '../project/CreateIndex';
 
-import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
+var contentStyle = {
+    height: '100%',
+    width: '600px'
+};
 export default class Account extends React.Component {
     constructor() {
         super();
@@ -34,6 +38,7 @@ export default class Account extends React.Component {
             longitude: 3.540790900000047300,
             latitude: 6.523276500000000000,
             zoom: 11,
+            showModal: false
         }
     }
 
@@ -74,10 +79,19 @@ export default class Account extends React.Component {
             let map = L.map("map", {center: [this.state.latitude, this.state.longitude],zoom: this.state.zoom});
             L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {attribution: "OpenStreetMap"}).addTo(map);
             let marker = L.marker([result.lat(), result.lng()]).addTo(map);
-            marker.bindPopup("<strong>" + this.state.username + "!</strong>").openPopup();
+            marker.bindPopup("<strong>You are here!</strong>").openPopup();
         }
     }
 
+    showModal = (e) => {
+        e.preventDefault();
+        this.refs.modal.show();
+    }
+
+    hideModal = (e) =>{
+        e.preventDefault();
+        this.refs.modal.hide();
+    }
 
     render(){
         return (
@@ -127,7 +141,13 @@ export default class Account extends React.Component {
                                             <br />
                                         </ul>
                                         <ul>
-                                            <li><i className="fa fa-project" /><a  className="btn btn-default">Share Project</a></li>
+                                            <li><i className="fa fa-project" />
+                                                <a onClick={this.showModal}
+                                                   className="btn btn-default">Share Project</a>
+                                                <Modal ref="modal" contentStyle={contentStyle}>
+                                                    <CreateIndex onClose={this.hideModal} />
+                                                </Modal>
+                                            </li>
                                             <br />
                                         </ul>
                                     </div>

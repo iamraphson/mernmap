@@ -22,6 +22,7 @@
   "dependencies": {
     "bcrypt": "^0.8.7",
     "body-parser": "^1.15.2",
+    "boron": "^0.2.3",
     "cloudinary": "^1.4.1",
     "cors": "^2.7.1",
     "dotenv": "^2.0.0",
@@ -44,8 +45,6 @@
     "react": "*",
     "react-dom": "*",
     "react-dropzone": "^3.6.0",
-    "react-leaflet": "^0.12.3",
-    "react-redux-toastr": "^3.8.3",
     "react-router": "*",
     "react-s-alert": "^1.2.0",
     "sendgrid-nodejs": "*",
