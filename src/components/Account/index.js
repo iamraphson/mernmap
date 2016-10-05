@@ -7,6 +7,7 @@ import NavBar from '../NavBar/index';
 import Footer from '../Footer/Index';
 import UserStore from '../../stores/UserStore';
 import UserActions from '../../actions/UserActions';
+import ProjectActions from '../../actions/ProjectActions';
 import Auth from '../../utils/auth';
 import marked from 'marked';
 import moment from 'moment';
@@ -95,6 +96,12 @@ export default class Account extends React.Component {
 
     handleProjectShare = (data) => {
         console.log(JSON.stringify(data));
+        var projectPayLoad = {
+            name: data.project_name,
+            url: data.project_url,
+            description: data.project_description
+        };
+        ProjectActions.shareProject(projectPayLoad, this.state.token);
     }
 
 

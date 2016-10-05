@@ -52057,6 +52057,10 @@
 
 	var _UserActions2 = _interopRequireDefault(_UserActions);
 
+	var _ProjectActions = __webpack_require__(/*! ../../actions/ProjectActions */ 407);
+
+	var _ProjectActions2 = _interopRequireDefault(_ProjectActions);
+
 	var _auth = __webpack_require__(/*! ../../utils/auth */ 252);
 
 	var _auth2 = _interopRequireDefault(_auth);
@@ -52149,6 +52153,12 @@
 
 	        _this.handleProjectShare = function (data) {
 	            console.log(JSON.stringify(data));
+	            var projectPayLoad = {
+	                name: data.project_name,
+	                url: data.project_url,
+	                description: data.project_description
+	            };
+	            _ProjectActions2.default.shareProject(projectPayLoad, _this.state.token);
 	        };
 
 	        _leaflet2.default.Icon.Default.imagePath = "//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/";
@@ -82087,12 +82097,7 @@
 	        };
 
 	        _this.handleSubmit = function (data) {
-	            console.log(JSON.stringify(data));
-	            var projectPayLoad = {
-	                name: data.project_name,
-	                url: data.project_url,
-	                description: data.project_description
-	            };
+	            _this.props.onDataSubmit(data);
 	        };
 
 	        _this.state = {
@@ -82158,6 +82163,30 @@
 	}(_react.Component);
 
 	exports.default = Create;
+
+/***/ },
+/* 407 */
+/*!***************************************!*\
+  !*** ./src/actions/ProjectActions.js ***!
+  \***************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(module) {'use strict';
+
+	/**
+	 * Created by Raphson on 10/5/16.
+	 */
+	var AppConstants = __webpack_require__(/*! ../constants/AppConstants */ 269),
+	    BaseActions = __webpack_require__(/*! ./BaseActions */ 278);
+
+	module.export = {
+	    shareProject: function shareProject(project) {
+	        var token = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
+
+	        BaseActions.post('/api/projects', project, AppConstants.PROJECT_SHARE, token);
+	    }
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../~/webpack/buildin/module.js */ 272)(module)))
 
 /***/ }
 /******/ ]);
