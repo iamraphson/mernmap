@@ -8,7 +8,6 @@ var projectSchema =  mongoose.Schema({
     description: {type: String, required: true},
     url: {type: String, required: true, unique: true},
     postedBy: {type : schema.ObjectId, ref: 'user'},
-    public_id: { type: String, required: true },
     snapshot: {type: String, default: ''},
     registered_on: {type: Date, default: Date.now()}
 });

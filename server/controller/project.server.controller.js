@@ -3,6 +3,7 @@
  */
 var cloudinary = require('cloudinary');
 var multiparty  = require('multiparty');
+var Async = require('async');
 var slug = require('slug');
 var project = require('../model/project.server.model');
 module.exports = {
@@ -46,7 +47,33 @@ module.exports = {
      * @return {object}
      */
     shareProject: function(req, res){
-        var newProject = new project({
+        async.waterfall([
+            function(cb){
+                var projectUrl = req.body.url;
+                var url = cloudinary.url(projectUrl,{
+                    type: "url2png",
+                    secure: true,
+                    crop: "fill",
+                    width: 300,
+                    height: 200,
+                    gravity: "north",
+                    sign_url: true
+                });
+                console.log("url", url);
+                cb(null, url);
+            }
+        ], (err, result) => {
+            var newProject = new project({
+                name: req.body.name,
+                slug: slug(req.body.name),
+                description: req.body.description,
+                url: req.body.url,
+                postedBy: req.user._id,
+                snapshot: result,
+            });
+
+        })
+        /*var newProject = new project({
             name: req.body.name,
             slug: slug(req.body.name),
             description: req.body.description,
@@ -62,7 +89,7 @@ module.exports = {
                 return res.status(500).json({ message: err.message });
             }
             return res.status(200).json({success: true, message: "Project Shared successfully." });
-        });
+        });*/
     },
 
     /**
