@@ -8,38 +8,6 @@ var slug = require('slug');
 var project = require('../model/project.server.model');
 module.exports = {
 
-    /*
-    *   upload image to cloudinary
-    *   @param req
-    *   @param res
-    *   @return json
-    */
-    uploadProjectSnap: function(req, res){
-        var fileName = '';
-        var size = '';
-        var form = new multiparty.Form();
-
-        form.on('error', function(err){
-            console.log('Error parsing form: ' + err.stack);
-        });
-        form.on('part', function(part){
-            if(!part.filename){
-                return;
-            }
-            size = part.byteCount;
-            fileName = part.filename;
-        });
-        form.on('file', function(name, file){
-            cloudinary.uploader.upload(file.path, function(response){
-                return res.json({ response: response });
-            }, { resource_type: "image" });
-        });
-        form.on('close', function(){
-            console.log('Uploaded!!');
-        });
-        form.parse(req);
-    },
-
     /**
      * Saves A project Details Posted By User
      * @param  {void}   req
@@ -47,7 +15,7 @@ module.exports = {
      * @return {object}
      */
     shareProject: function(req, res){
-        async.waterfall([
+        Async.waterfall([
             function(cb){
                 var projectUrl = req.body.url;
                 var url = cloudinary.url(projectUrl,{

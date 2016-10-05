@@ -52053,6 +52053,10 @@
 
 	var _UserStore2 = _interopRequireDefault(_UserStore);
 
+	var _ProjectStore = __webpack_require__(/*! ../../stores/ProjectStore */ 408);
+
+	var _ProjectStore2 = _interopRequireDefault(_ProjectStore);
+
 	var _UserActions = __webpack_require__(/*! ../../actions/UserActions */ 277);
 
 	var _UserActions2 = _interopRequireDefault(_UserActions);
@@ -52127,6 +52131,21 @@
 	            _this.handleAddressResolve();
 	        };
 
+	        _this.handleShareProjectResult = function () {
+	            var result = _ProjectStore2.default.getShareProjectResult();
+	            _auth2.default.checkAuthRequired(result);
+	            if (result.status == 500) {
+	                Alert.error(result.data.message, { position: 'top-right', effect: 'bouncyflip' });
+	            } else {
+	                if (result.data.success) {
+	                    Alert.success(result.data.message, { position: 'top-right', effect: 'bouncyflip' });
+	                    _this.refs.modal.hide();
+	                } else {
+	                    Alert.error(result.data.message, { position: 'top-right', effect: 'bouncyflip' });
+	                }
+	            }
+	        };
+
 	        _this.handleAddressResolve = function () {
 	            _this.state.geocoder.geocode({ 'address': _this.state.address }, _this.handleAddressResolveSuccess);
 	        };
@@ -52158,6 +52177,7 @@
 	                url: data.project_url,
 	                description: data.project_description
 	            };
+	            //UserActions.signup(projectPayLoad);
 	            _ProjectActions2.default.shareProject(projectPayLoad, _this.state.token);
 	        };
 
@@ -52188,11 +52208,13 @@
 	        value: function componentDidMount() {
 	            _UserActions2.default.fetchAuthUser(this.state.token);
 	            _UserStore2.default.addChangeListener(this.handleAuthUserFetch);
+	            _ProjectStore2.default.addChangeListener(this.handleShareProjectResult, 'shareProject');
 	        }
 	    }, {
 	        key: 'componentWillUnmount',
 	        value: function componentWillUnmount() {
 	            _UserStore2.default.removeChangeListener(this.handleAuthUserFetch);
+	            _ProjectStore2.default.removeChangeListener(this.handleShareProjectResult, 'shareProject');
 	        }
 	    }, {
 	        key: 'render',
@@ -82171,7 +82193,7 @@
   \***************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(module) {'use strict';
+	'use strict';
 
 	/**
 	 * Created by Raphson on 10/5/16.
@@ -82179,14 +82201,60 @@
 	var AppConstants = __webpack_require__(/*! ../constants/AppConstants */ 269),
 	    BaseActions = __webpack_require__(/*! ./BaseActions */ 278);
 
-	module.export = {
-	    shareProject: function shareProject(project) {
-	        var token = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
-
+	module.exports = {
+	    shareProject: function shareProject(project, token) {
 	        BaseActions.post('/api/projects', project, AppConstants.PROJECT_SHARE, token);
 	    }
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../~/webpack/buildin/module.js */ 272)(module)))
+
+/***/ },
+/* 408 */
+/*!************************************!*\
+  !*** ./src/stores/ProjectStore.js ***!
+  \************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _BaseStore = __webpack_require__(/*! ./BaseStore */ 267);
+
+	var _BaseStore2 = _interopRequireDefault(_BaseStore);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var AppConstants = __webpack_require__(/*! ../constants/AppConstants */ 269),
+	    AppDispatcher = __webpack_require__(/*! ../dispatcher/AppDispatcher */ 273); /**
+	                                                             * Created by Raphson on 10/5/16.
+	                                                             */
+
+
+	if (!Object.assign) {
+	    Object.assign = __webpack_require__(/*! object-assign */ 5);
+	}
+	var ProjectStore = Object.assign({}, _BaseStore2.default, {
+	    shareProjectResult: null,
+
+	    setShareProjectResult: function setShareProjectResult(shareProjectResult) {
+	        this.shareProjectResult = shareProjectResult;
+	        this.emitChange('shareProject');
+	    },
+	    getShareProjectResult: function getShareProjectResult() {
+	        return this.shareProjectResult;
+	    }
+	});
+
+	AppDispatcher.register(function (action) {
+	    switch (action.actionType) {
+	        case AppConstants.PROJECT_SHARE:
+	            ProjectStore.setShareProjectResult(action.data);
+	            break;
+	        default:
+	        // no default action
+	    }
+	    return true;
+	});
+
+	module.exports = ProjectStore;
 
 /***/ }
 /******/ ]);

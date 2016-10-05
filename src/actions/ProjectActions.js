@@ -4,8 +4,8 @@
 let AppConstants = require('../constants/AppConstants'),
     BaseActions = require('./BaseActions');
 
-module.export = {
-    shareProject: (project, token = null) => {
+module.exports = {
+    shareProject: (project, token) => {
         BaseActions.post('/api/projects', project, AppConstants.PROJECT_SHARE, token);
     }
 }

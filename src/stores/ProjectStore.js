@@ -13,7 +13,7 @@ let ProjectStore = Object.assign({}, BaseStore, {
 
     setShareProjectResult(shareProjectResult) {
         this.shareProjectResult = shareProjectResult;
-        this.emitChange('shareproject');
+        this.emitChange('shareProject');
     },
 
     getShareProjectResult()  {

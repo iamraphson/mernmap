@@ -6,6 +6,7 @@ import { Link, hashHistory } from 'react-router';
 import NavBar from '../NavBar/index';
 import Footer from '../Footer/Index';
 import UserStore from '../../stores/UserStore';
+import ProjectStore from '../../stores/ProjectStore';
 import UserActions from '../../actions/UserActions';
 import ProjectActions from '../../actions/ProjectActions';
 import Auth from '../../utils/auth';
@@ -46,10 +47,12 @@ export default class Account extends React.Component {
     componentDidMount() {
         UserActions.fetchAuthUser(this.state.token);
         UserStore.addChangeListener(this.handleAuthUserFetch);
+        ProjectStore.addChangeListener(this.handleShareProjectResult, 'shareProject');
     }
 
     componentWillUnmount(){
         UserStore.removeChangeListener(this.handleAuthUserFetch);
+        ProjectStore.removeChangeListener(this.handleShareProjectResult, 'shareProject');
     }
 
     handleAuthUserFetch = () => {
@@ -68,6 +71,21 @@ export default class Account extends React.Component {
             username: authUser.data.username
         });
         this.handleAddressResolve();
+    }
+
+    handleShareProjectResult = () => {
+        let result = ProjectStore.getShareProjectResult();
+        Auth.checkAuthRequired(result);
+        if(result.status == 500){
+            Alert.error(result.data.message, { position: 'top-right',  effect: 'bouncyflip'});
+        } else {
+            if(result.data.success){
+                Alert.success(result.data.message, { position: 'top-right',  effect: 'bouncyflip'});
+                this.refs.modal.hide();
+            } else {
+                Alert.error(result.data.message, { position: 'top-right',  effect: 'bouncyflip'});
+            }
+        }
     }
 
     handleAddressResolve = () => {
@@ -101,6 +119,7 @@ export default class Account extends React.Component {
             url: data.project_url,
             description: data.project_description
         };
+        //UserActions.signup(projectPayLoad);
         ProjectActions.shareProject(projectPayLoad, this.state.token);
     }
 
