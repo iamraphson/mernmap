@@ -25,7 +25,12 @@ export default class Create extends Component {
     }
 
     handleSubmit = (data) => {
-        this.props.onDataSubmit(data);
+        console.log(JSON.stringify(data));
+        var projectPayLoad = {
+            name: data.project_name,
+            url: data.project_url,
+            description: data.project_description
+        }
     }
 
     render(){

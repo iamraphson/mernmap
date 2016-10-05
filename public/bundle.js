@@ -31904,7 +31904,8 @@
 	    USER_SIGNUP: null,
 	    USER_LOGIN: null,
 	    AUTH_USER: null,
-	    USER_UPDATE: null
+	    USER_UPDATE: null,
+	    PROJECT_SHARE: null
 	});
 
 /***/ },
@@ -52072,11 +52073,11 @@
 
 	var _leaflet2 = _interopRequireDefault(_leaflet);
 
-	var _FlyModal = __webpack_require__(/*! boron/FlyModal */ 457);
+	var _FlyModal = __webpack_require__(/*! boron/FlyModal */ 397);
 
 	var _FlyModal2 = _interopRequireDefault(_FlyModal);
 
-	var _CreateIndex = __webpack_require__(/*! ../project/CreateIndex */ 462);
+	var _CreateIndex = __webpack_require__(/*! ../project/CreateIndex */ 406);
 
 	var _CreateIndex2 = _interopRequireDefault(_CreateIndex);
 
@@ -81424,66 +81425,138 @@
 	//# sourceMappingURL=leaflet-src.map
 
 /***/ },
-/* 397 */,
-/* 398 */,
-/* 399 */,
-/* 400 */,
-/* 401 */,
-/* 402 */,
-/* 403 */,
-/* 404 */,
-/* 405 */,
-/* 406 */,
-/* 407 */,
-/* 408 */,
-/* 409 */,
-/* 410 */,
-/* 411 */,
-/* 412 */,
-/* 413 */,
-/* 414 */,
-/* 415 */,
-/* 416 */,
-/* 417 */,
-/* 418 */,
-/* 419 */,
-/* 420 */,
-/* 421 */,
-/* 422 */,
-/* 423 */,
-/* 424 */,
-/* 425 */,
-/* 426 */,
-/* 427 */,
-/* 428 */,
-/* 429 */,
-/* 430 */,
-/* 431 */,
-/* 432 */,
-/* 433 */,
-/* 434 */,
-/* 435 */,
-/* 436 */,
-/* 437 */,
-/* 438 */,
-/* 439 */,
-/* 440 */,
-/* 441 */,
-/* 442 */,
-/* 443 */,
-/* 444 */,
-/* 445 */,
-/* 446 */,
-/* 447 */,
-/* 448 */
+/* 397 */
+/*!*****************************!*\
+  !*** ./~/boron/FlyModal.js ***!
+  \*****************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var modalFactory = __webpack_require__(/*! ./modalFactory */ 398);
+	var insertKeyframesRule = __webpack_require__(/*! domkit/insertKeyframesRule */ 403);
+	var appendVendorPrefix = __webpack_require__(/*! domkit/appendVendorPrefix */ 400);
+
+	var animation = {
+	    show: {
+	        animationDuration: '0.5s',
+	        animationTimingFunction: 'ease-out'
+	    },
+	    hide: {
+	        animationDuration: '0.5s',
+	        animationTimingFunction: 'ease-out'
+	    },
+	    showContentAnimation: insertKeyframesRule({
+
+	        '0%': {
+	            opacity: 0,
+	            transform: 'translate3d(calc(-100vw - 50%), 0, 0)'
+	        },
+	        '50%': {
+	            opacity: 1,
+	            transform: 'translate3d(100px, 0, 0)'
+	        },
+	        '100%': {
+	            opacity: 1,
+	            transform: 'translate3d(0, 0, 0)'
+	        }
+	    }),
+
+	    hideContentAnimation: insertKeyframesRule({
+
+	        '0%': {
+	            opacity: 1,
+	            transform: 'translate3d(0, 0, 0)'
+	        },
+	        '50%': {
+	            opacity: 1,
+	            transform: 'translate3d(-100px, 0, 0) scale3d(1.1, 1.1, 1)'
+	        },
+	        '100%': {
+	            opacity: 0,
+	            transform: 'translate3d(calc(100vw + 50%), 0, 0)'
+	        },
+	    }),
+
+	    showBackdropAnimation: insertKeyframesRule({
+	        '0%': {
+	            opacity: 0
+	        },
+	        '100%': {
+	            opacity: 0.9
+	        },
+	    }),
+
+	    hideBackdropAnimation: insertKeyframesRule({
+	        '0%': {
+	            opacity: 0.9
+	        },
+	        '90%': {
+	            opactiy: 0.9
+	        },
+	        '100%': {
+	            opacity: 0
+	        }
+	    })
+	};
+
+	var showAnimation = animation.show;
+	var hideAnimation = animation.hide;
+	var showContentAnimation = animation.showContentAnimation;
+	var hideContentAnimation = animation.hideContentAnimation;
+	var showBackdropAnimation = animation.showBackdropAnimation;
+	var hideBackdropAnimation = animation.hideBackdropAnimation;
+
+	module.exports = modalFactory({
+	    getRef: function(willHidden) {
+	        return 'content';
+	    },
+	    getModalStyle: function(willHidden) {
+	        return appendVendorPrefix({
+	            zIndex: 1050,
+	            position: "fixed",
+	            width: "500px",
+	            transform: "translate3d(-50%, -50%, 0)",
+	            top: "50%",
+	            left: "50%"
+	        })
+	    },
+	    getBackdropStyle: function(willHidden) {
+	        return appendVendorPrefix({
+	            position: "fixed",
+	            top: 0,
+	            right: 0,
+	            bottom: 0,
+	            left: 0,
+	            zIndex: 1040,
+	            backgroundColor: "#373A47",
+	            animationFillMode: 'forwards',
+	            animationDuration: '0.3s',
+	            animationName: willHidden ? hideBackdropAnimation : showBackdropAnimation,
+	            animationTimingFunction: (willHidden ? hideAnimation : showAnimation).animationTimingFunction
+	        });
+	    },
+	    getContentStyle: function(willHidden) {
+	        return appendVendorPrefix({
+	            margin: 0,
+	            backgroundColor: "white",
+	            animationDuration: (willHidden ? hideAnimation : showAnimation).animationDuration,
+	            animationFillMode: 'forwards',
+	            animationName: willHidden ? hideContentAnimation : showContentAnimation,
+	            animationTimingFunction: (willHidden ? hideAnimation : showAnimation).animationTimingFunction
+	        })
+	    }
+	});
+
+
+/***/ },
+/* 398 */
 /*!*********************************!*\
   !*** ./~/boron/modalFactory.js ***!
   \*********************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(/*! react */ 2);
-	var transitionEvents = __webpack_require__(/*! domkit/transitionEvents */ 449);
-	var appendVendorPrefix = __webpack_require__(/*! domkit/appendVendorPrefix */ 450);
+	var transitionEvents = __webpack_require__(/*! domkit/transitionEvents */ 399);
+	var appendVendorPrefix = __webpack_require__(/*! domkit/appendVendorPrefix */ 400);
 
 	module.exports = function(animation){
 
@@ -81662,7 +81735,7 @@
 
 
 /***/ },
-/* 449 */
+/* 399 */
 /*!**************************************!*\
   !*** ./~/domkit/transitionEvents.js ***!
   \**************************************/
@@ -81766,7 +81839,7 @@
 
 
 /***/ },
-/* 450 */
+/* 400 */
 /*!****************************************!*\
   !*** ./~/domkit/appendVendorPrefix.js ***!
   \****************************************/
@@ -81774,7 +81847,7 @@
 
 	'use strict';
 
-	var getVendorPropertyName = __webpack_require__(/*! ./getVendorPropertyName */ 451);
+	var getVendorPropertyName = __webpack_require__(/*! ./getVendorPropertyName */ 401);
 
 	module.exports = function(target, sources) {
 	  var to = Object(target);
@@ -81805,7 +81878,7 @@
 
 
 /***/ },
-/* 451 */
+/* 401 */
 /*!*******************************************!*\
   !*** ./~/domkit/getVendorPropertyName.js ***!
   \*******************************************/
@@ -81813,7 +81886,7 @@
 
 	'use strict';
 
-	var builtinStyle = __webpack_require__(/*! ./builtinStyle */ 452);
+	var builtinStyle = __webpack_require__(/*! ./builtinStyle */ 402);
 	var prefixes = ['Moz', 'Webkit', 'O', 'ms'];
 	var domVendorPrefix;
 
@@ -81851,7 +81924,7 @@
 
 
 /***/ },
-/* 452 */
+/* 402 */
 /*!**********************************!*\
   !*** ./~/domkit/builtinStyle.js ***!
   \**********************************/
@@ -81863,7 +81936,7 @@
 
 
 /***/ },
-/* 453 */
+/* 403 */
 /*!*****************************************!*\
   !*** ./~/domkit/insertKeyframesRule.js ***!
   \*****************************************/
@@ -81871,8 +81944,8 @@
 
 	'use strict';
 
-	var insertRule = __webpack_require__(/*! ./insertRule */ 454);
-	var vendorPrefix = __webpack_require__(/*! ./getVendorPrefix */ 455)();
+	var insertRule = __webpack_require__(/*! ./insertRule */ 404);
+	var vendorPrefix = __webpack_require__(/*! ./getVendorPrefix */ 405)();
 	var index = 0;
 
 	module.exports = function(keyframes) {
@@ -81902,7 +81975,7 @@
 
 
 /***/ },
-/* 454 */
+/* 404 */
 /*!********************************!*\
   !*** ./~/domkit/insertRule.js ***!
   \********************************/
@@ -81930,7 +82003,7 @@
 
 
 /***/ },
-/* 455 */
+/* 405 */
 /*!*************************************!*\
   !*** ./~/domkit/getVendorPrefix.js ***!
   \*************************************/
@@ -81952,135 +82025,7 @@
 
 
 /***/ },
-/* 456 */,
-/* 457 */
-/*!*****************************!*\
-  !*** ./~/boron/FlyModal.js ***!
-  \*****************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	var modalFactory = __webpack_require__(/*! ./modalFactory */ 448);
-	var insertKeyframesRule = __webpack_require__(/*! domkit/insertKeyframesRule */ 453);
-	var appendVendorPrefix = __webpack_require__(/*! domkit/appendVendorPrefix */ 450);
-
-	var animation = {
-	    show: {
-	        animationDuration: '0.5s',
-	        animationTimingFunction: 'ease-out'
-	    },
-	    hide: {
-	        animationDuration: '0.5s',
-	        animationTimingFunction: 'ease-out'
-	    },
-	    showContentAnimation: insertKeyframesRule({
-
-	        '0%': {
-	            opacity: 0,
-	            transform: 'translate3d(calc(-100vw - 50%), 0, 0)'
-	        },
-	        '50%': {
-	            opacity: 1,
-	            transform: 'translate3d(100px, 0, 0)'
-	        },
-	        '100%': {
-	            opacity: 1,
-	            transform: 'translate3d(0, 0, 0)'
-	        }
-	    }),
-
-	    hideContentAnimation: insertKeyframesRule({
-
-	        '0%': {
-	            opacity: 1,
-	            transform: 'translate3d(0, 0, 0)'
-	        },
-	        '50%': {
-	            opacity: 1,
-	            transform: 'translate3d(-100px, 0, 0) scale3d(1.1, 1.1, 1)'
-	        },
-	        '100%': {
-	            opacity: 0,
-	            transform: 'translate3d(calc(100vw + 50%), 0, 0)'
-	        },
-	    }),
-
-	    showBackdropAnimation: insertKeyframesRule({
-	        '0%': {
-	            opacity: 0
-	        },
-	        '100%': {
-	            opacity: 0.9
-	        },
-	    }),
-
-	    hideBackdropAnimation: insertKeyframesRule({
-	        '0%': {
-	            opacity: 0.9
-	        },
-	        '90%': {
-	            opactiy: 0.9
-	        },
-	        '100%': {
-	            opacity: 0
-	        }
-	    })
-	};
-
-	var showAnimation = animation.show;
-	var hideAnimation = animation.hide;
-	var showContentAnimation = animation.showContentAnimation;
-	var hideContentAnimation = animation.hideContentAnimation;
-	var showBackdropAnimation = animation.showBackdropAnimation;
-	var hideBackdropAnimation = animation.hideBackdropAnimation;
-
-	module.exports = modalFactory({
-	    getRef: function(willHidden) {
-	        return 'content';
-	    },
-	    getModalStyle: function(willHidden) {
-	        return appendVendorPrefix({
-	            zIndex: 1050,
-	            position: "fixed",
-	            width: "500px",
-	            transform: "translate3d(-50%, -50%, 0)",
-	            top: "50%",
-	            left: "50%"
-	        })
-	    },
-	    getBackdropStyle: function(willHidden) {
-	        return appendVendorPrefix({
-	            position: "fixed",
-	            top: 0,
-	            right: 0,
-	            bottom: 0,
-	            left: 0,
-	            zIndex: 1040,
-	            backgroundColor: "#373A47",
-	            animationFillMode: 'forwards',
-	            animationDuration: '0.3s',
-	            animationName: willHidden ? hideBackdropAnimation : showBackdropAnimation,
-	            animationTimingFunction: (willHidden ? hideAnimation : showAnimation).animationTimingFunction
-	        });
-	    },
-	    getContentStyle: function(willHidden) {
-	        return appendVendorPrefix({
-	            margin: 0,
-	            backgroundColor: "white",
-	            animationDuration: (willHidden ? hideAnimation : showAnimation).animationDuration,
-	            animationFillMode: 'forwards',
-	            animationName: willHidden ? hideContentAnimation : showContentAnimation,
-	            animationTimingFunction: (willHidden ? hideAnimation : showAnimation).animationTimingFunction
-	        })
-	    }
-	});
-
-
-/***/ },
-/* 458 */,
-/* 459 */,
-/* 460 */,
-/* 461 */,
-/* 462 */
+/* 406 */
 /*!***********************************************!*\
   !*** ./src/components/project/CreateIndex.js ***!
   \***********************************************/
@@ -82142,7 +82087,12 @@
 	        };
 
 	        _this.handleSubmit = function (data) {
-	            _this.props.onDataSubmit(data);
+	            console.log(JSON.stringify(data));
+	            var projectPayLoad = {
+	                name: data.project_name,
+	                url: data.project_url,
+	                description: data.project_description
+	            };
 	        };
 
 	        _this.state = {
