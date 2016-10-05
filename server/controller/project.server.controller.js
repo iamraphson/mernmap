@@ -71,6 +71,20 @@ module.exports = {
                 postedBy: req.user._id,
                 snapshot: result,
             });
+            newProject.save((err, projects) => {
+                if(err){
+                    console.log(err);
+                    if(err.name == 'MongoError' && err.message.indexOf('$name_1') > 0 ||
+                        err.message.indexOf('$url_1') > 0 ) {
+                        return res.status(200)
+                            .json({ success: false, message: 'Project is registered already. Please choose another' });
+                    } else {
+                        return res.status(500).json({success: false, message: 'Internal Server'});
+                    }
+                } else {
+                    return res.status(200).json({success: true, message: "Project Shared successfully."});
+                }
+            })
 
         })
         /*var newProject = new project({

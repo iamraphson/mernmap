@@ -84,7 +84,8 @@ module.exports = {
      */
     getCurrentLoggedUser: function(req, res){
         var query = User.findById(req.user)
-            .select('username fullname hire_status address twitter_handle website github_profile bio user_avi registered_on');
+            .select('username fullname hire_status address twitter_handle website github_profile bio ' +
+                'user_avi registered_on');
 
         query.exec(function(err, result){
             return res.status(200).send(result);

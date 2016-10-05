@@ -3,9 +3,9 @@
  */
 var mongoose = require('mongooose');
 var projectSchema =  mongoose.Schema({
-    name: { type: String, unique: true},
+    name: { type: String, unique: true, required: true},
     slug: {type: String},
-    description: {type: String, required: true},
+    description: {type: String},
     url: {type: String, required: true, unique: true},
     postedBy: {type : schema.ObjectId, ref: 'user'},
     snapshot: {type: String, default: ''},
