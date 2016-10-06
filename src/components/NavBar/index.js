@@ -91,10 +91,10 @@ export default class Nav extends React.Component{
                                 <div className="col-md-6 text-center col-md-pull-3 col-sm-12 col-xs-12">
                                     <ul className="menu">
                                         <li><Link to="/">HOME</Link></li>
-                                        <li><a href="/mean-developers">MERN DEVELOPERS</a></li>
-                                        <li><a href="/projects">PROJECTS</a></li>
-                                        <li><a href="/jobs">JOBS</a></li>
-                                        <li><a href="/tutorials">TUTORIALS</a></li>
+                                        <li><Link href="/mean-developers">MERN DEVELOPERS</Link></li>
+                                        <li><Link to="projects">PROJECTS</Link></li>
+                                        <li><Link href="/jobs">JOBS</Link></li>
+                                        <li><Link href="/tutorials">TUTORIALS</Link></li>
                                     </ul>
                                 </div>
                             </div>

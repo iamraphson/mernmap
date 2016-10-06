@@ -14,7 +14,10 @@ import marked from 'marked';
 import moment from 'moment';
 import L from 'leaflet'
 import Modal from 'boron/FlyModal';
-import CreateIndex from '../project/CreateIndex';
+import CreateIndex from '../Project/CreateIndex';
+import Alert from 'react-s-alert';
+import 'react-s-alert/dist/s-alert-default.css';
+import 'react-s-alert/dist/s-alert-css-effects/bouncyflip.css';
 
 var contentStyle = {
     height: '100%',
