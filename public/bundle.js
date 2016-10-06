@@ -52433,6 +52433,7 @@
 	}
 	var ProjectStore = Object.assign({}, _BaseStore2.default, {
 	    shareProjectResult: null,
+	    projects: null,
 
 	    setShareProjectResult: function setShareProjectResult(shareProjectResult) {
 	        this.shareProjectResult = shareProjectResult;
@@ -52440,6 +52441,13 @@
 	    },
 	    getShareProjectResult: function getShareProjectResult() {
 	        return this.shareProjectResult;
+	    },
+	    setProjects: function setProjects(projects) {
+	        this.projects = projects;
+	        this.emitChange('fetchProjects');
+	    },
+	    getProjects: function getProjects() {
+	        return this.projects;
 	    }
 	});
 
@@ -52447,6 +52455,9 @@
 	    switch (action.actionType) {
 	        case AppConstants.PROJECT_SHARE:
 	            ProjectStore.setShareProjectResult(action.data);
+	            break;
+	        case AppConstants.GET_PROJECT:
+	            ProjectStore.setProjects(action.data);
 	            break;
 	        default:
 	        // no default action
@@ -82304,6 +82315,10 @@
 
 	var _ProjectActions2 = _interopRequireDefault(_ProjectActions);
 
+	var _ProjectStore = __webpack_require__(/*! ../../stores/ProjectStore */ 289);
+
+	var _ProjectStore2 = _interopRequireDefault(_ProjectStore);
+
 	var _index = __webpack_require__(/*! ../NavBar/index */ 188);
 
 	var _index2 = _interopRequireDefault(_index);
@@ -82335,6 +82350,10 @@
 
 	        var _this = _possibleConstructorReturn(this, (Project.__proto__ || Object.getPrototypeOf(Project)).call(this));
 
+	        _this.handleProjectsResult = function () {
+	            var result = _ProjectStore2.default.getProjects();
+	        };
+
 	        _this.state = {
 	            token: _auth2.default.getToken()
 	        };
@@ -82345,12 +82364,12 @@
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
 	            _ProjectActions2.default.fetchAuthUser(this.state.token);
-	            //ProjectStore.addChangeListener(this.handleShareProjectResult, 'shareProject');
+	            _ProjectStore2.default.addChangeListener(this.handleProjectsResult, 'fetchProjects');
 	        }
 	    }, {
 	        key: 'componentWillUnmount',
 	        value: function componentWillUnmount() {
-	            //ProjectStore.removeChangeListener(this.handleShareProjectResult, 'shareProject');
+	            _ProjectStore2.default.removeChangeListener(this.handleProjectsResult, 'fetchProjects');
 	        }
 	    }, {
 	        key: 'render',
