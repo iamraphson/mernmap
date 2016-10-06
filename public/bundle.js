@@ -31910,7 +31910,8 @@
 	    USER_LOGIN: null,
 	    AUTH_USER: null,
 	    USER_UPDATE: null,
-	    PROJECT_SHARE: null
+	    PROJECT_SHARE: null,
+	    GET_PROJECT: null
 	});
 
 /***/ },
@@ -52473,6 +52474,10 @@
 	module.exports = {
 	    shareProject: function shareProject(project, token) {
 	        BaseActions.post('/api/projects', project, AppConstants.PROJECT_SHARE, token);
+	    },
+
+	    fetchAllProjects: function fetchAllProjects(token) {
+	        BaseActions.get('/api/project', AppConstants.GET_PROJECT, token);
 	    }
 	};
 
@@ -82295,6 +82300,10 @@
 
 	var _reactRouter = __webpack_require__(/*! react-router */ 189);
 
+	var _ProjectActions = __webpack_require__(/*! ../../actions/ProjectActions */ 290);
+
+	var _ProjectActions2 = _interopRequireDefault(_ProjectActions);
+
 	var _index = __webpack_require__(/*! ../NavBar/index */ 188);
 
 	var _index2 = _interopRequireDefault(_index);
@@ -82335,6 +82344,7 @@
 	    _createClass(Project, [{
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
+	            _ProjectActions2.default.fetchAuthUser(this.state.token);
 	            //ProjectStore.addChangeListener(this.handleShareProjectResult, 'shareProject');
 	        }
 	    }, {

@@ -4,6 +4,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Link, hashHistory } from 'react-router';
+import ProjectActions from '../../actions/ProjectActions';
 import NavBar from '../NavBar/index';
 import Footer from '../Footer/Index';
 import Auth from '../../utils/auth';
@@ -17,6 +18,7 @@ export default class Project extends React.Component {
     }
 
     componentDidMount() {
+        ProjectActions.fetchAuthUser(this.state.token);
         //ProjectStore.addChangeListener(this.handleShareProjectResult, 'shareProject');
     }
 

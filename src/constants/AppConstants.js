@@ -9,4 +9,5 @@ module.exports = keyMirror({
     AUTH_USER : null,
     USER_UPDATE : null,
     PROJECT_SHARE: null,
+    GET_PROJECT: null,
 });

@@ -7,5 +7,9 @@ let AppConstants = require('../constants/AppConstants'),
 module.exports = {
     shareProject: (project, token) => {
         BaseActions.post('/api/projects', project, AppConstants.PROJECT_SHARE, token);
+    },
+
+    fetchAllProjects: (token) => {
+        BaseActions.get('/api/project', AppConstants.GET_PROJECT, token);
     }
 }
