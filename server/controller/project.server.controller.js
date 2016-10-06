@@ -54,24 +54,7 @@ module.exports = {
                 }
             })
 
-        })
-        /*var newProject = new project({
-            name: req.body.name,
-            slug: slug(req.body.name),
-            description: req.body.description,
-            url: req.body.url,
-            postedBy: req.user._id,
-            snapshot: req.body.snap,
-            public_id: req.body.public_id,
         });
-
-        newProject.save(function( err, project){
-            if(err) {
-                console.log( err );
-                return res.status(500).json({ message: err.message });
-            }
-            return res.status(200).json({success: true, message: "Project Shared successfully." });
-        });*/
     },
 
     /**

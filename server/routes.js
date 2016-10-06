@@ -12,4 +12,5 @@ module.exports = function(app){
     app.put('/api/me', token.ensureAuthenticated, userCtrl.updateLoggedInUserDetail);
 
     app.post('/api/projects', token.ensureAuthenticated, projectCtrl.shareProject);
+    app.get('/api/project', projectCtrl.getAllProjects);
 }
