@@ -36,7 +36,7 @@ module.exports = {
                 slug: slug(req.body.name),
                 description: req.body.description,
                 url: req.body.url,
-                postedBy: req.user._id,
+                postedBy: req.user,
                 snapshot: result,
             });
             newProject.save((err, projects) => {
@@ -53,7 +53,6 @@ module.exports = {
                     return res.status(200).json({success: true, message: "Project Shared successfully."});
                 }
             })
-
         });
     },
 

@@ -93,7 +93,7 @@
 
 	var _index2 = _interopRequireDefault(_index);
 
-	var _Index7 = __webpack_require__(/*! ./components/Project/Index */ 410);
+	var _Index7 = __webpack_require__(/*! ./components/Project/Index */ 409);
 
 	var _Index8 = _interopRequireDefault(_Index7);
 
@@ -52091,7 +52091,7 @@
 
 	var _FlyModal2 = _interopRequireDefault(_FlyModal);
 
-	var _CreateIndex = __webpack_require__(/*! ../Project/CreateIndex */ 409);
+	var _CreateIndex = __webpack_require__(/*! ../Project/CreateIndex */ 408);
 
 	var _CreateIndex2 = _interopRequireDefault(_CreateIndex);
 
@@ -82156,8 +82156,7 @@
 
 
 /***/ },
-/* 408 */,
-/* 409 */
+/* 408 */
 /*!***********************************************!*\
   !*** ./src/components/Project/CreateIndex.js ***!
   \***********************************************/
@@ -82287,7 +82286,7 @@
 	exports.default = Create;
 
 /***/ },
-/* 410 */
+/* 409 */
 /*!*****************************************!*\
   !*** ./src/components/Project/Index.js ***!
   \*****************************************/
@@ -82352,6 +82351,7 @@
 
 	        _this.handleProjectsResult = function () {
 	            var result = _ProjectStore2.default.getProjects();
+	            console.log(result);
 	        };
 
 	        _this.state = {
@@ -82363,7 +82363,7 @@
 	    _createClass(Project, [{
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
-	            _ProjectActions2.default.fetchAuthUser(this.state.token);
+	            _ProjectActions2.default.fetchAllProjects(this.state.token);
 	            _ProjectStore2.default.addChangeListener(this.handleProjectsResult, 'fetchProjects');
 	        }
 	    }, {

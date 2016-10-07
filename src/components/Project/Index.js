@@ -19,7 +19,7 @@ export default class Project extends React.Component {
     }
 
     componentDidMount() {
-        ProjectActions.fetchAuthUser(this.state.token);
+        ProjectActions.fetchAllProjects(this.state.token);
         ProjectStore.addChangeListener(this.handleProjectsResult, 'fetchProjects');
     }
 
@@ -29,6 +29,7 @@ export default class Project extends React.Component {
 
     handleProjectsResult = () => {
         let result = ProjectStore.getProjects();
+        console.log(result);
     }
 
     render(){
