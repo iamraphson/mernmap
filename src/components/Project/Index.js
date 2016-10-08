@@ -9,12 +9,14 @@ import ProjectStore from '../../stores/ProjectStore';
 import NavBar from '../NavBar/index';
 import Footer from '../Footer/Index';
 import Auth from '../../utils/auth';
+import ProjectList from './ProjectList';
 
 export default class Project extends React.Component {
     constructor() {
         super();
         this.state = {
             token: Auth.getToken(),
+            projects: null,
         }
     }
 
@@ -30,6 +32,11 @@ export default class Project extends React.Component {
     handleProjectsResult = () => {
         let result = ProjectStore.getProjects();
         console.log(result);
+        if(result.status == 200){
+            this.setState({
+                projects: result.data
+            });
+        }
     }
 
     render(){
@@ -46,16 +53,14 @@ export default class Project extends React.Component {
                             </div>
                             <div className="row">
                                 <div className="col-sm-12 col-xs-12 col-md-4 col-lg-4">
-                                    <div className="thumbnail bootsnipp-thumb">
-                                        <div>
-                                            <p className="lead snipp-title text-center">
-                                                <a style={{textTransform: 'capitalize'}} href="#">projectname</a>
-                                            </p>
-                                        </div>
-                                        <div className="caption">
-                                            <p><a style={{color: '#fff'}} className="btn btn-primary btn-lg btn-block" href="#">View</a></p>
-                                        </div>
-                                    </div>
+                                    {this.state.projects
+                                        ? this.state.projects.map((project, i) => {
+                                            return (
+                                                <ProjectList project={project} key={i} />
+                                            )
+                                        })
+                                        : <p>Loading...</p>
+                                    }
                                 </div>
                             </div>
                         </div>

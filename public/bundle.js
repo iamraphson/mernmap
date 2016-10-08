@@ -82330,6 +82330,10 @@
 
 	var _auth2 = _interopRequireDefault(_auth);
 
+	var _ProjectList = __webpack_require__(/*! ./ProjectList */ 410);
+
+	var _ProjectList2 = _interopRequireDefault(_ProjectList);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -82352,10 +82356,16 @@
 	        _this.handleProjectsResult = function () {
 	            var result = _ProjectStore2.default.getProjects();
 	            console.log(result);
+	            if (result.status == 200) {
+	                _this.setState({
+	                    projects: result.data
+	                });
+	            }
 	        };
 
 	        _this.state = {
-	            token: _auth2.default.getToken()
+	            token: _auth2.default.getToken(),
+	            projects: null
 	        };
 	        return _this;
 	    }
@@ -82406,35 +82416,12 @@
 	                                _react2.default.createElement(
 	                                    'div',
 	                                    { className: 'col-sm-12 col-xs-12 col-md-4 col-lg-4' },
-	                                    _react2.default.createElement(
-	                                        'div',
-	                                        { className: 'thumbnail bootsnipp-thumb' },
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            null,
-	                                            _react2.default.createElement(
-	                                                'p',
-	                                                { className: 'lead snipp-title text-center' },
-	                                                _react2.default.createElement(
-	                                                    'a',
-	                                                    { style: { textTransform: 'capitalize' }, href: '#' },
-	                                                    'projectname'
-	                                                )
-	                                            )
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'caption' },
-	                                            _react2.default.createElement(
-	                                                'p',
-	                                                null,
-	                                                _react2.default.createElement(
-	                                                    'a',
-	                                                    { style: { color: '#fff' }, className: 'btn btn-primary btn-lg btn-block', href: '#' },
-	                                                    'View'
-	                                                )
-	                                            )
-	                                        )
+	                                    this.state.projects ? this.state.projects.map(function (project, i) {
+	                                        return _react2.default.createElement(_ProjectList2.default, { project: project, key: i });
+	                                    }) : _react2.default.createElement(
+	                                        'p',
+	                                        null,
+	                                        'Loading...'
 	                                    )
 	                                )
 	                            )
@@ -82450,6 +82437,94 @@
 	}(_react2.default.Component);
 
 	exports.default = Project;
+
+/***/ },
+/* 410 */
+/*!***********************************************!*\
+  !*** ./src/components/Project/ProjectList.js ***!
+  \***********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(/*! react */ 2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(/*! react-dom */ 35);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _reactRouter = __webpack_require__(/*! react-router */ 189);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by Raphson on 10/7/16.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+	var ProjectList = function (_Component) {
+	    _inherits(ProjectList, _Component);
+
+	    function ProjectList() {
+	        _classCallCheck(this, ProjectList);
+
+	        return _possibleConstructorReturn(this, (ProjectList.__proto__ || Object.getPrototypeOf(ProjectList)).call(this));
+	    }
+
+	    _createClass(ProjectList, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'thumbnail bootsnipp-thumb' },
+	                _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    _react2.default.createElement(
+	                        'p',
+	                        { className: 'lead snipp-title text-center' },
+	                        _react2.default.createElement(
+	                            _reactRouter.Link,
+	                            { style: { textTransform: 'capitalize' },
+	                                to: '/projects/featured/' + this.props.project.slug },
+	                            this.props.project.name
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'caption' },
+	                    _react2.default.createElement(
+	                        'p',
+	                        null,
+	                        _react2.default.createElement(
+	                            _reactRouter.Link,
+	                            { style: { color: '#fff' }, className: 'btn btn-primary btn-lg btn-block',
+	                                to: '/projects/featured/' + this.props.project.slug },
+	                            'View'
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return ProjectList;
+	}(_react.Component);
+
+	exports.default = ProjectList;
 
 /***/ }
 /******/ ]);
