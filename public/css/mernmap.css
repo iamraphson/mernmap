@@ -11216,3 +11216,12 @@ footer .container {
   width: 100%;
   margin: 0 auto;
 }
+.Demo__some-network {
+  display: inline-block;
+  margin-right: 30px;
+  text-align: center;
+}
+.Demo__some-network__share-count {
+  margin-top: 3px;
+  font-size: 12px;
+}

@@ -97,6 +97,10 @@
 
 	var _Index8 = _interopRequireDefault(_Index7);
 
+	var _ProjectDetails = __webpack_require__(/*! ./components/Project/ProjectDetails */ 411);
+
+	var _ProjectDetails2 = _interopRequireDefault(_ProjectDetails);
+
 	var _auth = __webpack_require__(/*! ./utils/auth */ 252);
 
 	var _auth2 = _interopRequireDefault(_auth);
@@ -122,7 +126,8 @@
 	        _react2.default.createElement(_reactRouter.Route, { path: 'auth/login', component: _Index6.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'projects', component: _Index8.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'account/edit', component: _EditIndex2.default, onEnter: requireAuth }),
-	        _react2.default.createElement(_reactRouter.Route, { path: 'account', component: _index2.default, onEnter: requireAuth })
+	        _react2.default.createElement(_reactRouter.Route, { path: 'account', component: _index2.default, onEnter: requireAuth }),
+	        _react2.default.createElement(_reactRouter.Route, { path: '/projects/featured/:slug', component: _ProjectDetails2.default })
 	    )
 	), document.getElementById('app'));
 
@@ -31911,6 +31916,7 @@
 	    AUTH_USER: null,
 	    USER_UPDATE: null,
 	    PROJECT_SHARE: null,
+	    GET_PROJECTS: null,
 	    GET_PROJECT: null
 	});
 
@@ -52434,6 +52440,7 @@
 	var ProjectStore = Object.assign({}, _BaseStore2.default, {
 	    shareProjectResult: null,
 	    projects: null,
+	    project: null,
 
 	    setShareProjectResult: function setShareProjectResult(shareProjectResult) {
 	        this.shareProjectResult = shareProjectResult;
@@ -52448,6 +52455,13 @@
 	    },
 	    getProjects: function getProjects() {
 	        return this.projects;
+	    },
+	    setProject: function setProject(project) {
+	        this.project = project;
+	        this.emitChange('fetchProject');
+	    },
+	    getProject: function getProject() {
+	        return this.project;
 	    }
 	});
 
@@ -52456,8 +52470,11 @@
 	        case AppConstants.PROJECT_SHARE:
 	            ProjectStore.setShareProjectResult(action.data);
 	            break;
-	        case AppConstants.GET_PROJECT:
+	        case AppConstants.GET_PROJECTS:
 	            ProjectStore.setProjects(action.data);
+	            break;
+	        case AppConstants.GET_PROJECT:
+	            ProjectStore.setProject(action.data);
 	            break;
 	        default:
 	        // no default action
@@ -52487,8 +52504,12 @@
 	        BaseActions.post('/api/projects', project, AppConstants.PROJECT_SHARE, token);
 	    },
 
-	    fetchAllProjects: function fetchAllProjects(token) {
-	        BaseActions.get('/api/project', AppConstants.GET_PROJECT, token);
+	    fetchAllProjects: function fetchAllProjects() {
+	        BaseActions.get('/api/project', AppConstants.GET_PROJECTS);
+	    },
+
+	    fetchProject: function fetchProject(projectSlug) {
+	        BaseActions.get('/api/project/' + projectSlug, AppConstants.GET_PROJECT);
 	    }
 	};
 
@@ -82525,6 +82546,619 @@
 	}(_react.Component);
 
 	exports.default = ProjectList;
+
+/***/ },
+/* 411 */
+/*!**************************************************!*\
+  !*** ./src/components/Project/ProjectDetails.js ***!
+  \**************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(/*! react */ 2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(/*! react-dom */ 35);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _reactRouter = __webpack_require__(/*! react-router */ 189);
+
+	var _ProjectActions = __webpack_require__(/*! ../../actions/ProjectActions */ 290);
+
+	var _ProjectActions2 = _interopRequireDefault(_ProjectActions);
+
+	var _ProjectStore = __webpack_require__(/*! ../../stores/ProjectStore */ 289);
+
+	var _ProjectStore2 = _interopRequireDefault(_ProjectStore);
+
+	var _index = __webpack_require__(/*! ../NavBar/index */ 188);
+
+	var _index2 = _interopRequireDefault(_index);
+
+	var _Index = __webpack_require__(/*! ../Footer/Index */ 255);
+
+	var _Index2 = _interopRequireDefault(_Index);
+
+	var _auth = __webpack_require__(/*! ../../utils/auth */ 252);
+
+	var _auth2 = _interopRequireDefault(_auth);
+
+	var _marked = __webpack_require__(/*! marked */ 291);
+
+	var _marked2 = _interopRequireDefault(_marked);
+
+	var _reactDisqusThread = __webpack_require__(/*! react-disqus-thread */ 412);
+
+	var _reactDisqusThread2 = _interopRequireDefault(_reactDisqusThread);
+
+	var _reactTimeago = __webpack_require__(/*! react-timeago */ 414);
+
+	var _reactTimeago2 = _interopRequireDefault(_reactTimeago);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by Raphson on 10/8/16.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+	var ProjectDetails = function (_Component) {
+	    _inherits(ProjectDetails, _Component);
+
+	    function ProjectDetails() {
+	        _classCallCheck(this, ProjectDetails);
+
+	        var _this = _possibleConstructorReturn(this, (ProjectDetails.__proto__ || Object.getPrototypeOf(ProjectDetails)).call(this));
+
+	        _this.handleProjectResult = function () {
+	            var result = _ProjectStore2.default.getProject();
+	            _this.setState({
+	                project: result.data
+	            });
+	        };
+
+	        _this.shareTwitter = function (e) {
+	            e.preventDefault();
+	            var name = _this.state.project ? _this.state.project.name : 'Loading..';
+	            var url = _this.state.project ? _this.state.project.url : 'Loading..';
+	            window.open('https://twitter.com/share?url=' + encodeURIComponent(url) + '&amp;text=' + encodeURIComponent('Check Out This MERN Stack Project: ' + name) + '&amp;count=none/', 'twitter-share-dialog', 'width=626,height=436,top=' + (screen.height - 436) / 2 + ',left=' + (screen.width - 626) / 2);
+	        };
+
+	        _this.shareFacebook = function (e) {
+	            e.preventDefault();
+	            var name = _this.state.project ? _this.state.project.name : 'Loading..';
+	            var url = _this.state.project ? _this.state.project.url : 'Loading..';
+	            window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url) + '&amp;t=' + encodeURIComponent('Check Out This MERN Stack Project: ' + name), 'facebook-share-dialog', 'width=626,height=436,top=' + (screen.height - 436) / 2 + ',left=' + (screen.width - 626) / 2);
+	        };
+
+	        _this.state = {
+	            project: null
+	        };
+	        return _this;
+	    }
+
+	    _createClass(ProjectDetails, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            _ProjectActions2.default.fetchProject(this.props.params.slug);
+	            _ProjectStore2.default.addChangeListener(this.handleProjectResult, 'fetchProject');
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            _ProjectStore2.default.removeChangeListener(this.handleProjectResult, 'fetchProject');
+	        }
+	    }, {
+	        key: 'handleNewComment',
+	        value: function handleNewComment(comment) {
+	            console.log(comment);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var desc = this.state.project ? this.state.project.description : 'Loading..';
+	            return _react2.default.createElement(
+	                'span',
+	                null,
+	                _react2.default.createElement(_index2.default, null),
+	                _react2.default.createElement(
+	                    'div',
+	                    { style: { minHeight: 580 }, className: 'main-container' },
+	                    _react2.default.createElement(
+	                        'section',
+	                        null,
+	                        _react2.default.createElement(
+	                            'div',
+	                            { style: { backgroundColor: '#fff', padding: '60px 20px' }, className: 'listing' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { 'data-ng-controller': 'ProjectController', className: 'row' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'col-sm-8 columns project-board' },
+	                                    _react2.default.createElement(
+	                                        'h3',
+	                                        { style: { textTransform: 'capitalize' },
+	                                            className: 'header' },
+	                                        this.state.project ? this.state.project.name : 'Loading..'
+	                                    ),
+	                                    _react2.default.createElement('br', null),
+	                                    _react2.default.createElement('p', { dangerouslySetInnerHTML: { __html: (0, _marked2.default)(desc) } }),
+	                                    _react2.default.createElement(
+	                                        'span',
+	                                        { style: { fontStyle: 'italic' }, className: 'postedBy' },
+	                                        ' Added by  ',
+	                                        _react2.default.createElement(
+	                                            'a',
+	                                            { href: '/mean-developers/{{ projectDetails.postedBy }}', style: { color: '#aa0036' } },
+	                                            'me'
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(_reactDisqusThread2.default, { shortname: 'mernmap',
+	                                        url: this.state.project ? this.state.project.url : 'Loading..',
+	                                        title: this.state.project ? this.state.project.name : 'Loading..',
+	                                        identifier: this.state.project ? this.state.project.name : 'Loading..',
+	                                        onNewComment: this.handleNewComment })
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'col-sm-3 columns project-sidebar' },
+	                                    _react2.default.createElement(
+	                                        'h6',
+	                                        null,
+	                                        'Posted: ',
+	                                        _react2.default.createElement(
+	                                            'span',
+	                                            { className: 'time' },
+	                                            _react2.default.createElement(_reactTimeago2.default, {
+	                                                date: this.state.project ? new Date(this.state.project.postedOn) : new Date(1475956609492) }),
+	                                            ' '
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement('br', null),
+	                                    _react2.default.createElement(
+	                                        'h6',
+	                                        null,
+	                                        'Website: '
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'p',
+	                                        null,
+	                                        _react2.default.createElement(
+	                                            'a',
+	                                            { target: '_blank',
+	                                                href: this.state.project ? this.state.project.url : 'Loading..' },
+	                                            this.state.project ? this.state.project.url : 'Loading..'
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'h6',
+	                                        null,
+	                                        'Social Media Share: '
+	                                    ),
+	                                    _react2.default.createElement('br', null),
+	                                    _react2.default.createElement(
+	                                        'p',
+	                                        null,
+	                                        _react2.default.createElement(
+	                                            'a',
+	                                            _defineProperty({ href: '#', className: 'btn btn-info btn-lg', onClick: this.shareTwitter,
+	                                                style: { color: '#fff', marginLeft: '-10px' } }, 'href', '#'),
+	                                            _react2.default.createElement('i', { className: 'fa fa-twitter' }),
+	                                            ' Share on Twitter'
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'p',
+	                                        null,
+	                                        _react2.default.createElement(
+	                                            'a',
+	                                            _defineProperty({ href: '#', className: 'btn btn-lg btn-primary', onClick: this.shareFacebook,
+	                                                style: { color: '#fff', marginLeft: '-10px' } }, 'href', '#'),
+	                                            _react2.default.createElement('i', { className: 'fa fa-facebook' }),
+	                                            ' Share on Facebook'
+	                                        )
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(_Index2.default, null)
+	            );
+	        }
+	    }]);
+
+	    return ProjectDetails;
+	}(_react.Component);
+
+	exports.default = ProjectDetails;
+
+/***/ },
+/* 412 */
+/*!*******************************************!*\
+  !*** ./~/react-disqus-thread/lib/main.js ***!
+  \*******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	module.exports = __webpack_require__(/*! ./components/DisqusThread */ 413);
+
+/***/ },
+/* 413 */
+/*!**************************************************************!*\
+  !*** ./~/react-disqus-thread/lib/components/DisqusThread.js ***!
+  \**************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _react = __webpack_require__(/*! react */ 2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var DISQUS_CONFIG = ['shortname', 'identifier', 'title', 'url', 'category_id', 'onNewComment'];
+	var __disqusAdded = false;
+
+	function copyProps(context, props) {
+	  var prefix = arguments.length <= 2 || arguments[2] === undefined ? '' : arguments[2];
+
+	  Object.keys(props).forEach(function (prop) {
+	    context[prefix + prop] = props[prop];
+	  });
+
+	  if (typeof props.onNewComment === 'function') {
+	    context[prefix + 'config'] = function config() {
+	      this.callbacks.onNewComment = [function handleNewComment(comment) {
+	        props.onNewComment(comment);
+	      }];
+	    };
+	  }
+	}
+
+	module.exports = _react2['default'].createClass({
+	  displayName: 'DisqusThread',
+
+	  propTypes: {
+	    id: _react2['default'].PropTypes.string,
+
+	    /**
+	     * `shortname` tells the Disqus service your forum's shortname,
+	     * which is the unique identifier for your website as registered
+	     * on Disqus. If undefined , the Disqus embed will not load.
+	     */
+	    shortname: _react2['default'].PropTypes.string.isRequired,
+
+	    /**
+	     * `identifier` tells the Disqus service how to identify the
+	     * current page. When the Disqus embed is loaded, the identifier
+	     * is used to look up the correct thread. If disqus_identifier
+	     * is undefined, the page's URL will be used. The URL can be
+	     * unreliable, such as when renaming an article slug or changing
+	     * domains, so we recommend using your own unique way of
+	     * identifying a thread.
+	     */
+	    identifier: _react2['default'].PropTypes.string,
+
+	    /**
+	     * `title` tells the Disqus service the title of the current page.
+	     * This is used when creating the thread on Disqus for the first time.
+	     * If undefined, Disqus will use the <title> attribute of the page.
+	     * If that attribute could not be used, Disqus will use the URL of the page.
+	     */
+	    title: _react2['default'].PropTypes.string,
+
+	    /**
+	     * `url` tells the Disqus service the URL of the current page.
+	     * If undefined, Disqus will take the window.location.href.
+	     * This URL is used to look up or create a thread if disqus_identifier
+	     * is undefined. In addition, this URL is always saved when a thread is
+	     * being created so that Disqus knows what page a thread belongs to.
+	     */
+	    url: _react2['default'].PropTypes.string,
+
+	    /**
+	     * `category_id` tells the Disqus service the category to be used for
+	     * the current page. This is used when creating the thread on Disqus
+	     * for the first time.
+	     */
+	    category_id: _react2['default'].PropTypes.string,
+
+	    /**
+	     * `onNewComment` function accepts one parameter `comment` which is a
+	     * JavaScript object with comment `id` and `text`. This allows you to track
+	     * user comments and replies and run a script after a comment is posted.
+	     */
+	    onNewComment: _react2['default'].PropTypes.func
+	  },
+
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      shortname: null,
+	      identifier: null,
+	      title: null,
+	      url: null,
+	      category_id: null,
+	      onNewComment: null
+	    };
+	  },
+
+	  componentDidMount: function componentDidMount() {
+	    this.loadDisqus();
+	  },
+
+	  componentDidUpdate: function componentDidUpdate() {
+	    this.loadDisqus();
+	  },
+
+	  render: function render() {
+	    return _react2['default'].createElement(
+	      'div',
+	      this.props,
+	      _react2['default'].createElement('div', { id: 'disqus_thread' }),
+	      _react2['default'].createElement(
+	        'noscript',
+	        null,
+	        _react2['default'].createElement(
+	          'span',
+	          null,
+	          'Please enable JavaScript to view the',
+	          _react2['default'].createElement(
+	            'a',
+	            { href: 'http://disqus.com/?ref_noscript' },
+	            'comments powered by Disqus.'
+	          )
+	        )
+	      ),
+	      _react2['default'].createElement(
+	        'a',
+	        { href: 'http://disqus.com', className: 'dsq-brlink' },
+	        'Blog comments powered by ',
+	        _react2['default'].createElement(
+	          'span',
+	          { className: 'logo-disqus' },
+	          'Disqus'
+	        ),
+	        '.'
+	      )
+	    );
+	  },
+
+	  addDisqusScript: function addDisqusScript() {
+	    if (__disqusAdded) {
+	      return;
+	    }
+
+	    var child = this.disqus = document.createElement('script');
+	    var parent = document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0];
+
+	    child.async = true;
+	    child.type = 'text/javascript';
+	    child.src = '//' + this.props.shortname + '.disqus.com/embed.js';
+
+	    parent.appendChild(child);
+	    __disqusAdded = true;
+	  },
+
+	  loadDisqus: function loadDisqus() {
+	    var _this = this;
+
+	    var props = {};
+
+	    // Extract Disqus props that were supplied to this component
+	    DISQUS_CONFIG.forEach(function (prop) {
+	      if (!!_this.props[prop]) {
+	        props[prop] = _this.props[prop];
+	      }
+	    });
+
+	    // Always set URL
+	    if (!props.url || !props.url.length) {
+	      props.url = window.location.href;
+	    }
+
+	    // If Disqus has already been added, reset it
+	    if (typeof DISQUS !== 'undefined') {
+	      DISQUS.reset({
+	        reload: true,
+	        config: function config() {
+	          copyProps(this.page, props);
+
+	          // Disqus needs hashbang URL, see https://help.disqus.com/customer/portal/articles/472107
+	          this.page.url = this.page.url.replace(/#/, '') + '#!newthread';
+	        }
+	      });
+	    } else {
+	      // Otherwise add Disqus to the page
+	      copyProps(window, props, 'disqus_');
+	      this.addDisqusScript();
+	    }
+	  }
+	});
+
+/***/ },
+/* 414 */
+/*!**************************************!*\
+  !*** ./~/react-timeago/lib/index.js ***!
+  \**************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(/*! react */ 2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	// Just some simple constants for readability
+	var MINUTE = 60;
+	var HOUR = MINUTE * 60;
+	var DAY = HOUR * 24;
+	var WEEK = DAY * 7;
+	var MONTH = DAY * 30;
+	var YEAR = DAY * 365;
+
+	var TimeAgo = function (_Component) {
+	  _inherits(TimeAgo, _Component);
+
+	  function TimeAgo() {
+	    var _ref;
+
+	    var _temp, _this, _ret;
+
+	    _classCallCheck(this, TimeAgo);
+
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+
+	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = TimeAgo.__proto__ || Object.getPrototypeOf(TimeAgo)).call.apply(_ref, [this].concat(args))), _this), _this.isStillMounted = false, _this.tick = function (refresh) {
+	      if (!_this.isStillMounted || !_this.props.live) {
+	        return;
+	      }
+
+	      var then = new Date(_this.props.date).valueOf();
+	      var now = Date.now();
+	      var seconds = Math.round(Math.abs(now - then) / 1000);
+
+	      var unboundPeriod = seconds < MINUTE ? 1000 : seconds < HOUR ? 1000 * MINUTE : seconds < DAY ? 1000 * HOUR : 0;
+	      var period = Math.min(Math.max(unboundPeriod, _this.props.minPeriod * 1000), _this.props.maxPeriod * 1000);
+
+	      if (period) {
+	        _this.timeoutId = setTimeout(_this.tick, period);
+	      }
+
+	      if (!refresh) {
+	        _this.forceUpdate();
+	      }
+	    }, _temp), _possibleConstructorReturn(_this, _ret);
+	  }
+
+	  _createClass(TimeAgo, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.isStillMounted = true;
+	      if (this.props.live) {
+	        this.tick(true);
+	      }
+	    }
+	  }, {
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate(lastProps) {
+	      if (this.props.live !== lastProps.live || this.props.date !== lastProps.date) {
+	        if (!this.props.live && this.timeoutId) {
+	          clearTimeout(this.timeoutId);
+	        }
+	        this.tick();
+	      }
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      this.isStillMounted = false;
+	      if (this.timeoutId) {
+	        clearTimeout(this.timeoutId);
+	        this.timeoutId = undefined;
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      /* eslint-disable no-unused-vars */
+	      var _props = this.props;
+	      var date = _props.date;
+	      var formatter = _props.formatter;
+	      var Komponent = _props.component;
+	      var live = _props.live;
+	      var minPeriod = _props.minPeriod;
+	      var maxPeriod = _props.maxPeriod;
+	      var title = _props.title;
+
+	      var passDownProps = _objectWithoutProperties(_props, ['date', 'formatter', 'component', 'live', 'minPeriod', 'maxPeriod', 'title']);
+	      /* eslint-enable no-unused-vars */
+
+
+	      var then = new Date(date).valueOf();
+	      var now = Date.now();
+	      var seconds = Math.round(Math.abs(now - then) / 1000);
+	      var suffix = then < now ? 'ago' : 'from now';
+
+	      var _ref2 = seconds < MINUTE ? [Math.round(seconds), 'second'] : seconds < HOUR ? [Math.round(seconds / MINUTE), 'minute'] : seconds < DAY ? [Math.round(seconds / HOUR), 'hour'] : seconds < WEEK ? [Math.round(seconds / DAY), 'day'] : seconds < MONTH ? [Math.round(seconds / WEEK), 'week'] : seconds < YEAR ? [Math.round(seconds / MONTH), 'month'] : [Math.round(seconds / YEAR), 'year'];
+
+	      var _ref3 = _slicedToArray(_ref2, 2);
+
+	      var value = _ref3[0];
+	      var unit = _ref3[1];
+
+
+	      var passDownTitle = typeof title === 'undefined' ? typeof date === 'string' ? date : new Date(date).toISOString().substr(0, 16).replace('T', ' ') : title;
+
+	      if (Komponent === 'time') {
+	        passDownProps.dateTime = new Date(date).toISOString();
+	      }
+
+	      return _react2.default.createElement(
+	        Komponent,
+	        _extends({}, passDownProps, { title: passDownTitle }),
+	        this.props.formatter(value, unit, suffix, then)
+	      );
+	    }
+	  }]);
+
+	  return TimeAgo;
+	}(_react.Component);
+
+	TimeAgo.displayName = 'TimeAgo';
+	TimeAgo.defaultProps = {
+	  live: true,
+	  component: 'time',
+	  minPeriod: 0,
+	  maxPeriod: Infinity,
+	  formatter: function formatter(value, unit, suffix) {
+	    if (value !== 1) {
+	      unit += 's';
+	    }
+	    return value + ' ' + unit + ' ' + suffix;
+	  }
+	};
+	exports.default = TimeAgo;
 
 /***/ }
 /******/ ]);

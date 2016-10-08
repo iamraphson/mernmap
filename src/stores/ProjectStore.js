@@ -11,6 +11,7 @@ let AppConstants = require('../constants/AppConstants'),
 let ProjectStore = Object.assign({}, BaseStore, {
     shareProjectResult: null,
     projects: null,
+    project: null,
 
     setShareProjectResult(shareProjectResult) {
         this.shareProjectResult = shareProjectResult;
@@ -30,6 +31,15 @@ let ProjectStore = Object.assign({}, BaseStore, {
         return this.projects
     },
 
+    setProject(project) {
+        this.project = project;
+        this.emitChange('fetchProject');
+    },
+
+    getProject()  {
+        return this.project
+    },
+
 });
 
 AppDispatcher.register((action) => {
@@ -37,8 +47,11 @@ AppDispatcher.register((action) => {
         case AppConstants.PROJECT_SHARE :
             ProjectStore.setShareProjectResult(action.data);
             break;
-        case AppConstants.GET_PROJECT :
+        case AppConstants.GET_PROJECTS :
             ProjectStore.setProjects(action.data);
+            break;
+        case AppConstants.GET_PROJECT :
+            ProjectStore.setProject(action.data);
             break;
         default:
         // no default action

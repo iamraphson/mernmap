@@ -13,6 +13,7 @@ import Login from './components/Login/Index';
 import EditAccount from './components/Account/EditIndex';
 import Account from './components/Account/index';
 import Project from './components/Project/Index';
+import ProjectDetails from './components/Project/ProjectDetails';
 import Auth from './utils/auth';
 import {Router, Route, hashHistory, Redirect, IndexRoute, browserHistory} from 'react-router';
 
@@ -31,6 +32,7 @@ render(
             <Route path="projects" component={Project} />
             <Route path="account/edit" component={EditAccount} onEnter={requireAuth} />
             <Route path="account" component={Account} onEnter={requireAuth} />
+            <Route path="/projects/featured/:slug" component={ProjectDetails} />
         </Route>
     </Router>,
     document.getElementById('app')

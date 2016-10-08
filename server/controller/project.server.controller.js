@@ -75,27 +75,26 @@ module.exports = {
      */
     getEachProjectDetails: function(req, res){
         var pSlug = req.params.projectSlug;
-        project.find({slug: pSlug}, function(err, project){
+        project.find({slug: pSlug}, function(err, projects){
             if(err) {
                 console.log( err );
                 return res.status(500).json({ message: err.message });
             }
 
-            if(project.length == 0){
+            if(projects.length == 0){
                 return res.status(404).json({ message: "Project Not Found." });
             } else {
                 var projectDetails = {};
-                var projects = [0];
-                projectDetails.id = projects._id;
-                projectDetails.name = projects.name;
-                projectDetails.slug = projects.slug
-                projectDetails.description = projects.description;
-                projectDetails.url = projects.url;
-                projectDetails.postedBy = projects.postedBy;
-                projectDetails.snapshot = projects.snapshot;
-                projectDetails.postedOn = projects.registered_on;
-                projectDetails.public_id = projects.public_id;
-
+                var project = projects[0];
+                projectDetails.id = project._id;
+                projectDetails.name = project.name;
+                projectDetails.slug = project.slug;
+                projectDetails.description = project.description;
+                projectDetails.url = project.url;
+                projectDetails.postedBy = project.postedBy;
+                projectDetails.snapshot = project.snapshot;
+                projectDetails.postedOn = project.registered_on;
+                console.log(projectDetails);
                 return res.status(200).json(projectDetails)
             }
         });

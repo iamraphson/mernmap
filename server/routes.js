@@ -13,4 +13,5 @@ module.exports = function(app){
 
     app.post('/api/projects', token.ensureAuthenticated, projectCtrl.shareProject);
     app.get('/api/project', projectCtrl.getAllProjects);
+    app.get('/api/project/:projectSlug', projectCtrl.getEachProjectDetails)
 }
