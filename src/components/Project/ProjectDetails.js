@@ -10,8 +10,8 @@ import NavBar from '../NavBar/index';
 import Footer from '../Footer/Index';
 import Auth from '../../utils/auth';
 import marked from 'marked';
-import ReactDisqusThread from 'react-disqus-thread';
-import TimeAgo from 'react-timeago'
+import TimeAgo from 'react-timeago';
+import ReactDisqus from 'react-disqus';
 
 export default class ProjectDetails extends Component {
     constructor() {
@@ -58,10 +58,6 @@ export default class ProjectDetails extends Component {
             'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 ));
     }
 
-    handleNewComment(comment) {
-        console.log(comment);
-    }
-
     render() {
         let desc = this.state.project ? this.state.project.description : 'Loading..';
         return (
@@ -76,12 +72,11 @@ export default class ProjectDetails extends Component {
                                         className="header">{this.state.project ? this.state.project.name : 'Loading..'}</h3>
                                     <br />
                                     <p dangerouslySetInnerHTML={{__html: marked(desc) }} />
-                                    <span style={{fontStyle: 'italic'}} className="postedBy"> Added by  <a href="/mean-developers/{{ projectDetails.postedBy }}" style={{color: '#aa0036'}}>me</a></span>
-                                    <ReactDisqusThread shortname="mernmap"
-                                           url={this.state.project ? this.state.project.url : 'Loading..'}
-                                           title={this.state.project ? this.state.project.name : 'Loading..'}
-                                           identifier={this.state.project ? this.state.project.name : 'Loading..'}
-                                           onNewComment={this.handleNewComment}/>
+                                    <span style={{fontStyle: 'italic'}} className="postedBy"> Added by
+                                        <a href="/mean-developers/{{ projectDetails.postedBy }}"
+                                           style={{color: '#aa0036'}}> @{this.state.project ?
+                                        this.state.project.postedBy.username : 'Loading..'}</a></span>
+                                    <ReactDisqus shortname="mernmap" identifier="123" />
                                 </div>
                                 <div className="col-sm-3 columns project-sidebar">
                                     <h6>Posted: <span className="time"><TimeAgo

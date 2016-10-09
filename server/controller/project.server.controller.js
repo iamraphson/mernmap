@@ -75,7 +75,7 @@ module.exports = {
      */
     getEachProjectDetails: function(req, res){
         var pSlug = req.params.projectSlug;
-        project.find({slug: pSlug}, function(err, projects){
+        project.find({slug: pSlug}).populate('postedBy').exec(function(err, projects){
             if(err) {
                 console.log( err );
                 return res.status(500).json({ message: err.message });

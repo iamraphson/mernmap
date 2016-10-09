@@ -44,7 +44,7 @@
     "nodemailer-smtp-transport": "^2.5.0",
     "path": "^0.12.7",
     "react": "*",
-    "react-disqus-thread": "^0.4.0",
+    "react-disqus": "^1.0.2",
     "react-dom": "*",
     "react-dropzone": "^3.6.0",
     "react-router": "*",
