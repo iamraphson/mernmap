@@ -101,6 +101,14 @@
 
 	var _ProjectDetails2 = _interopRequireDefault(_ProjectDetails);
 
+	var _Index9 = __webpack_require__(/*! ./components/Jobs/Index */ 416);
+
+	var _Index10 = _interopRequireDefault(_Index9);
+
+	var _CreateIndex = __webpack_require__(/*! ./components/Jobs/CreateIndex */ 417);
+
+	var _CreateIndex2 = _interopRequireDefault(_CreateIndex);
+
 	var _auth = __webpack_require__(/*! ./utils/auth */ 252);
 
 	var _auth2 = _interopRequireDefault(_auth);
@@ -125,6 +133,8 @@
 	        _react2.default.createElement(_reactRouter.Route, { path: 'user/create', component: _Index4.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'auth/login', component: _Index6.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'projects', component: _Index8.default }),
+	        _react2.default.createElement(_reactRouter.Route, { path: 'jobs', component: _Index10.default }),
+	        _react2.default.createElement(_reactRouter.Route, { path: 'post-a-job', component: _CreateIndex2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'account/edit', component: _EditIndex2.default, onEnter: requireAuth }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'account', component: _index2.default, onEnter: requireAuth }),
 	        _react2.default.createElement(_reactRouter.Route, { path: '/projects/featured/:slug', component: _ProjectDetails2.default })
@@ -23959,7 +23969,7 @@
 	                                            null,
 	                                            _react2.default.createElement(
 	                                                _reactRouter.Link,
-	                                                { href: '/jobs' },
+	                                                { to: '/jobs' },
 	                                                'JOBS'
 	                                            )
 	                                        ),
@@ -83047,6 +83057,373 @@
 
 	exports.default = ReactDisqus;
 
+
+/***/ },
+/* 416 */
+/*!**************************************!*\
+  !*** ./src/components/Jobs/Index.js ***!
+  \**************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(/*! react */ 2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(/*! react-dom */ 35);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _reactRouter = __webpack_require__(/*! react-router */ 189);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by Raphson on 10/10/16.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+	var Jobs = function (_Component) {
+	    _inherits(Jobs, _Component);
+
+	    function Jobs() {
+	        _classCallCheck(this, Jobs);
+
+	        return _possibleConstructorReturn(this, (Jobs.__proto__ || Object.getPrototypeOf(Jobs)).call(this));
+	    }
+
+	    _createClass(Jobs, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { style: { minHeight: 580 }, className: 'main-container' },
+	                _react2.default.createElement(
+	                    'section',
+	                    null,
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'container' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'row' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'col-sm-12 text-center' },
+	                                _react2.default.createElement(
+	                                    'h4',
+	                                    null,
+	                                    'FULL STACK DEVELOPER JOBS ON THE PLANET'
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { 'ng-controller': 'JobsController', className: 'row' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'col-md-12' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'bs-callout', 'ng-repeat': 'jobs in allJobs' },
+	                                    _react2.default.createElement(
+	                                        'h4',
+	                                        null,
+	                                        _react2.default.createElement('i', { className: 'fa fa-suitcase' }),
+	                                        ' Job title'
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'p',
+	                                        null,
+	                                        'Jobs Description'
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'p',
+	                                        null,
+	                                        'Posted by ',
+	                                        _react2.default.createElement(
+	                                            'span',
+	                                            { className: 'btn-info badge' },
+	                                            'Company Name'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'small',
+	                                            null,
+	                                            _react2.default.createElement('em', { className: 'time' }),
+	                                            '10/10/2016'
+	                                        )
+	                                    )
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'row' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'col-md-4 text-center' },
+	                                _react2.default.createElement(
+	                                    _reactRouter.Link,
+	                                    { className: 'btn btn-block btn-lg', to: '/post-a-job' },
+	                                    'Post a Job'
+	                                )
+	                            )
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'section',
+	                    { className: 'social social-1 near-footer' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'container' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'row' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'leader col-sm-12 text-center' },
+	                                _react2.default.createElement(
+	                                    'span',
+	                                    null,
+	                                    _react2.default.createElement('i', { className: 'fa fa-quote-left' }),
+	                                    'Developers can only switch Jobs. They can never be Unemployed.',
+	                                    _react2.default.createElement('i', { className: 'fa fa-quote-right' })
+	                                ),
+	                                _react2.default.createElement(
+	                                    'h5',
+	                                    { className: 'lead-author' },
+	                                    '- Prosper Otemuyiwa'
+	                                )
+	                            )
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Jobs;
+	}(_react.Component);
+
+	exports.default = Jobs;
+
+/***/ },
+/* 417 */
+/*!********************************************!*\
+  !*** ./src/components/Jobs/CreateIndex.js ***!
+  \********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(/*! react */ 2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(/*! react-dom */ 35);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _Input = __webpack_require__(/*! ../forms/Input */ 257);
+
+	var _Input2 = _interopRequireDefault(_Input);
+
+	var _Textarea = __webpack_require__(/*! ../forms/Textarea */ 265);
+
+	var _Textarea2 = _interopRequireDefault(_Textarea);
+
+	var _formsyReact = __webpack_require__(/*! formsy-react */ 258);
+
+	var _formsyReact2 = _interopRequireDefault(_formsyReact);
+
+	var _index = __webpack_require__(/*! ../NavBar/index */ 188);
+
+	var _index2 = _interopRequireDefault(_index);
+
+	var _Index = __webpack_require__(/*! ../Footer/Index */ 255);
+
+	var _Index2 = _interopRequireDefault(_Index);
+
+	var _auth = __webpack_require__(/*! ../../utils/auth */ 252);
+
+	var _auth2 = _interopRequireDefault(_auth);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by Raphson on 10/9/16.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+	var Create = function (_Component) {
+	    _inherits(Create, _Component);
+
+	    function Create() {
+	        _classCallCheck(this, Create);
+
+	        var _this = _possibleConstructorReturn(this, (Create.__proto__ || Object.getPrototypeOf(Create)).call(this));
+
+	        _this.enableButton = function () {
+	            _this.setState({ canSubmit: true });
+	        };
+
+	        _this.disableButton = function () {
+	            _this.setState({ canSubmit: false });
+	        };
+
+	        _this.state = {
+	            canSubmit: false
+	        };
+	        return _this;
+	    }
+
+	    _createClass(Create, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'span',
+	                null,
+	                _react2.default.createElement(_index2.default, null),
+	                _react2.default.createElement(
+	                    'div',
+	                    { style: { minHeight: 580 }, className: 'main-container' },
+	                    _react2.default.createElement(
+	                        'section',
+	                        null,
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'container' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'row' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'col-sm-12 text-center' },
+	                                    _react2.default.createElement(
+	                                        'h3',
+	                                        null,
+	                                        ' POST A DEVELOPER JOB TODAY '
+	                                    )
+	                                )
+	                            ),
+	                            _react2.default.createElement('hr', null),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'row' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { style: { margin: '0 auto' }, className: 'col-md-8 col-md-offset-2' },
+	                                    _react2.default.createElement(
+	                                        'form',
+	                                        { 'data-ng-submit': 'createJob()', name: 'jobForm' },
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'form-group' },
+	                                            _react2.default.createElement(
+	                                                'label',
+	                                                { htmlFor: 'title' },
+	                                                'Job Title'
+	                                            ),
+	                                            _react2.default.createElement('input', { type: 'text', required: true, id: 'title', name: 'title', 'data-ng-model': 'job.title', style: { width: '150%' }, className: 'form-control input-lg' })
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'form-group' },
+	                                            _react2.default.createElement(
+	                                                'label',
+	                                                { htmlFor: 'content' },
+	                                                'Job Description ',
+	                                                _react2.default.createElement(
+	                                                    'em',
+	                                                    null,
+	                                                    '*You may write in Markdown'
+	                                                )
+	                                            ),
+	                                            _react2.default.createElement('textarea', { required: true, rows: 12, cols: 50, name: 'description', 'data-ng-model': 'job.description', style: { width: '150%' }, className: 'form-control', defaultValue: "" })
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'form-group' },
+	                                            _react2.default.createElement(
+	                                                'label',
+	                                                { htmlFor: 'content' },
+	                                                'Company'
+	                                            ),
+	                                            _react2.default.createElement('input', { type: 'text', required: true, id: 'title', name: 'company', 'data-ng-model': 'job.company', style: { width: '150%' }, className: 'form-control input-lg' })
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'form-group' },
+	                                            _react2.default.createElement(
+	                                                'button',
+	                                                { 'data-ng-disabled': 'jobForm.$invalid', style: { width: '150%' }, id: 'submit-btn', type: 'submit', className: 'form-control btn btn-lg' },
+	                                                'Submit Job Details'
+	                                            )
+	                                        )
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'section',
+	                        { className: 'social social-1 near-footer' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'container' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'row' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'leader col-sm-12 text-center' },
+	                                    _react2.default.createElement(
+	                                        'span',
+	                                        null,
+	                                        '"Learn By Doing. Learn More By Teaching"'
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'h5',
+	                                        { className: 'lead-author' },
+	                                        '- Prosper Otemuyiwa'
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(_Index2.default, null)
+	            );
+	        }
+	    }]);
+
+	    return Create;
+	}(_react.Component);
+
+	exports.default = Create;
 
 /***/ }
 /******/ ]);

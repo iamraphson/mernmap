@@ -93,7 +93,7 @@ export default class Nav extends React.Component{
                                         <li><Link to="/">HOME</Link></li>
                                         <li><Link href="/mean-developers">MERN DEVELOPERS</Link></li>
                                         <li><Link to="projects">PROJECTS</Link></li>
-                                        <li><Link href="/jobs">JOBS</Link></li>
+                                        <li><Link to="/jobs">JOBS</Link></li>
                                         <li><Link href="/tutorials">TUTORIALS</Link></li>
                                     </ul>
                                 </div>
