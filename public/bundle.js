@@ -30441,7 +30441,7 @@
 	            }),
 	            _react2.default.createElement(
 	                'span',
-	                { className: 'validation-error' },
+	                { className: 'validation-error text-danger' },
 	                errorMessage
 	            )
 	        );
@@ -83294,6 +83294,10 @@
 	            _this.setState({ canSubmit: false });
 	        };
 
+	        _this.handleSubmit = function (data) {
+	            console.log(data);
+	        };
+
 	        _this.state = {
 	            canSubmit: false
 	        };
@@ -83337,49 +83341,24 @@
 	                                    'div',
 	                                    { style: { margin: '0 auto' }, className: 'col-md-8 col-md-offset-2' },
 	                                    _react2.default.createElement(
-	                                        'form',
-	                                        { 'data-ng-submit': 'createJob()', name: 'jobForm' },
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'form-group' },
-	                                            _react2.default.createElement(
-	                                                'label',
-	                                                { htmlFor: 'title' },
-	                                                'Job Title'
-	                                            ),
-	                                            _react2.default.createElement('input', { type: 'text', required: true, id: 'title', name: 'title', 'data-ng-model': 'job.title', style: { width: '150%' }, className: 'form-control input-lg' })
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'form-group' },
-	                                            _react2.default.createElement(
-	                                                'label',
-	                                                { htmlFor: 'content' },
-	                                                'Job Description ',
-	                                                _react2.default.createElement(
-	                                                    'em',
-	                                                    null,
-	                                                    '*You may write in Markdown'
-	                                                )
-	                                            ),
-	                                            _react2.default.createElement('textarea', { required: true, rows: 12, cols: 50, name: 'description', 'data-ng-model': 'job.description', style: { width: '150%' }, className: 'form-control', defaultValue: "" })
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'form-group' },
-	                                            _react2.default.createElement(
-	                                                'label',
-	                                                { htmlFor: 'content' },
-	                                                'Company'
-	                                            ),
-	                                            _react2.default.createElement('input', { type: 'text', required: true, id: 'title', name: 'company', 'data-ng-model': 'job.company', style: { width: '150%' }, className: 'form-control input-lg' })
-	                                        ),
+	                                        _formsyReact2.default.Form,
+	                                        { className: 'col-md-10', onValidSubmit: this.handleSubmit,
+	                                            onValid: this.enableButton, onInvalid: this.disableButton, name: 'jobForm' },
+	                                        _react2.default.createElement(_Input2.default, { className: 'form-group', name: 'title', title: 'Job Title', required: true,
+	                                            validations: 'minLength:2', validationError: 'Job Title is required.' }),
+	                                        _react2.default.createElement(_Textarea2.default, { className: 'form-group', title: 'Job Description *Markdown Supported',
+	                                            rows: '12', cols: '50', name: 'description', validations: 'minLength:2', required: true,
+	                                            validationError: 'Description is required.' }),
+	                                        _react2.default.createElement(_Input2.default, { className: 'form-group', name: 'company', title: 'Company', required: true,
+	                                            validations: 'minLength:2', validationError: 'Company is required.'
+	                                        }),
 	                                        _react2.default.createElement(
 	                                            'div',
 	                                            { className: 'form-group' },
 	                                            _react2.default.createElement(
 	                                                'button',
-	                                                { 'data-ng-disabled': 'jobForm.$invalid', style: { width: '150%' }, id: 'submit-btn', type: 'submit', className: 'form-control btn btn-lg' },
+	                                                { disabled: !this.state.canSubmit, id: 'submit-btn', type: 'submit',
+	                                                    className: 'form-control btn btn-lg' },
 	                                                'Submit Job Details'
 	                                            )
 	                                        )

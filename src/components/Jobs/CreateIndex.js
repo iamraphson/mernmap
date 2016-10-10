@@ -26,6 +26,10 @@ export default class Create extends Component {
         this.setState({ canSubmit: false });
     }
 
+    handleSubmit = (data) => {
+        console.log(data);
+    }
+
     render() {
         return (
             <span>
@@ -41,29 +45,26 @@ export default class Create extends Component {
                             <hr />
                             <div className="row">
                                 <div style={{margin: '0 auto'}} className="col-md-8 col-md-offset-2">
-                                    <form data-ng-submit="createJob()" name="jobForm">
+                                    <Formsy.Form  className="col-md-10"  onValidSubmit={this.handleSubmit}
+                                          onValid={this.enableButton} onInvalid={this.disableButton} name="jobForm">
                                         {/* Job Title Form Input */}
-                                        <div className="form-group">
-                                            <label htmlFor="title">Job Title</label>
-                                            <input type="text" required id="title" name="title" data-ng-model="job.title" style={{width: '150%'}} className="form-control input-lg" />
-
-                                        </div>
+                                        <MyInput className="form-group" name="title" title="Job Title" required
+                                             validations="minLength:2" validationError="Job Title is required." />
                                         {/* Job Description Form Input */}
-                                        <div className="form-group">
-                                            <label htmlFor="content">Job Description <em>*You may write in Markdown</em></label>
-                                            <textarea required rows={12} cols={50} name="description" data-ng-model="job.description" style={{width: '150%'}} className="form-control" defaultValue={""} />
-                                        </div>
-                                        {/* Company Form Input */}
-                                        <div className="form-group">
-                                            <label htmlFor="content">Company</label>
-                                            <input type="text" required id="title" name="company" data-ng-model="job.company" style={{width: '150%'}} className="form-control input-lg" />
+                                        <MyTextarea className="form-group" title="Job Description *Markdown Supported"
+                                            rows="12" cols="50" name="description" validations="minLength:2" required
+                                            validationError="Description is required."  />
 
-                                        </div>
+                                        {/* Company Form Input */}
+                                        <MyInput className="form-group" name="company" title="Company" required
+                                             validations="minLength:2" validationError="Company is required."
+                                             />
                                         {/* Submit Job Details Button */}
                                         <div className="form-group">
-                                            <button data-ng-disabled="jobForm.$invalid" style={{width: '150%'}} id="submit-btn" type="submit" className="form-control btn btn-lg">Submit Job Details</button>
+                                            <button disabled={!this.state.canSubmit} id="submit-btn" type="submit"
+                                                className="form-control btn btn-lg">Submit Job Details</button>
                                         </div>
-                                    </form>
+                                    </Formsy.Form>
                                 </div>
                             </div>
                         </div>
