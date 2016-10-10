@@ -5,5 +5,7 @@ let AppConstants = require('../constants/AppConstants'),
     BaseActions = require('./BaseActions');
 
 module.exports = {
+    postJob: () => {
 
+    }
 }

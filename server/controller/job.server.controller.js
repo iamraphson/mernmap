@@ -23,8 +23,7 @@ module.exports = {
                 console.log( err );
                 return res.status(500).json({ message: err.message });
             }
-            return res.status(200).json({success: true, message: "Job submitted successfully.Review will " +
-            "take place within 24hrs" });
+            return res.status(200).json({success: true, message: "Job submitted successfully."});
         })
     },
 

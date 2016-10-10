@@ -3,6 +3,7 @@
  */
 var userCtrl = require('./controller/user.server.controller');
 var projectCtrl = require('./controller/project.server.controller');
+var jobCtrl = require('./controller/job.server.controller');
 var token = require('./../config/token');
 module.exports = function(app){
 
@@ -13,5 +14,7 @@ module.exports = function(app){
 
     app.post('/api/projects', token.ensureAuthenticated, projectCtrl.shareProject);
     app.get('/api/project', projectCtrl.getAllProjects);
-    app.get('/api/project/:projectSlug', projectCtrl.getEachProjectDetails)
+    app.get('/api/project/:projectSlug', projectCtrl.getEachProjectDetails);
+
+    app.post('/api/jobs/create', token.ensureAuthenticated, jobCtrl.create);
 }
