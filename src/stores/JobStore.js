@@ -9,22 +9,22 @@ let AppConstants = require('../constants/AppConstants'),
         Object.assign = require('object-assign');
     }
 let JobStore = Object.assign({}, BaseStore, {
-    updateResult: null,
+    postJobResult: null,
 
-    setUpdateResult(updateResult) {
-        this.updateResult = updateResult;
-        this.emitChange('update');
+    setPostJobResult(postJobResult) {
+        this.postJobResult = postJobResult;
+        this.emitChange('postjob');
     },
 
-    getUpdateResult()  {
-        return this.updateResult
+    getPostJobResult()  {
+        return this.postJobResult
     }
 });
 
 AppDispatcher.register((action) => {
     switch (action.actionType){
-        case AppConstants.USER_SIGNUP :
-            UserStore.setSignupResult(action.data);
+        case AppConstants.POST_JOB :
+            JobStore.setPostJobResult(action.data);
             break;
         default:
         // no default action

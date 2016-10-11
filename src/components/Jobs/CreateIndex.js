@@ -9,12 +9,38 @@ import Formsy from 'formsy-react';
 import NavBar from '../NavBar/index';
 import Footer from '../Footer/Index';
 import Auth from '../../utils/auth';
+import JobStore from '../../stores/JobStore';
+import JobActions from '../../actions/JobActions';
+import { Router } from 'react-router';
+import Alert from 'react-s-alert';
+import 'react-s-alert/dist/s-alert-default.css';
+import 'react-s-alert/dist/s-alert-css-effects/bouncyflip.css';
 
 export default class Create extends Component {
     constructor() {
         super();
         this.state = {
-            canSubmit: false
+            canSubmit: false,
+            token: Auth.getToken(),
+        }
+    }
+
+    componentDidMount() {
+        JobStore.addChangeListener(this.handlePostJobResult, 'postjob');
+    }
+
+    componentWillUnmount(){
+        JobStore.removeChangeListener(this.handlePostJobResult, 'postjob');
+    }
+
+    handlePostJobResult = () => {
+        let result = JobStore.getPostJobResult();
+        Auth.checkAuthRequired(result);
+        if(result.status == 500){
+            Alert.error(result.data.message, { position: 'top-right',  effect: 'bouncyflip'});
+        } else {
+            Alert.success(result.data.message, { position: 'top-right',  effect: 'bouncyflip'});
+            Router.navigate('/jobs');
         }
     }
 
@@ -28,6 +54,12 @@ export default class Create extends Component {
 
     handleSubmit = (data) => {
         console.log(data);
+        var jobPayload = {
+            title: data.title,
+            description: data.description,
+            company: data.company
+        };
+        JobActions.postJob(jobPayload, this.state.token);
     }
 
     render() {

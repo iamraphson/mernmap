@@ -12,13 +12,14 @@ module.exports = {
      * @return {object}
      */
     create: function(req, res){
-        var job = new job({
+        var newJob = new job({
             title: req.body.title,
             description: req.body.description,
-            company: req.body.company
+            company: req.body.company,
+            postedBy: req.user
         });
 
-        job.save(function(err, job){
+        newJob.save(function(err, job){
             if(err) {
                 console.log( err );
                 return res.status(500).json({ message: err.message });

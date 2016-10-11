@@ -101,11 +101,11 @@
 
 	var _ProjectDetails2 = _interopRequireDefault(_ProjectDetails);
 
-	var _Index9 = __webpack_require__(/*! ./components/Jobs/Index */ 416);
+	var _Index9 = __webpack_require__(/*! ./components/Jobs/Index */ 414);
 
 	var _Index10 = _interopRequireDefault(_Index9);
 
-	var _CreateIndex = __webpack_require__(/*! ./components/Jobs/CreateIndex */ 417);
+	var _CreateIndex = __webpack_require__(/*! ./components/Jobs/CreateIndex */ 415);
 
 	var _CreateIndex2 = _interopRequireDefault(_CreateIndex);
 
@@ -134,7 +134,7 @@
 	        _react2.default.createElement(_reactRouter.Route, { path: 'auth/login', component: _Index6.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'projects', component: _Index8.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'jobs', component: _Index10.default }),
-	        _react2.default.createElement(_reactRouter.Route, { path: 'post-a-job', component: _CreateIndex2.default }),
+	        _react2.default.createElement(_reactRouter.Route, { path: 'post-a-job', component: _CreateIndex2.default, onEnter: requireAuth }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'account/edit', component: _EditIndex2.default, onEnter: requireAuth }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'account', component: _index2.default, onEnter: requireAuth }),
 	        _react2.default.createElement(_reactRouter.Route, { path: '/projects/featured/:slug', component: _ProjectDetails2.default })
@@ -31927,7 +31927,8 @@
 	    USER_UPDATE: null,
 	    PROJECT_SHARE: null,
 	    GET_PROJECTS: null,
-	    GET_PROJECT: null
+	    GET_PROJECT: null,
+	    POST_JOB: null
 	});
 
 /***/ },
@@ -82606,11 +82607,11 @@
 
 	var _marked2 = _interopRequireDefault(_marked);
 
-	var _reactTimeago = __webpack_require__(/*! react-timeago */ 414);
+	var _reactTimeago = __webpack_require__(/*! react-timeago */ 412);
 
 	var _reactTimeago2 = _interopRequireDefault(_reactTimeago);
 
-	var _reactDisqus = __webpack_require__(/*! react-disqus */ 415);
+	var _reactDisqus = __webpack_require__(/*! react-disqus */ 413);
 
 	var _reactDisqus2 = _interopRequireDefault(_reactDisqus);
 
@@ -82793,9 +82794,7 @@
 	exports.default = ProjectDetails;
 
 /***/ },
-/* 412 */,
-/* 413 */,
-/* 414 */
+/* 412 */
 /*!**************************************!*\
   !*** ./~/react-timeago/lib/index.js ***!
   \**************************************/
@@ -82961,7 +82960,7 @@
 	exports.default = TimeAgo;
 
 /***/ },
-/* 415 */
+/* 413 */
 /*!*********************************!*\
   !*** ./~/react-disqus/index.js ***!
   \*********************************/
@@ -83059,7 +83058,7 @@
 
 
 /***/ },
-/* 416 */
+/* 414 */
 /*!**************************************!*\
   !*** ./src/components/Jobs/Index.js ***!
   \**************************************/
@@ -83221,7 +83220,7 @@
 	exports.default = Jobs;
 
 /***/ },
-/* 417 */
+/* 415 */
 /*!********************************************!*\
   !*** ./src/components/Jobs/CreateIndex.js ***!
   \********************************************/
@@ -83267,6 +83266,24 @@
 
 	var _auth2 = _interopRequireDefault(_auth);
 
+	var _JobStore = __webpack_require__(/*! ../../stores/JobStore */ 416);
+
+	var _JobStore2 = _interopRequireDefault(_JobStore);
+
+	var _JobActions = __webpack_require__(/*! ../../actions/JobActions */ 417);
+
+	var _JobActions2 = _interopRequireDefault(_JobActions);
+
+	var _reactRouter = __webpack_require__(/*! react-router */ 189);
+
+	var _reactSAlert = __webpack_require__(/*! react-s-alert */ 174);
+
+	var _reactSAlert2 = _interopRequireDefault(_reactSAlert);
+
+	__webpack_require__(/*! react-s-alert/dist/s-alert-default.css */ 181);
+
+	__webpack_require__(/*! react-s-alert/dist/s-alert-css-effects/bouncyflip.css */ 253);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -83286,6 +83303,17 @@
 
 	        var _this = _possibleConstructorReturn(this, (Create.__proto__ || Object.getPrototypeOf(Create)).call(this));
 
+	        _this.handlePostJobResult = function () {
+	            var result = _JobStore2.default.getPostJobResult();
+	            _auth2.default.checkAuthRequired(result);
+	            if (result.status == 500) {
+	                _reactSAlert2.default.error(result.data.message, { position: 'top-right', effect: 'bouncyflip' });
+	            } else {
+	                _reactSAlert2.default.success(result.data.message, { position: 'top-right', effect: 'bouncyflip' });
+	                _reactRouter.Router.navigate('/jobs');
+	            }
+	        };
+
 	        _this.enableButton = function () {
 	            _this.setState({ canSubmit: true });
 	        };
@@ -83296,15 +83324,32 @@
 
 	        _this.handleSubmit = function (data) {
 	            console.log(data);
+	            var jobPayload = {
+	                title: data.title,
+	                description: data.description,
+	                company: data.company
+	            };
+	            _JobActions2.default.postJob(jobPayload, _this.state.token);
 	        };
 
 	        _this.state = {
-	            canSubmit: false
+	            canSubmit: false,
+	            token: _auth2.default.getToken()
 	        };
 	        return _this;
 	    }
 
 	    _createClass(Create, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            _JobStore2.default.addChangeListener(this.handlePostJobResult, 'postjob');
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            _JobStore2.default.removeChangeListener(this.handlePostJobResult, 'postjob');
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
@@ -83403,6 +83448,76 @@
 	}(_react.Component);
 
 	exports.default = Create;
+
+/***/ },
+/* 416 */
+/*!********************************!*\
+  !*** ./src/stores/JobStore.js ***!
+  \********************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _BaseStore = __webpack_require__(/*! ./BaseStore */ 267);
+
+	var _BaseStore2 = _interopRequireDefault(_BaseStore);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var AppConstants = __webpack_require__(/*! ../constants/AppConstants */ 269),
+	    AppDispatcher = __webpack_require__(/*! ../dispatcher/AppDispatcher */ 273); /**
+	                                                             * Created by Raphson on 10/9/16.
+	                                                             */
+
+
+	if (!Object.assign) {
+	    Object.assign = __webpack_require__(/*! object-assign */ 5);
+	}
+	var JobStore = Object.assign({}, _BaseStore2.default, {
+	    postJobResult: null,
+
+	    setPostJobResult: function setPostJobResult(postJobResult) {
+	        this.postJobResult = postJobResult;
+	        this.emitChange('postjob');
+	    },
+	    getPostJobResult: function getPostJobResult() {
+	        return this.postJobResult;
+	    }
+	});
+
+	AppDispatcher.register(function (action) {
+	    switch (action.actionType) {
+	        case AppConstants.POST_JOB:
+	            JobStore.setPostJobResult(action.data);
+	            break;
+	        default:
+	        // no default action
+	    }
+	    return true;
+	});
+
+	module.exports = JobStore;
+
+/***/ },
+/* 417 */
+/*!***********************************!*\
+  !*** ./src/actions/JobActions.js ***!
+  \***********************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	/**
+	 * Created by Raphson on 10/9/16.
+	 */
+	var AppConstants = __webpack_require__(/*! ../constants/AppConstants */ 269),
+	    BaseActions = __webpack_require__(/*! ./BaseActions */ 278);
+
+	module.exports = {
+	    postJob: function postJob(job, token) {
+	        BaseActions.post('/api/jobs/create', job, AppConstants.POST_JOB, token);
+	    }
+	};
 
 /***/ }
 /******/ ]);

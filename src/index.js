@@ -33,7 +33,7 @@ render(
             <Route path="auth/login" component={Login} />
             <Route path="projects" component={Project} />
             <Route path="jobs" component={Job} />
-            <Route path="post-a-job" component={CreateJob} />
+            <Route path="post-a-job" component={CreateJob} onEnter={requireAuth} />
             <Route path="account/edit" component={EditAccount} onEnter={requireAuth} />
             <Route path="account" component={Account} onEnter={requireAuth} />
             <Route path="/projects/featured/:slug" component={ProjectDetails} />

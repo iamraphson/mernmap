@@ -5,7 +5,7 @@ let AppConstants = require('../constants/AppConstants'),
     BaseActions = require('./BaseActions');
 
 module.exports = {
-    postJob: () => {
-
+    postJob: (job, token) => {
+        BaseActions.post('/api/jobs/create', job, AppConstants.POST_JOB, token);
     }
 }
