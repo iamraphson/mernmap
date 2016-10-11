@@ -11,7 +11,7 @@ import Footer from '../Footer/Index';
 import Auth from '../../utils/auth';
 import JobStore from '../../stores/JobStore';
 import JobActions from '../../actions/JobActions';
-import { Router } from 'react-router';
+import { hashHistory } from 'react-router';
 import Alert from 'react-s-alert';
 import 'react-s-alert/dist/s-alert-default.css';
 import 'react-s-alert/dist/s-alert-css-effects/bouncyflip.css';
@@ -40,7 +40,7 @@ export default class Create extends Component {
             Alert.error(result.data.message, { position: 'top-right',  effect: 'bouncyflip'});
         } else {
             Alert.success(result.data.message, { position: 'top-right',  effect: 'bouncyflip'});
-            Router.navigate('/jobs');
+            hashHistory.push('/jobs');
         }
     }
 
@@ -53,7 +53,6 @@ export default class Create extends Component {
     }
 
     handleSubmit = (data) => {
-        console.log(data);
         var jobPayload = {
             title: data.title,
             description: data.description,

@@ -83310,7 +83310,7 @@
 	                _reactSAlert2.default.error(result.data.message, { position: 'top-right', effect: 'bouncyflip' });
 	            } else {
 	                _reactSAlert2.default.success(result.data.message, { position: 'top-right', effect: 'bouncyflip' });
-	                _reactRouter.Router.navigate('/jobs');
+	                _reactRouter.hashHistory.push('/jobs');
 	            }
 	        };
 
@@ -83323,7 +83323,6 @@
 	        };
 
 	        _this.handleSubmit = function (data) {
-	            console.log(data);
 	            var jobPayload = {
 	                title: data.title,
 	                description: data.description,
