@@ -7,5 +7,9 @@ let AppConstants = require('../constants/AppConstants'),
 module.exports = {
     postJob: (job, token) => {
         BaseActions.post('/api/jobs/create', job, AppConstants.POST_JOB, token);
+    },
+
+    fetchAllJobs: () => {
+        BaseActions.get('/api/jobs', AppConstants.GET_JOBS);
     }
 }

@@ -10,6 +10,7 @@ let AppConstants = require('../constants/AppConstants'),
     }
 let JobStore = Object.assign({}, BaseStore, {
     postJobResult: null,
+    jobs: null,
 
     setPostJobResult(postJobResult) {
         this.postJobResult = postJobResult;
@@ -18,13 +19,25 @@ let JobStore = Object.assign({}, BaseStore, {
 
     getPostJobResult()  {
         return this.postJobResult
-    }
+    },
+
+    setJobs(jobs) {
+        this.jobs = jobs;
+        this.emitChange('fetchJobs');
+    },
+
+    getJobs()  {
+        return this.jobs
+    },
 });
 
 AppDispatcher.register((action) => {
     switch (action.actionType){
         case AppConstants.POST_JOB :
             JobStore.setPostJobResult(action.data);
+            break;
+        case AppConstants.GET_JOBS :
+            JobStore.setJobs(action.data);
             break;
         default:
         // no default action

@@ -31928,7 +31928,8 @@
 	    PROJECT_SHARE: null,
 	    GET_PROJECTS: null,
 	    GET_PROJECT: null,
-	    POST_JOB: null
+	    POST_JOB: null,
+	    GET_JOBS: null
 	});
 
 /***/ },
@@ -83082,6 +83083,26 @@
 
 	var _reactRouter = __webpack_require__(/*! react-router */ 189);
 
+	var _index = __webpack_require__(/*! ../NavBar/index */ 188);
+
+	var _index2 = _interopRequireDefault(_index);
+
+	var _Index = __webpack_require__(/*! ../Footer/Index */ 255);
+
+	var _Index2 = _interopRequireDefault(_Index);
+
+	var _auth = __webpack_require__(/*! ../../utils/auth */ 252);
+
+	var _auth2 = _interopRequireDefault(_auth);
+
+	var _JobStore = __webpack_require__(/*! ../../stores/JobStore */ 416);
+
+	var _JobStore2 = _interopRequireDefault(_JobStore);
+
+	var _JobActions = __webpack_require__(/*! ../../actions/JobActions */ 417);
+
+	var _JobActions2 = _interopRequireDefault(_JobActions);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -83099,117 +83120,114 @@
 	    function Jobs() {
 	        _classCallCheck(this, Jobs);
 
-	        return _possibleConstructorReturn(this, (Jobs.__proto__ || Object.getPrototypeOf(Jobs)).call(this));
+	        var _this = _possibleConstructorReturn(this, (Jobs.__proto__ || Object.getPrototypeOf(Jobs)).call(this));
+
+	        _this.handleJobsResult = function () {
+	            var result = _JobStore2.default.getJobs();
+	            console.log(result);
+	        };
+
+	        _this.state = {
+	            projects: null
+	        };
+	        return _this;
 	    }
 
 	    _createClass(Jobs, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            _JobActions2.default.fetchAllJobs();
+	            _JobStore2.default.addChangeListener(this.handleJobsResult, 'fetchJobs');
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            _JobStore2.default.removeChangeListener(this.handleJobsResult, 'fetchJobs');
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
-	                'div',
-	                { style: { minHeight: 580 }, className: 'main-container' },
+	                'span',
+	                null,
+	                _react2.default.createElement(_index2.default, null),
 	                _react2.default.createElement(
-	                    'section',
-	                    null,
+	                    'div',
+	                    { style: { minHeight: 580 }, className: 'main-container' },
 	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'container' },
+	                        'section',
+	                        null,
 	                        _react2.default.createElement(
 	                            'div',
-	                            { className: 'row' },
+	                            { className: 'container' },
 	                            _react2.default.createElement(
 	                                'div',
-	                                { className: 'col-sm-12 text-center' },
-	                                _react2.default.createElement(
-	                                    'h4',
-	                                    null,
-	                                    'FULL STACK DEVELOPER JOBS ON THE PLANET'
-	                                )
-	                            )
-	                        ),
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { 'ng-controller': 'JobsController', className: 'row' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'col-md-12' },
+	                                { className: 'row' },
 	                                _react2.default.createElement(
 	                                    'div',
-	                                    { className: 'bs-callout', 'ng-repeat': 'jobs in allJobs' },
+	                                    { className: 'col-sm-12 text-center' },
 	                                    _react2.default.createElement(
 	                                        'h4',
 	                                        null,
-	                                        _react2.default.createElement('i', { className: 'fa fa-suitcase' }),
-	                                        ' Job title'
-	                                    ),
+	                                        'FULL STACK DEVELOPER JOBS ON THE PLANET'
+	                                    )
+	                                )
+	                            ),
+	                            _react2.default.createElement('br', null),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'row' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'col-md-12' },
+	                                    'List goes here...'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'row' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'col-md-4 text-center' },
 	                                    _react2.default.createElement(
-	                                        'p',
-	                                        null,
-	                                        'Jobs Description'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'p',
-	                                        null,
-	                                        'Posted by ',
-	                                        _react2.default.createElement(
-	                                            'span',
-	                                            { className: 'btn-info badge' },
-	                                            'Company Name'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'small',
-	                                            null,
-	                                            _react2.default.createElement('em', { className: 'time' }),
-	                                            '10/10/2016'
-	                                        )
+	                                        _reactRouter.Link,
+	                                        { className: 'btn btn-block btn-lg', to: '/post-a-job' },
+	                                        'Post a Job'
 	                                    )
 	                                )
 	                            )
-	                        ),
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'section',
+	                        { className: 'social social-1 near-footer' },
 	                        _react2.default.createElement(
 	                            'div',
-	                            { className: 'row' },
+	                            { className: 'container' },
 	                            _react2.default.createElement(
 	                                'div',
-	                                { className: 'col-md-4 text-center' },
+	                                { className: 'row' },
 	                                _react2.default.createElement(
-	                                    _reactRouter.Link,
-	                                    { className: 'btn btn-block btn-lg', to: '/post-a-job' },
-	                                    'Post a Job'
+	                                    'div',
+	                                    { className: 'leader col-sm-12 text-center' },
+	                                    _react2.default.createElement(
+	                                        'span',
+	                                        null,
+	                                        _react2.default.createElement('i', { className: 'fa fa-quote-left' }),
+	                                        'Developers can only switch Jobs. They can never be Unemployed.',
+	                                        _react2.default.createElement('i', { className: 'fa fa-quote-right' })
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'h5',
+	                                        { className: 'lead-author' },
+	                                        '- Prosper Otemuyiwa'
+	                                    )
 	                                )
 	                            )
 	                        )
 	                    )
 	                ),
-	                _react2.default.createElement(
-	                    'section',
-	                    { className: 'social social-1 near-footer' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'container' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'row' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'leader col-sm-12 text-center' },
-	                                _react2.default.createElement(
-	                                    'span',
-	                                    null,
-	                                    _react2.default.createElement('i', { className: 'fa fa-quote-left' }),
-	                                    'Developers can only switch Jobs. They can never be Unemployed.',
-	                                    _react2.default.createElement('i', { className: 'fa fa-quote-right' })
-	                                ),
-	                                _react2.default.createElement(
-	                                    'h5',
-	                                    { className: 'lead-author' },
-	                                    '- Prosper Otemuyiwa'
-	                                )
-	                            )
-	                        )
-	                    )
-	                )
+	                _react2.default.createElement(_Index2.default, null)
 	            );
 	        }
 	    }]);
@@ -83474,6 +83492,7 @@
 	}
 	var JobStore = Object.assign({}, _BaseStore2.default, {
 	    postJobResult: null,
+	    jobs: null,
 
 	    setPostJobResult: function setPostJobResult(postJobResult) {
 	        this.postJobResult = postJobResult;
@@ -83481,6 +83500,13 @@
 	    },
 	    getPostJobResult: function getPostJobResult() {
 	        return this.postJobResult;
+	    },
+	    setJobs: function setJobs(jobs) {
+	        this.jobs = jobs;
+	        this.emitChange('fetchJobs');
+	    },
+	    getJobs: function getJobs() {
+	        return this.jobs;
 	    }
 	});
 
@@ -83488,6 +83514,9 @@
 	    switch (action.actionType) {
 	        case AppConstants.POST_JOB:
 	            JobStore.setPostJobResult(action.data);
+	            break;
+	        case AppConstants.GET_JOBS:
+	            JobStore.setJobs(action.data);
 	            break;
 	        default:
 	        // no default action
@@ -83515,6 +83544,10 @@
 	module.exports = {
 	    postJob: function postJob(job, token) {
 	        BaseActions.post('/api/jobs/create', job, AppConstants.POST_JOB, token);
+	    },
+
+	    fetchAllJobs: function fetchAllJobs() {
+	        BaseActions.get('/api/jobs', AppConstants.GET_JOBS);
 	    }
 	};
 

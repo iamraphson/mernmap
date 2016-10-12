@@ -11,5 +11,6 @@ module.exports = keyMirror({
     PROJECT_SHARE: null,
     GET_PROJECTS: null,
     GET_PROJECT: null,
-    POST_JOB: null
+    POST_JOB: null,
+    GET_JOBS: null,
 });
