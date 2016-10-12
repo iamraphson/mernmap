@@ -17,4 +17,5 @@ module.exports = function(app){
     app.get('/api/project/:projectSlug', projectCtrl.getEachProjectDetails);
 
     app.post('/api/jobs/create', token.ensureAuthenticated, jobCtrl.create);
+    app.get('/api/jobs', jobCtrl.getAllJobs);
 }
