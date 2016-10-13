@@ -9,11 +9,12 @@ import Footer from '../Footer/Index';
 import Auth from '../../utils/auth';
 import JobStore from '../../stores/JobStore';
 import JobActions from '../../actions/JobActions';
+import JobList from './JobList';
 export default class Jobs extends Component {
     constructor() {
         super();
         this.state = {
-            projects: null,
+            jobs: null,
         }
     }
 
@@ -29,6 +30,11 @@ export default class Jobs extends Component {
     handleJobsResult = () => {
         let result = JobStore.getJobs();
         console.log(result);
+        if(result.status == 200){
+            this.setState({
+                jobs: result.data
+            });
+        }
     }
 
     render() {
@@ -46,7 +52,14 @@ export default class Jobs extends Component {
                             <br />
                             <div className="row">
                                 <div className="col-md-12">
-                                    List goes here...
+                                    {this.state.jobs
+                                        ? this.state.jobs.map((job, j) => {
+                                        return (
+                                            <JobList job={job} key={j} />
+                                        )
+                                    })
+                                        : <p>Loading...</p>
+                                    }
                                 </div>
                             </div>
                             <div className="row">

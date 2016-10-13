@@ -105,7 +105,7 @@
 
 	var _Index10 = _interopRequireDefault(_Index9);
 
-	var _CreateIndex = __webpack_require__(/*! ./components/Jobs/CreateIndex */ 415);
+	var _CreateIndex = __webpack_require__(/*! ./components/Jobs/CreateIndex */ 417);
 
 	var _CreateIndex2 = _interopRequireDefault(_CreateIndex);
 
@@ -83095,13 +83095,17 @@
 
 	var _auth2 = _interopRequireDefault(_auth);
 
-	var _JobStore = __webpack_require__(/*! ../../stores/JobStore */ 416);
+	var _JobStore = __webpack_require__(/*! ../../stores/JobStore */ 415);
 
 	var _JobStore2 = _interopRequireDefault(_JobStore);
 
-	var _JobActions = __webpack_require__(/*! ../../actions/JobActions */ 417);
+	var _JobActions = __webpack_require__(/*! ../../actions/JobActions */ 416);
 
 	var _JobActions2 = _interopRequireDefault(_JobActions);
+
+	var _JobList = __webpack_require__(/*! ./JobList */ 418);
+
+	var _JobList2 = _interopRequireDefault(_JobList);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -83125,10 +83129,15 @@
 	        _this.handleJobsResult = function () {
 	            var result = _JobStore2.default.getJobs();
 	            console.log(result);
+	            if (result.status == 200) {
+	                _this.setState({
+	                    jobs: result.data
+	                });
+	            }
 	        };
 
 	        _this.state = {
-	            projects: null
+	            jobs: null
 	        };
 	        return _this;
 	    }
@@ -83180,7 +83189,13 @@
 	                                _react2.default.createElement(
 	                                    'div',
 	                                    { className: 'col-md-12' },
-	                                    'List goes here...'
+	                                    this.state.jobs ? this.state.jobs.map(function (job, j) {
+	                                        return _react2.default.createElement(_JobList2.default, { job: job, key: j });
+	                                    }) : _react2.default.createElement(
+	                                        'p',
+	                                        null,
+	                                        'Loading...'
+	                                    )
 	                                )
 	                            ),
 	                            _react2.default.createElement(
@@ -83239,6 +83254,91 @@
 
 /***/ },
 /* 415 */
+/*!********************************!*\
+  !*** ./src/stores/JobStore.js ***!
+  \********************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _BaseStore = __webpack_require__(/*! ./BaseStore */ 267);
+
+	var _BaseStore2 = _interopRequireDefault(_BaseStore);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var AppConstants = __webpack_require__(/*! ../constants/AppConstants */ 269),
+	    AppDispatcher = __webpack_require__(/*! ../dispatcher/AppDispatcher */ 273); /**
+	                                                             * Created by Raphson on 10/9/16.
+	                                                             */
+
+
+	if (!Object.assign) {
+	    Object.assign = __webpack_require__(/*! object-assign */ 5);
+	}
+	var JobStore = Object.assign({}, _BaseStore2.default, {
+	    postJobResult: null,
+	    jobs: null,
+
+	    setPostJobResult: function setPostJobResult(postJobResult) {
+	        this.postJobResult = postJobResult;
+	        this.emitChange('postjob');
+	    },
+	    getPostJobResult: function getPostJobResult() {
+	        return this.postJobResult;
+	    },
+	    setJobs: function setJobs(jobs) {
+	        this.jobs = jobs;
+	        this.emitChange('fetchJobs');
+	    },
+	    getJobs: function getJobs() {
+	        return this.jobs;
+	    }
+	});
+
+	AppDispatcher.register(function (action) {
+	    switch (action.actionType) {
+	        case AppConstants.POST_JOB:
+	            JobStore.setPostJobResult(action.data);
+	            break;
+	        case AppConstants.GET_JOBS:
+	            JobStore.setJobs(action.data);
+	            break;
+	        default:
+	        // no default action
+	    }
+	    return true;
+	});
+
+	module.exports = JobStore;
+
+/***/ },
+/* 416 */
+/*!***********************************!*\
+  !*** ./src/actions/JobActions.js ***!
+  \***********************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	/**
+	 * Created by Raphson on 10/9/16.
+	 */
+	var AppConstants = __webpack_require__(/*! ../constants/AppConstants */ 269),
+	    BaseActions = __webpack_require__(/*! ./BaseActions */ 278);
+
+	module.exports = {
+	    postJob: function postJob(job, token) {
+	        BaseActions.post('/api/jobs/create', job, AppConstants.POST_JOB, token);
+	    },
+
+	    fetchAllJobs: function fetchAllJobs() {
+	        BaseActions.get('/api/jobs', AppConstants.GET_JOBS);
+	    }
+	};
+
+/***/ },
+/* 417 */
 /*!********************************************!*\
   !*** ./src/components/Jobs/CreateIndex.js ***!
   \********************************************/
@@ -83284,11 +83384,11 @@
 
 	var _auth2 = _interopRequireDefault(_auth);
 
-	var _JobStore = __webpack_require__(/*! ../../stores/JobStore */ 416);
+	var _JobStore = __webpack_require__(/*! ../../stores/JobStore */ 415);
 
 	var _JobStore2 = _interopRequireDefault(_JobStore);
 
-	var _JobActions = __webpack_require__(/*! ../../actions/JobActions */ 417);
+	var _JobActions = __webpack_require__(/*! ../../actions/JobActions */ 416);
 
 	var _JobActions2 = _interopRequireDefault(_JobActions);
 
@@ -83467,89 +83567,98 @@
 	exports.default = Create;
 
 /***/ },
-/* 416 */
-/*!********************************!*\
-  !*** ./src/stores/JobStore.js ***!
-  \********************************/
+/* 418 */
+/*!****************************************!*\
+  !*** ./src/components/Jobs/JobList.js ***!
+  \****************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _BaseStore = __webpack_require__(/*! ./BaseStore */ 267);
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 
-	var _BaseStore2 = _interopRequireDefault(_BaseStore);
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(/*! react */ 2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(/*! react-dom */ 35);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _reactRouter = __webpack_require__(/*! react-router */ 189);
+
+	var _reactTimeago = __webpack_require__(/*! react-timeago */ 412);
+
+	var _reactTimeago2 = _interopRequireDefault(_reactTimeago);
+
+	var _marked = __webpack_require__(/*! marked */ 291);
+
+	var _marked2 = _interopRequireDefault(_marked);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var AppConstants = __webpack_require__(/*! ../constants/AppConstants */ 269),
-	    AppDispatcher = __webpack_require__(/*! ../dispatcher/AppDispatcher */ 273); /**
-	                                                             * Created by Raphson on 10/9/16.
-	                                                             */
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by Raphson on 10/12/16.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
 
 
-	if (!Object.assign) {
-	    Object.assign = __webpack_require__(/*! object-assign */ 5);
-	}
-	var JobStore = Object.assign({}, _BaseStore2.default, {
-	    postJobResult: null,
-	    jobs: null,
+	var JobList = function (_Component) {
+	    _inherits(JobList, _Component);
 
-	    setPostJobResult: function setPostJobResult(postJobResult) {
-	        this.postJobResult = postJobResult;
-	        this.emitChange('postjob');
-	    },
-	    getPostJobResult: function getPostJobResult() {
-	        return this.postJobResult;
-	    },
-	    setJobs: function setJobs(jobs) {
-	        this.jobs = jobs;
-	        this.emitChange('fetchJobs');
-	    },
-	    getJobs: function getJobs() {
-	        return this.jobs;
+	    function JobList() {
+	        _classCallCheck(this, JobList);
+
+	        return _possibleConstructorReturn(this, (JobList.__proto__ || Object.getPrototypeOf(JobList)).call(this));
 	    }
-	});
 
-	AppDispatcher.register(function (action) {
-	    switch (action.actionType) {
-	        case AppConstants.POST_JOB:
-	            JobStore.setPostJobResult(action.data);
-	            break;
-	        case AppConstants.GET_JOBS:
-	            JobStore.setJobs(action.data);
-	            break;
-	        default:
-	        // no default action
-	    }
-	    return true;
-	});
+	    _createClass(JobList, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'bs-callout' },
+	                _react2.default.createElement(
+	                    'h4',
+	                    null,
+	                    _react2.default.createElement('i', { className: 'fa fa-suitcase' }),
+	                    ' ',
+	                    this.props.job.title
+	                ),
+	                _react2.default.createElement('p', { dangerouslySetInnerHTML: { __html: (0, _marked2.default)(this.props.job.description) } }),
+	                _react2.default.createElement(
+	                    'p',
+	                    null,
+	                    'Posted by ',
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: 'btn-info badge' },
+	                        this.props.job.company
+	                    ),
+	                    _react2.default.createElement(
+	                        'small',
+	                        null,
+	                        ' ',
+	                        _react2.default.createElement('em', { className: 'time' }),
+	                        _react2.default.createElement(_reactTimeago2.default, { date: new Date(this.props.job.registered_on) }),
+	                        ' '
+	                    )
+	                )
+	            );
+	        }
+	    }]);
 
-	module.exports = JobStore;
+	    return JobList;
+	}(_react.Component);
 
-/***/ },
-/* 417 */
-/*!***********************************!*\
-  !*** ./src/actions/JobActions.js ***!
-  \***********************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	/**
-	 * Created by Raphson on 10/9/16.
-	 */
-	var AppConstants = __webpack_require__(/*! ../constants/AppConstants */ 269),
-	    BaseActions = __webpack_require__(/*! ./BaseActions */ 278);
-
-	module.exports = {
-	    postJob: function postJob(job, token) {
-	        BaseActions.post('/api/jobs/create', job, AppConstants.POST_JOB, token);
-	    },
-
-	    fetchAllJobs: function fetchAllJobs() {
-	        BaseActions.get('/api/jobs', AppConstants.GET_JOBS);
-	    }
-	};
+	exports.default = JobList;
 
 /***/ }
 /******/ ]);
