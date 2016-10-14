@@ -105,6 +105,10 @@
 
 	var _Index10 = _interopRequireDefault(_Index9);
 
+	var _Index11 = __webpack_require__(/*! ./components/Developer/Index */ 419);
+
+	var _Index12 = _interopRequireDefault(_Index11);
+
 	var _CreateIndex = __webpack_require__(/*! ./components/Jobs/CreateIndex */ 417);
 
 	var _CreateIndex2 = _interopRequireDefault(_CreateIndex);
@@ -134,6 +138,7 @@
 	        _react2.default.createElement(_reactRouter.Route, { path: 'auth/login', component: _Index6.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'projects', component: _Index8.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'jobs', component: _Index10.default }),
+	        _react2.default.createElement(_reactRouter.Route, { path: 'mern-developers', component: _Index12.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'post-a-job', component: _CreateIndex2.default, onEnter: requireAuth }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'account/edit', component: _EditIndex2.default, onEnter: requireAuth }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'account', component: _index2.default, onEnter: requireAuth }),
@@ -83659,6 +83664,194 @@
 	}(_react.Component);
 
 	exports.default = JobList;
+
+/***/ },
+/* 419 */
+/*!*******************************************!*\
+  !*** ./src/components/Developer/Index.js ***!
+  \*******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(/*! react */ 2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(/*! react-dom */ 35);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _reactRouter = __webpack_require__(/*! react-router */ 189);
+
+	var _index = __webpack_require__(/*! ../NavBar/index */ 188);
+
+	var _index2 = _interopRequireDefault(_index);
+
+	var _Index = __webpack_require__(/*! ../Footer/Index */ 255);
+
+	var _Index2 = _interopRequireDefault(_Index);
+
+	var _auth = __webpack_require__(/*! ../../utils/auth */ 252);
+
+	var _auth2 = _interopRequireDefault(_auth);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by Raphson on 10/14/16.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+	/**
+	 * Created by Raphson on 10/10/16.
+	 */
+
+
+	var Jobs = function (_Component) {
+	    _inherits(Jobs, _Component);
+
+	    function Jobs() {
+	        _classCallCheck(this, Jobs);
+
+	        var _this = _possibleConstructorReturn(this, (Jobs.__proto__ || Object.getPrototypeOf(Jobs)).call(this));
+
+	        _this.state = {
+	            developers: null
+	        };
+	        return _this;
+	    }
+
+	    _createClass(Jobs, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {}
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {}
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'span',
+	                null,
+	                _react2.default.createElement(_index2.default, null),
+	                _react2.default.createElement(
+	                    'div',
+	                    { style: { minHeight: 580 }, className: 'main-container' },
+	                    _react2.default.createElement(
+	                        'section',
+	                        { className: 'features features-6' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'container' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'row' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'col-sm-12 text-center' },
+	                                    _react2.default.createElement(
+	                                        'h4',
+	                                        null,
+	                                        'MERN STACK DEVELOPERS ON THE PLANET'
+	                                    )
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'row' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'col-lg-2 col-md-3 col-sm-4 col-xs-5 team-profile' },
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { style: { textAlign: 'center' } },
+	                                        _react2.default.createElement(
+	                                            'a',
+	                                            { href: '/mean-developers/{{ dev.username }}' },
+	                                            _react2.default.createElement('img', { height: 150, width: 150, alt: '{{dev.fullname}}',
+	                                                src: '{{ dev.user_avatar }}' })
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { className: 'profile-name grid3' },
+	                                        'Username'
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'ul',
+	                                        { className: 'profile-social-icons' },
+	                                        _react2.default.createElement(
+	                                            'li',
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                'a',
+	                                                { target: '_blank', href: '{{dev.twitter_handle || \'#\'}}' },
+	                                                _react2.default.createElement('i', { className: 'fa fa-twitter-square' })
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'li',
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                'a',
+	                                                { target: '_blank', href: '{{dev.github_profile || \'#\'}}' },
+	                                                _react2.default.createElement('i', { className: 'fa fa-github-square' })
+	                                            )
+	                                        )
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'section',
+	                        { className: 'social social-1 near-footer' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'container' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'row' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'leader col-sm-12 text-center' },
+	                                    _react2.default.createElement(
+	                                        'span',
+	                                        null,
+	                                        _react2.default.createElement('i', { className: 'fa fa-quote-left' }),
+	                                        'A group of wolves is called a Pack. ',
+	                                        _react2.default.createElement('br', { className: 'visible-desktop' }),
+	                                        'A group of Developers is called a Merge Conflict',
+	                                        _react2.default.createElement('i', { className: 'fa fa-quote-right' })
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'h5',
+	                                        { className: 'lead-author' },
+	                                        '- Unknown'
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(_Index2.default, null)
+	            );
+	        }
+	    }]);
+
+	    return Jobs;
+	}(_react.Component);
+
+	exports.default = Jobs;
 
 /***/ }
 /******/ ]);
