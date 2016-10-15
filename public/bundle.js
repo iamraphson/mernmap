@@ -23956,7 +23956,7 @@
 	                                            null,
 	                                            _react2.default.createElement(
 	                                                _reactRouter.Link,
-	                                                { href: '/mean-developers' },
+	                                                { to: 'mern-developers' },
 	                                                'MERN DEVELOPERS'
 	                                            )
 	                                        ),
@@ -83798,6 +83798,7 @@
 	                                                _react2.default.createElement('i', { className: 'fa fa-twitter-square' })
 	                                            )
 	                                        ),
+	                                        _react2.default.createElement('div', { style: { display: 'inline-block', width: 10, height: 4 } }),
 	                                        _react2.default.createElement(
 	                                            'li',
 	                                            null,

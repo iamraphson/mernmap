@@ -25,8 +25,6 @@ export default class Jobs extends Component {
     componentWillUnmount(){
     }
 
-
-
     render() {
         return (
             <span>
@@ -49,9 +47,17 @@ export default class Jobs extends Component {
                                         </div>
                                         <div className="profile-name grid3">Username</div>
                                         <ul className="profile-social-icons">
-                                            <li><a target="_blank" href="{{dev.twitter_handle || '#'}}"><i className="fa fa-twitter-square" /></a></li>
-                                            <li><a target="_blank" href="{{dev.github_profile || '#'}}"><i className="fa fa-github-square">
-                                            </i></a></li>
+                                            <li>
+                                                <a target="_blank" href="{{dev.twitter_handle || '#'}}">
+                                                    <i className="fa fa-twitter-square" />
+                                                </a>
+                                            </li>
+                                            <div style={{display: 'inline-block', width: 10, height: 4}}></div>
+                                            <li>
+                                                <a target="_blank" href="{{dev.github_profile || '#'}}">
+                                                    <i className="fa fa-github-square" />
+                                                </a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>

@@ -18,4 +18,6 @@ module.exports = function(app){
 
     app.post('/api/jobs/create', token.ensureAuthenticated, jobCtrl.create);
     app.get('/api/jobs', jobCtrl.getAllJobs);
+
+    app.get('/api/users', userCtrl.getAllUsers);
 }

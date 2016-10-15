@@ -121,6 +121,12 @@ module.exports = {
             }
             return res.status(200).json({message: 'Update Successful'});
         });
+    },
+
+    getAllUsers: (req, res) => {
+        User.find({}, (err, users) => {
+            return res.status(200).json(users);
+        });
     }
 
 };
