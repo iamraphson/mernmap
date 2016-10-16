@@ -37,7 +37,7 @@
     "lodash": "^4.13.1",
     "marked": "^0.3.6",
     "moment": "^2.15.1",
-    "mongoose": "^4.5.2",
+    "mongoose": "^4.6.3",
     "morgan": "^1.7.0",
     "multiparty": "^4.1.2",
     "nodemailer": "^2.4.2",

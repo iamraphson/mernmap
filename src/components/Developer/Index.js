@@ -10,6 +10,10 @@ import {Link} from 'react-router';
 import NavBar from '../NavBar/index';
 import Footer from '../Footer/Index';
 import Auth from '../../utils/auth';
+import DeveloperActions from '../../actions/DeveloperActions';
+import DeveloperStore from '../../stores/DeveloperStore';
+import DeveloperList from './DeveloperList';
+
 export default class Jobs extends Component {
     constructor() {
         super();
@@ -19,10 +23,22 @@ export default class Jobs extends Component {
     }
 
     componentDidMount() {
-
+        DeveloperActions.fetchAllDevelopers();
+        DeveloperStore.addChangeListener(this.handleDevelopersResult, 'fetchDevelopers');
     }
 
     componentWillUnmount(){
+        DeveloperStore.removeChangeListener(this.handleDevelopersResult, 'fetchDevelopers');
+    }
+
+    handleDevelopersResult = () => {
+        let result = DeveloperStore.getDevelopers();
+        console.log(result);
+        if(result.status == 200){
+            this.setState({
+                developers: result.data
+            });
+        }
     }
 
     render() {
@@ -38,28 +54,14 @@ export default class Jobs extends Component {
                                     </div>
                                 </div>
                                 <div className="row">
-                                    <div className="col-lg-2 col-md-3 col-sm-4 col-xs-5 team-profile">
-                                        <div style={{textAlign: 'center'}}>
-                                            <a href="/mean-developers/{{ dev.username }}">
-                                                <img height={150} width={150} alt="{{dev.fullname}}"
-                                                     src="{{ dev.user_avatar }}" />
-                                            </a>
-                                        </div>
-                                        <div className="profile-name grid3">Username</div>
-                                        <ul className="profile-social-icons">
-                                            <li>
-                                                <a target="_blank" href="{{dev.twitter_handle || '#'}}">
-                                                    <i className="fa fa-twitter-square" />
-                                                </a>
-                                            </li>
-                                            <div style={{display: 'inline-block', width: 10, height: 4}}></div>
-                                            <li>
-                                                <a target="_blank" href="{{dev.github_profile || '#'}}">
-                                                    <i className="fa fa-github-square" />
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                    {this.state.developers
+                                        ? this.state.developers.map((developer, i) => {
+                                        return (
+                                            <DeveloperList developer={developer} key={i} />
+                                        )
+                                    })
+                                        : <p>Loading...</p>
+                                    }
                                 </div>
                             </div>
                         </section>

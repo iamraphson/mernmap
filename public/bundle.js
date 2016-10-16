@@ -105,11 +105,11 @@
 
 	var _Index10 = _interopRequireDefault(_Index9);
 
-	var _Index11 = __webpack_require__(/*! ./components/Developer/Index */ 419);
+	var _Index11 = __webpack_require__(/*! ./components/Developer/Index */ 418);
 
 	var _Index12 = _interopRequireDefault(_Index11);
 
-	var _CreateIndex = __webpack_require__(/*! ./components/Jobs/CreateIndex */ 417);
+	var _CreateIndex = __webpack_require__(/*! ./components/Jobs/CreateIndex */ 421);
 
 	var _CreateIndex2 = _interopRequireDefault(_CreateIndex);
 
@@ -83109,7 +83109,7 @@
 
 	var _JobActions2 = _interopRequireDefault(_JobActions);
 
-	var _JobList = __webpack_require__(/*! ./JobList */ 418);
+	var _JobList = __webpack_require__(/*! ./JobList */ 417);
 
 	var _JobList2 = _interopRequireDefault(_JobList);
 
@@ -83345,6 +83345,354 @@
 
 /***/ },
 /* 417 */
+/*!****************************************!*\
+  !*** ./src/components/Jobs/JobList.js ***!
+  \****************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(/*! react */ 2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(/*! react-dom */ 35);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _reactRouter = __webpack_require__(/*! react-router */ 189);
+
+	var _reactTimeago = __webpack_require__(/*! react-timeago */ 412);
+
+	var _reactTimeago2 = _interopRequireDefault(_reactTimeago);
+
+	var _marked = __webpack_require__(/*! marked */ 291);
+
+	var _marked2 = _interopRequireDefault(_marked);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by Raphson on 10/12/16.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+	var JobList = function (_Component) {
+	    _inherits(JobList, _Component);
+
+	    function JobList() {
+	        _classCallCheck(this, JobList);
+
+	        return _possibleConstructorReturn(this, (JobList.__proto__ || Object.getPrototypeOf(JobList)).call(this));
+	    }
+
+	    _createClass(JobList, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'bs-callout' },
+	                _react2.default.createElement(
+	                    'h4',
+	                    null,
+	                    _react2.default.createElement('i', { className: 'fa fa-suitcase' }),
+	                    ' ',
+	                    this.props.job.title
+	                ),
+	                _react2.default.createElement('p', { dangerouslySetInnerHTML: { __html: (0, _marked2.default)(this.props.job.description) } }),
+	                _react2.default.createElement(
+	                    'p',
+	                    null,
+	                    'Posted by ',
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: 'btn-info badge' },
+	                        this.props.job.company
+	                    ),
+	                    _react2.default.createElement(
+	                        'small',
+	                        null,
+	                        ' ',
+	                        _react2.default.createElement('em', { className: 'time' }),
+	                        _react2.default.createElement(_reactTimeago2.default, { date: new Date(this.props.job.registered_on) }),
+	                        ' '
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return JobList;
+	}(_react.Component);
+
+	exports.default = JobList;
+
+/***/ },
+/* 418 */
+/*!*******************************************!*\
+  !*** ./src/components/Developer/Index.js ***!
+  \*******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(/*! react */ 2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(/*! react-dom */ 35);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _reactRouter = __webpack_require__(/*! react-router */ 189);
+
+	var _index = __webpack_require__(/*! ../NavBar/index */ 188);
+
+	var _index2 = _interopRequireDefault(_index);
+
+	var _Index = __webpack_require__(/*! ../Footer/Index */ 255);
+
+	var _Index2 = _interopRequireDefault(_Index);
+
+	var _auth = __webpack_require__(/*! ../../utils/auth */ 252);
+
+	var _auth2 = _interopRequireDefault(_auth);
+
+	var _DeveloperActions = __webpack_require__(/*! ../../actions/DeveloperActions */ 419);
+
+	var _DeveloperActions2 = _interopRequireDefault(_DeveloperActions);
+
+	var _DeveloperStore = __webpack_require__(/*! ../../stores/DeveloperStore */ 420);
+
+	var _DeveloperStore2 = _interopRequireDefault(_DeveloperStore);
+
+	var _DeveloperList = __webpack_require__(/*! ./DeveloperList */ 422);
+
+	var _DeveloperList2 = _interopRequireDefault(_DeveloperList);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by Raphson on 10/14/16.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+	/**
+	 * Created by Raphson on 10/10/16.
+	 */
+
+
+	var Jobs = function (_Component) {
+	    _inherits(Jobs, _Component);
+
+	    function Jobs() {
+	        _classCallCheck(this, Jobs);
+
+	        var _this = _possibleConstructorReturn(this, (Jobs.__proto__ || Object.getPrototypeOf(Jobs)).call(this));
+
+	        _this.handleDevelopersResult = function () {
+	            var result = _DeveloperStore2.default.getDevelopers();
+	            console.log(result);
+	            if (result.status == 200) {
+	                _this.setState({
+	                    developers: result.data
+	                });
+	            }
+	        };
+
+	        _this.state = {
+	            developers: null
+	        };
+	        return _this;
+	    }
+
+	    _createClass(Jobs, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            _DeveloperActions2.default.fetchAllDevelopers();
+	            _DeveloperStore2.default.addChangeListener(this.handleDevelopersResult, 'fetchDevelopers');
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            _DeveloperStore2.default.removeChangeListener(this.handleDevelopersResult, 'fetchDevelopers');
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'span',
+	                null,
+	                _react2.default.createElement(_index2.default, null),
+	                _react2.default.createElement(
+	                    'div',
+	                    { style: { minHeight: 580 }, className: 'main-container' },
+	                    _react2.default.createElement(
+	                        'section',
+	                        { className: 'features features-6' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'container' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'row' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'col-sm-12 text-center' },
+	                                    _react2.default.createElement(
+	                                        'h4',
+	                                        null,
+	                                        'MERN STACK DEVELOPERS ON THE PLANET'
+	                                    )
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'row' },
+	                                this.state.developers ? this.state.developers.map(function (developer, i) {
+	                                    return _react2.default.createElement(_DeveloperList2.default, { developer: developer, key: i });
+	                                }) : _react2.default.createElement(
+	                                    'p',
+	                                    null,
+	                                    'Loading...'
+	                                )
+	                            )
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'section',
+	                        { className: 'social social-1 near-footer' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'container' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'row' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'leader col-sm-12 text-center' },
+	                                    _react2.default.createElement(
+	                                        'span',
+	                                        null,
+	                                        _react2.default.createElement('i', { className: 'fa fa-quote-left' }),
+	                                        'A group of wolves is called a Pack. ',
+	                                        _react2.default.createElement('br', { className: 'visible-desktop' }),
+	                                        'A group of Developers is called a Merge Conflict',
+	                                        _react2.default.createElement('i', { className: 'fa fa-quote-right' })
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'h5',
+	                                        { className: 'lead-author' },
+	                                        '- Unknown'
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(_Index2.default, null)
+	            );
+	        }
+	    }]);
+
+	    return Jobs;
+	}(_react.Component);
+
+	exports.default = Jobs;
+
+/***/ },
+/* 419 */
+/*!*****************************************!*\
+  !*** ./src/actions/DeveloperActions.js ***!
+  \*****************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	/**
+	 * Created by Raphson on 10/16/16.
+	 */
+	/**
+	 * Created by Raphson on 9/24/16.
+	 */
+	var AppConstants = __webpack_require__(/*! ../constants/AppConstants */ 269),
+	    BaseActions = __webpack_require__(/*! ./BaseActions */ 278);
+
+	module.exports = {
+	    fetchAllDevelopers: function fetchAllDevelopers() {
+	        BaseActions.get('/api/users', AppConstants.GET_DEVELOPERS);
+	    }
+	};
+
+/***/ },
+/* 420 */
+/*!**************************************!*\
+  !*** ./src/stores/DeveloperStore.js ***!
+  \**************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _BaseStore = __webpack_require__(/*! ./BaseStore */ 267);
+
+	var _BaseStore2 = _interopRequireDefault(_BaseStore);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var AppConstants = __webpack_require__(/*! ../constants/AppConstants */ 269),
+	    AppDispatcher = __webpack_require__(/*! ../dispatcher/AppDispatcher */ 273); /**
+	                                                             * Created by Raphson on 10/16/16.
+	                                                             */
+
+
+	if (!Object.assign) {
+	    Object.assign = __webpack_require__(/*! object-assign */ 5);
+	}
+	var DeveloperStore = Object.assign({}, _BaseStore2.default, {
+	    developers: null,
+
+	    setDevelopers: function setDevelopers(developers) {
+	        this.developers = developers;
+	        this.emitChange('fetchDevelopers');
+	    },
+	    getDevelopers: function getDevelopers() {
+	        return this.developers;
+	    }
+	});
+
+	AppDispatcher.register(function (action) {
+	    switch (action.actionType) {
+	        case AppConstants.GET_DEVELOPERS:
+	            DeveloperStore.setDevelopers(action.data);
+	            break;
+	        default:
+	        // no default action
+	    }
+	    return true;
+	});
+
+	module.exports = DeveloperStore;
+
+/***/ },
+/* 421 */
 /*!********************************************!*\
   !*** ./src/components/Jobs/CreateIndex.js ***!
   \********************************************/
@@ -83573,10 +83921,10 @@
 	exports.default = Create;
 
 /***/ },
-/* 418 */
-/*!****************************************!*\
-  !*** ./src/components/Jobs/JobList.js ***!
-  \****************************************/
+/* 422 */
+/*!***************************************************!*\
+  !*** ./src/components/Developer/DeveloperList.js ***!
+  \***************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -83596,112 +83944,6 @@
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
 	var _reactRouter = __webpack_require__(/*! react-router */ 189);
-
-	var _reactTimeago = __webpack_require__(/*! react-timeago */ 412);
-
-	var _reactTimeago2 = _interopRequireDefault(_reactTimeago);
-
-	var _marked = __webpack_require__(/*! marked */ 291);
-
-	var _marked2 = _interopRequireDefault(_marked);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by Raphson on 10/12/16.
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-
-
-	var JobList = function (_Component) {
-	    _inherits(JobList, _Component);
-
-	    function JobList() {
-	        _classCallCheck(this, JobList);
-
-	        return _possibleConstructorReturn(this, (JobList.__proto__ || Object.getPrototypeOf(JobList)).call(this));
-	    }
-
-	    _createClass(JobList, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'bs-callout' },
-	                _react2.default.createElement(
-	                    'h4',
-	                    null,
-	                    _react2.default.createElement('i', { className: 'fa fa-suitcase' }),
-	                    ' ',
-	                    this.props.job.title
-	                ),
-	                _react2.default.createElement('p', { dangerouslySetInnerHTML: { __html: (0, _marked2.default)(this.props.job.description) } }),
-	                _react2.default.createElement(
-	                    'p',
-	                    null,
-	                    'Posted by ',
-	                    _react2.default.createElement(
-	                        'span',
-	                        { className: 'btn-info badge' },
-	                        this.props.job.company
-	                    ),
-	                    _react2.default.createElement(
-	                        'small',
-	                        null,
-	                        ' ',
-	                        _react2.default.createElement('em', { className: 'time' }),
-	                        _react2.default.createElement(_reactTimeago2.default, { date: new Date(this.props.job.registered_on) }),
-	                        ' '
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-
-	    return JobList;
-	}(_react.Component);
-
-	exports.default = JobList;
-
-/***/ },
-/* 419 */
-/*!*******************************************!*\
-  !*** ./src/components/Developer/Index.js ***!
-  \*******************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(/*! react */ 2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDom = __webpack_require__(/*! react-dom */ 35);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
-	var _reactRouter = __webpack_require__(/*! react-router */ 189);
-
-	var _index = __webpack_require__(/*! ../NavBar/index */ 188);
-
-	var _index2 = _interopRequireDefault(_index);
-
-	var _Index = __webpack_require__(/*! ../Footer/Index */ 255);
-
-	var _Index2 = _interopRequireDefault(_Index);
-
-	var _auth = __webpack_require__(/*! ../../utils/auth */ 252);
-
-	var _auth2 = _interopRequireDefault(_auth);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -83712,148 +83954,69 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by Raphson on 10/14/16.
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-	/**
-	 * Created by Raphson on 10/10/16.
-	 */
 
 
-	var Jobs = function (_Component) {
-	    _inherits(Jobs, _Component);
+	var DeveloperList = function (_Component) {
+	    _inherits(DeveloperList, _Component);
 
-	    function Jobs() {
-	        _classCallCheck(this, Jobs);
+	    function DeveloperList() {
+	        _classCallCheck(this, DeveloperList);
 
-	        var _this = _possibleConstructorReturn(this, (Jobs.__proto__ || Object.getPrototypeOf(Jobs)).call(this));
-
-	        _this.state = {
-	            developers: null
-	        };
-	        return _this;
+	        return _possibleConstructorReturn(this, (DeveloperList.__proto__ || Object.getPrototypeOf(DeveloperList)).call(this));
 	    }
 
-	    _createClass(Jobs, [{
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {}
-	    }, {
-	        key: 'componentWillUnmount',
-	        value: function componentWillUnmount() {}
-	    }, {
+	    _createClass(DeveloperList, [{
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
-	                'span',
-	                null,
-	                _react2.default.createElement(_index2.default, null),
+	                'div',
+	                { className: 'col-lg-2 col-md-3 col-sm-4 col-xs-5 team-profile' },
 	                _react2.default.createElement(
 	                    'div',
-	                    { style: { minHeight: 580 }, className: 'main-container' },
+	                    { style: { textAlign: 'center' } },
 	                    _react2.default.createElement(
-	                        'section',
-	                        { className: 'features features-6' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'container' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'row' },
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'col-sm-12 text-center' },
-	                                    _react2.default.createElement(
-	                                        'h4',
-	                                        null,
-	                                        'MERN STACK DEVELOPERS ON THE PLANET'
-	                                    )
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'row' },
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'col-lg-2 col-md-3 col-sm-4 col-xs-5 team-profile' },
-	                                    _react2.default.createElement(
-	                                        'div',
-	                                        { style: { textAlign: 'center' } },
-	                                        _react2.default.createElement(
-	                                            'a',
-	                                            { href: '/mean-developers/{{ dev.username }}' },
-	                                            _react2.default.createElement('img', { height: 150, width: 150, alt: '{{dev.fullname}}',
-	                                                src: '{{ dev.user_avatar }}' })
-	                                        )
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'div',
-	                                        { className: 'profile-name grid3' },
-	                                        'Username'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'ul',
-	                                        { className: 'profile-social-icons' },
-	                                        _react2.default.createElement(
-	                                            'li',
-	                                            null,
-	                                            _react2.default.createElement(
-	                                                'a',
-	                                                { target: '_blank', href: '{{dev.twitter_handle || \'#\'}}' },
-	                                                _react2.default.createElement('i', { className: 'fa fa-twitter-square' })
-	                                            )
-	                                        ),
-	                                        _react2.default.createElement('div', { style: { display: 'inline-block', width: 10, height: 4 } }),
-	                                        _react2.default.createElement(
-	                                            'li',
-	                                            null,
-	                                            _react2.default.createElement(
-	                                                'a',
-	                                                { target: '_blank', href: '{{dev.github_profile || \'#\'}}' },
-	                                                _react2.default.createElement('i', { className: 'fa fa-github-square' })
-	                                            )
-	                                        )
-	                                    )
-	                                )
-	                            )
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'section',
-	                        { className: 'social social-1 near-footer' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'container' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'row' },
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'leader col-sm-12 text-center' },
-	                                    _react2.default.createElement(
-	                                        'span',
-	                                        null,
-	                                        _react2.default.createElement('i', { className: 'fa fa-quote-left' }),
-	                                        'A group of wolves is called a Pack. ',
-	                                        _react2.default.createElement('br', { className: 'visible-desktop' }),
-	                                        'A group of Developers is called a Merge Conflict',
-	                                        _react2.default.createElement('i', { className: 'fa fa-quote-right' })
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'h5',
-	                                        { className: 'lead-author' },
-	                                        '- Unknown'
-	                                    )
-	                                )
-	                            )
-	                        )
+	                        _reactRouter.Link,
+	                        { to: '/mean-developers/{{ dev.username }}' },
+	                        _react2.default.createElement('img', { height: 150, width: 150, alt: this.props.developer.fullname,
+	                            src: this.props.developer.user_avi })
 	                    )
 	                ),
-	                _react2.default.createElement(_Index2.default, null)
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'profile-name grid3' },
+	                    this.props.developer.username
+	                ),
+	                _react2.default.createElement(
+	                    'ul',
+	                    { className: 'profile-social-icons' },
+	                    _react2.default.createElement(
+	                        'li',
+	                        null,
+	                        _react2.default.createElement(
+	                            'a',
+	                            { target: '_blank', href: this.props.developer.twitter_handle || '#' },
+	                            _react2.default.createElement('i', { className: 'fa fa-twitter-square' })
+	                        )
+	                    ),
+	                    _react2.default.createElement('div', { style: { display: 'inline-block', width: 10, height: 4 } }),
+	                    _react2.default.createElement(
+	                        'li',
+	                        null,
+	                        _react2.default.createElement(
+	                            'a',
+	                            { target: '_blank', href: this.props.developer.github_profile || '#' },
+	                            _react2.default.createElement('i', { className: 'fa fa-github-square' })
+	                        )
+	                    )
+	                )
 	            );
 	        }
 	    }]);
 
-	    return Jobs;
+	    return DeveloperList;
 	}(_react.Component);
 
-	exports.default = Jobs;
+	exports.default = DeveloperList;
 
 /***/ }
 /******/ ]);

@@ -8,7 +8,7 @@ let AppConstants = require('../constants/AppConstants'),
     BaseActions = require('./BaseActions');
 
 module.exports = {
-    fetchAllDeveloper: (token) => {
+    fetchAllDevelopers: () => {
         BaseActions.get('/api/users', AppConstants.GET_DEVELOPERS);
     }
 }

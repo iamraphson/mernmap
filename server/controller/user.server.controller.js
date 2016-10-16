@@ -124,8 +124,10 @@ module.exports = {
     },
 
     getAllUsers: (req, res) => {
-        User.find({}, (err, users) => {
-            return res.status(200).json(users);
+        var query = User.find().select('username fullname twitter_handle website github_profile user_avi');
+
+        query.exec(function(err, result){
+            return res.status(200).send(result);
         });
     }
 
