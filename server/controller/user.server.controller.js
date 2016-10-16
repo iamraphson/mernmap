@@ -129,6 +129,37 @@ module.exports = {
         query.exec(function(err, result){
             return res.status(200).send(result);
         });
+    },
+
+    getEachUserByUsername: (req, res, next) => {
+        var userReal = req.params.username;
+
+        User.find({username: userReal}, function (err, user) {
+            if(err) {
+                return res.status(404).json({err: err});
+            }
+
+            if(user.length === 0){
+                return res.json({ success: false, message: 'User not found.' });
+            }
+            else if(user.length == 1) {
+                var userDetails = {};
+                userDetails.email           = user[0].email;
+                userDetails.fullname        = user[0].fullname;
+                userDetails.username        = user[0].username;
+                userDetails.user_avatar     = user[0].user_avatar;
+                userDetails.admin           = user[0].admin;
+                userDetails.bio             = user[0].bio;
+                userDetails.hire_status     = user[0].hire_status;
+                userDetails.address         = user[0].address;
+                userDetails.github_profile  = user[0].github_profile;
+                userDetails.website         = user[0].website;
+                userDetails.registered      = user[0].registered_on;
+
+                return res.json({success: true, user: userDetails});
+            }
+            next();
+        });
     }
 
 };

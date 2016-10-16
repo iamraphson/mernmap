@@ -20,4 +20,5 @@ module.exports = function(app){
     app.get('/api/jobs', jobCtrl.getAllJobs);
 
     app.get('/api/users', userCtrl.getAllUsers);
+    app.get('/api/users/:username', userCtrl.getEachUserByUsername);
 }
