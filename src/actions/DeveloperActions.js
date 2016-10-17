@@ -10,5 +10,9 @@ let AppConstants = require('../constants/AppConstants'),
 module.exports = {
     fetchAllDevelopers: () => {
         BaseActions.get('/api/users', AppConstants.GET_DEVELOPERS);
+    },
+
+    fetchADeveloper: (username) => {
+        BaseActions.get('/api/user/' + username, AppConstants.GET_DEVELOPER);
     }
 }

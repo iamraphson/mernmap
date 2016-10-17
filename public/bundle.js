@@ -109,7 +109,7 @@
 
 	var _Index12 = _interopRequireDefault(_Index11);
 
-	var _CreateIndex = __webpack_require__(/*! ./components/Jobs/CreateIndex */ 421);
+	var _CreateIndex = __webpack_require__(/*! ./components/Jobs/CreateIndex */ 422);
 
 	var _CreateIndex2 = _interopRequireDefault(_CreateIndex);
 
@@ -31935,7 +31935,8 @@
 	    GET_PROJECT: null,
 	    POST_JOB: null,
 	    GET_JOBS: null,
-	    GET_DEVELOPERS: null
+	    GET_DEVELOPERS: null,
+	    GET_DEVELOPER: null
 	});
 
 /***/ },
@@ -83482,7 +83483,7 @@
 
 	var _DeveloperStore2 = _interopRequireDefault(_DeveloperStore);
 
-	var _DeveloperList = __webpack_require__(/*! ./DeveloperList */ 422);
+	var _DeveloperList = __webpack_require__(/*! ./DeveloperList */ 421);
 
 	var _DeveloperList2 = _interopRequireDefault(_DeveloperList);
 
@@ -83639,6 +83640,10 @@
 	module.exports = {
 	    fetchAllDevelopers: function fetchAllDevelopers() {
 	        BaseActions.get('/api/users', AppConstants.GET_DEVELOPERS);
+	    },
+
+	    fetchADeveloper: function fetchADeveloper(username) {
+	        BaseActions.get('/api/user/' + username, AppConstants.GET_DEVELOPER);
 	    }
 	};
 
@@ -83668,6 +83673,7 @@
 	}
 	var DeveloperStore = Object.assign({}, _BaseStore2.default, {
 	    developers: null,
+	    developer: null,
 
 	    setDevelopers: function setDevelopers(developers) {
 	        this.developers = developers;
@@ -83675,6 +83681,13 @@
 	    },
 	    getDevelopers: function getDevelopers() {
 	        return this.developers;
+	    },
+	    setDeveloper: function setDeveloper(developer) {
+	        this.developer = developer;
+	        this.emitChange('fetchDeveloper');
+	    },
+	    getDeveloper: function getDeveloper() {
+	        return this.developer;
 	    }
 	});
 
@@ -83682,6 +83695,9 @@
 	    switch (action.actionType) {
 	        case AppConstants.GET_DEVELOPERS:
 	            DeveloperStore.setDevelopers(action.data);
+	            break;
+	        case AppConstants.GET_DEVELOPER:
+	            DeveloperStore.setDeveloper(action.data);
 	            break;
 	        default:
 	        // no default action
@@ -83693,6 +83709,104 @@
 
 /***/ },
 /* 421 */
+/*!***************************************************!*\
+  !*** ./src/components/Developer/DeveloperList.js ***!
+  \***************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(/*! react */ 2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(/*! react-dom */ 35);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _reactRouter = __webpack_require__(/*! react-router */ 189);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by Raphson on 10/14/16.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+	var DeveloperList = function (_Component) {
+	    _inherits(DeveloperList, _Component);
+
+	    function DeveloperList() {
+	        _classCallCheck(this, DeveloperList);
+
+	        return _possibleConstructorReturn(this, (DeveloperList.__proto__ || Object.getPrototypeOf(DeveloperList)).call(this));
+	    }
+
+	    _createClass(DeveloperList, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'col-lg-2 col-md-3 col-sm-4 col-xs-5 team-profile' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { style: { textAlign: 'center' } },
+	                    _react2.default.createElement(
+	                        _reactRouter.Link,
+	                        { to: '/mean-developers/{{ dev.username }}' },
+	                        _react2.default.createElement('img', { height: 150, width: 150, alt: this.props.developer.fullname,
+	                            src: this.props.developer.user_avi })
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'profile-name grid3' },
+	                    this.props.developer.username
+	                ),
+	                _react2.default.createElement(
+	                    'ul',
+	                    { className: 'profile-social-icons' },
+	                    _react2.default.createElement(
+	                        'li',
+	                        null,
+	                        _react2.default.createElement(
+	                            'a',
+	                            { target: '_blank', href: this.props.developer.twitter_handle || '#' },
+	                            _react2.default.createElement('i', { className: 'fa fa-twitter-square' })
+	                        )
+	                    ),
+	                    _react2.default.createElement('div', { style: { display: 'inline-block', width: 10, height: 4 } }),
+	                    _react2.default.createElement(
+	                        'li',
+	                        null,
+	                        _react2.default.createElement(
+	                            'a',
+	                            { target: '_blank', href: this.props.developer.github_profile || '#' },
+	                            _react2.default.createElement('i', { className: 'fa fa-github-square' })
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return DeveloperList;
+	}(_react.Component);
+
+	exports.default = DeveloperList;
+
+/***/ },
+/* 422 */
 /*!********************************************!*\
   !*** ./src/components/Jobs/CreateIndex.js ***!
   \********************************************/
@@ -83919,104 +84033,6 @@
 	}(_react.Component);
 
 	exports.default = Create;
-
-/***/ },
-/* 422 */
-/*!***************************************************!*\
-  !*** ./src/components/Developer/DeveloperList.js ***!
-  \***************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(/*! react */ 2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDom = __webpack_require__(/*! react-dom */ 35);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
-	var _reactRouter = __webpack_require__(/*! react-router */ 189);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by Raphson on 10/14/16.
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-
-
-	var DeveloperList = function (_Component) {
-	    _inherits(DeveloperList, _Component);
-
-	    function DeveloperList() {
-	        _classCallCheck(this, DeveloperList);
-
-	        return _possibleConstructorReturn(this, (DeveloperList.__proto__ || Object.getPrototypeOf(DeveloperList)).call(this));
-	    }
-
-	    _createClass(DeveloperList, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'col-lg-2 col-md-3 col-sm-4 col-xs-5 team-profile' },
-	                _react2.default.createElement(
-	                    'div',
-	                    { style: { textAlign: 'center' } },
-	                    _react2.default.createElement(
-	                        _reactRouter.Link,
-	                        { to: '/mean-developers/{{ dev.username }}' },
-	                        _react2.default.createElement('img', { height: 150, width: 150, alt: this.props.developer.fullname,
-	                            src: this.props.developer.user_avi })
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'profile-name grid3' },
-	                    this.props.developer.username
-	                ),
-	                _react2.default.createElement(
-	                    'ul',
-	                    { className: 'profile-social-icons' },
-	                    _react2.default.createElement(
-	                        'li',
-	                        null,
-	                        _react2.default.createElement(
-	                            'a',
-	                            { target: '_blank', href: this.props.developer.twitter_handle || '#' },
-	                            _react2.default.createElement('i', { className: 'fa fa-twitter-square' })
-	                        )
-	                    ),
-	                    _react2.default.createElement('div', { style: { display: 'inline-block', width: 10, height: 4 } }),
-	                    _react2.default.createElement(
-	                        'li',
-	                        null,
-	                        _react2.default.createElement(
-	                            'a',
-	                            { target: '_blank', href: this.props.developer.github_profile || '#' },
-	                            _react2.default.createElement('i', { className: 'fa fa-github-square' })
-	                        )
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-
-	    return DeveloperList;
-	}(_react.Component);
-
-	exports.default = DeveloperList;
 
 /***/ }
 /******/ ]);
