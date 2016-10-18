@@ -73,9 +73,10 @@ export default class ProjectDetails extends Component {
                                     <br />
                                     <p dangerouslySetInnerHTML={{__html: marked(desc) }} />
                                     <span style={{fontStyle: 'italic'}} className="postedBy"> Added by
-                                        <a href="/mean-developers/{{ projectDetails.postedBy }}"
+                                        <Link to={ `/mern-developers/${this.state.project ?
+                                        this.state.project.postedBy.username : 'Loading..'}`}
                                            style={{color: '#aa0036'}}> @{this.state.project ?
-                                        this.state.project.postedBy.username : 'Loading..'}</a></span>
+                                        this.state.project.postedBy.username : 'Loading..'}</Link></span>
                                     <ReactDisqus shortname="mernmap" identifier="123" />
                                 </div>
                                 <div className="col-sm-3 columns project-sidebar">

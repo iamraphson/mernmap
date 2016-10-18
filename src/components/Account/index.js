@@ -42,7 +42,7 @@ export default class Account extends React.Component {
             registered_on: '1454521239279',
             longitude: 3.540790900000047300,
             latitude: 6.523276500000000000,
-            zoom: 11,
+            zoom: 12,
             showModal: false
         }
     }
@@ -88,6 +88,7 @@ export default class Account extends React.Component {
             } else {
                 Alert.error(result.data.message, { position: 'top-right',  effect: 'bouncyflip'});
             }
+
         }
     }
 
@@ -122,7 +123,6 @@ export default class Account extends React.Component {
             url: data.project_url,
             description: data.project_description
         };
-        //UserActions.signup(projectPayLoad);
         ProjectActions.shareProject(projectPayLoad, this.state.token);
     }
 

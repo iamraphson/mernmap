@@ -16,6 +16,7 @@ import Project from './components/Project/Index';
 import ProjectDetails from './components/Project/ProjectDetails';
 import Job from './components/Jobs/Index';
 import Developer from './components/Developer/Index';
+import UserProfile from './components/Account/UserProfile';
 import CreateJob from './components/Jobs/CreateIndex';
 import Auth from './utils/auth';
 import {Router, Route, hashHistory, Redirect, IndexRoute, browserHistory} from 'react-router';
@@ -35,6 +36,7 @@ render(
             <Route path="projects" component={Project} />
             <Route path="jobs" component={Job} />
             <Route path="mern-developers" component={Developer} />
+            <Route path="mern-developers/:username" component={UserProfile} />
             <Route path="post-a-job" component={CreateJob} onEnter={requireAuth} />
             <Route path="account/edit" component={EditAccount} onEnter={requireAuth} />
             <Route path="account" component={Account} onEnter={requireAuth} />

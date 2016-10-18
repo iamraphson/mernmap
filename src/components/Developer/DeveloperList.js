@@ -14,7 +14,7 @@ export default class DeveloperList extends Component {
         return (
             <div className="col-lg-2 col-md-3 col-sm-4 col-xs-5 team-profile">
                 <div style={{textAlign: 'center'}}>
-                    <Link to="/mean-developers/{{ dev.username }}">
+                    <Link to={ `/mern-developers/${this.props.developer.username}`}>
                         <img height={150} width={150} alt={this.props.developer.fullname}
                              src={this.props.developer.user_avi} />
                     </Link>

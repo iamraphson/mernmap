@@ -109,7 +109,11 @@
 
 	var _Index12 = _interopRequireDefault(_Index11);
 
-	var _CreateIndex = __webpack_require__(/*! ./components/Jobs/CreateIndex */ 422);
+	var _UserProfile = __webpack_require__(/*! ./components/Account/UserProfile */ 422);
+
+	var _UserProfile2 = _interopRequireDefault(_UserProfile);
+
+	var _CreateIndex = __webpack_require__(/*! ./components/Jobs/CreateIndex */ 423);
 
 	var _CreateIndex2 = _interopRequireDefault(_CreateIndex);
 
@@ -139,6 +143,7 @@
 	        _react2.default.createElement(_reactRouter.Route, { path: 'projects', component: _Index8.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'jobs', component: _Index10.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'mern-developers', component: _Index12.default }),
+	        _react2.default.createElement(_reactRouter.Route, { path: 'mern-developers/:username', component: _UserProfile2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'post-a-job', component: _CreateIndex2.default, onEnter: requireAuth }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'account/edit', component: _EditIndex2.default, onEnter: requireAuth }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'account', component: _index2.default, onEnter: requireAuth }),
@@ -52216,7 +52221,6 @@
 	                url: data.project_url,
 	                description: data.project_description
 	            };
-	            //UserActions.signup(projectPayLoad);
 	            _ProjectActions2.default.shareProject(projectPayLoad, _this.state.token);
 	        };
 
@@ -52236,7 +52240,7 @@
 	            registered_on: '1454521239279',
 	            longitude: 3.540790900000047300,
 	            latitude: 6.523276500000000000,
-	            zoom: 11,
+	            zoom: 12,
 	            showModal: false
 	        };
 	        return _this;
@@ -82718,8 +82722,8 @@
 	                                        { style: { fontStyle: 'italic' }, className: 'postedBy' },
 	                                        ' Added by',
 	                                        _react2.default.createElement(
-	                                            'a',
-	                                            { href: '/mean-developers/{{ projectDetails.postedBy }}',
+	                                            _reactRouter.Link,
+	                                            { to: '/mern-developers/' + (this.state.project ? this.state.project.postedBy.username : 'Loading..'),
 	                                                style: { color: '#aa0036' } },
 	                                            ' @',
 	                                            this.state.project ? this.state.project.postedBy.username : 'Loading..'
@@ -83763,7 +83767,7 @@
 	                    { style: { textAlign: 'center' } },
 	                    _react2.default.createElement(
 	                        _reactRouter.Link,
-	                        { to: '/mean-developers/{{ dev.username }}' },
+	                        { to: '/mern-developers/' + this.props.developer.username },
 	                        _react2.default.createElement('img', { height: 150, width: 150, alt: this.props.developer.fullname,
 	                            src: this.props.developer.user_avi })
 	                    )
@@ -83807,6 +83811,388 @@
 
 /***/ },
 /* 422 */
+/*!***********************************************!*\
+  !*** ./src/components/Account/UserProfile.js ***!
+  \***********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(/*! react */ 2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(/*! react-router */ 189);
+
+	var _index = __webpack_require__(/*! ../NavBar/index */ 188);
+
+	var _index2 = _interopRequireDefault(_index);
+
+	var _Index = __webpack_require__(/*! ../Footer/Index */ 255);
+
+	var _Index2 = _interopRequireDefault(_Index);
+
+	var _DeveloperStore = __webpack_require__(/*! ../../stores/DeveloperStore */ 420);
+
+	var _DeveloperStore2 = _interopRequireDefault(_DeveloperStore);
+
+	var _ProjectStore = __webpack_require__(/*! ../../stores/ProjectStore */ 289);
+
+	var _ProjectStore2 = _interopRequireDefault(_ProjectStore);
+
+	var _DeveloperActions = __webpack_require__(/*! ../../actions/DeveloperActions */ 419);
+
+	var _DeveloperActions2 = _interopRequireDefault(_DeveloperActions);
+
+	var _ProjectActions = __webpack_require__(/*! ../../actions/ProjectActions */ 290);
+
+	var _ProjectActions2 = _interopRequireDefault(_ProjectActions);
+
+	var _auth = __webpack_require__(/*! ../../utils/auth */ 252);
+
+	var _auth2 = _interopRequireDefault(_auth);
+
+	var _marked = __webpack_require__(/*! marked */ 291);
+
+	var _marked2 = _interopRequireDefault(_marked);
+
+	var _moment = __webpack_require__(/*! moment */ 292);
+
+	var _moment2 = _interopRequireDefault(_moment);
+
+	var _leaflet = __webpack_require__(/*! leaflet */ 398);
+
+	var _leaflet2 = _interopRequireDefault(_leaflet);
+
+	var _FlyModal = __webpack_require__(/*! boron/FlyModal */ 399);
+
+	var _FlyModal2 = _interopRequireDefault(_FlyModal);
+
+	var _CreateIndex = __webpack_require__(/*! ../Project/CreateIndex */ 408);
+
+	var _CreateIndex2 = _interopRequireDefault(_CreateIndex);
+
+	var _reactSAlert = __webpack_require__(/*! react-s-alert */ 174);
+
+	var _reactSAlert2 = _interopRequireDefault(_reactSAlert);
+
+	__webpack_require__(/*! react-s-alert/dist/s-alert-default.css */ 181);
+
+	__webpack_require__(/*! react-s-alert/dist/s-alert-css-effects/bouncyflip.css */ 253);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by Raphson on 10/17/16.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+	var contentStyle = {
+	    height: '100%',
+	    width: '600px'
+	};
+
+	var Profile = function (_React$Component) {
+	    _inherits(Profile, _React$Component);
+
+	    function Profile() {
+	        _classCallCheck(this, Profile);
+
+	        var _this = _possibleConstructorReturn(this, (Profile.__proto__ || Object.getPrototypeOf(Profile)).call(this));
+
+	        _this.handleUserProfileFetch = function () {
+	            var User = _DeveloperStore2.default.getDeveloper().data.user;
+	            _this.setState({
+	                fullname: User.fullname,
+	                registered: User.registered,
+	                username: User.username,
+	                user_avatar: User.user_avatar,
+	                github_profile: User.github_profile,
+	                website: User.website,
+	                hire_status: User.hire_status,
+	                bio: User.bio,
+	                id: User.id,
+	                address: User.address
+	            });
+	            _this.handleAddressResolve();
+	        };
+
+	        _this.handleShareProjectResult = function () {
+	            var result = _ProjectStore2.default.getShareProjectResult();
+	            _auth2.default.checkAuthRequired(result);
+	            if (result.status == 500) {
+	                _reactSAlert2.default.error(result.data.message, { position: 'top-right', effect: 'bouncyflip' });
+	            } else {
+	                if (result.data.success) {
+	                    _reactSAlert2.default.success(result.data.message, { position: 'top-right', effect: 'bouncyflip' });
+	                    _this.refs.modal.hide();
+	                } else {
+	                    _reactSAlert2.default.error(result.data.message, { position: 'top-right', effect: 'bouncyflip' });
+	                }
+	            }
+	        };
+
+	        _this.handleAddressResolve = function () {
+	            _this.state.geocoder.geocode({ 'address': _this.state.address }, _this.handleAddressResolveSuccess);
+	        };
+
+	        _this.handleAddressResolveSuccess = function (results, status) {
+	            if (status == google.maps.GeocoderStatus.OK) {
+	                var result = results[0].geometry.location;
+	                var map = _leaflet2.default.map("map", { center: [_this.state.latitude, _this.state.longitude], zoom: _this.state.zoom });
+	                _leaflet2.default.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", { attribution: "OpenStreetMap" }).addTo(map);
+	                var marker = _leaflet2.default.marker([result.lat(), result.lng()]).addTo(map);
+	                marker.bindPopup("<strong>" + _this.state.username + "</strong>").openPopup();
+	            }
+	        };
+
+	        _this.showModal = function (e) {
+	            e.preventDefault();
+	            _this.refs.modal.show();
+	        };
+
+	        _this.hideModal = function (e) {
+	            e.preventDefault();
+	            _this.refs.modal.hide();
+	        };
+
+	        _this.handleProjectShare = function (data) {
+	            var projectPayLoad = {
+	                name: data.project_name,
+	                url: data.project_url,
+	                description: data.project_description
+	            };
+	            _ProjectActions2.default.shareProject(projectPayLoad, _this.state.token);
+	        };
+
+	        _leaflet2.default.Icon.Default.imagePath = "//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/";
+	        _this.state = {
+	            geocoder: new google.maps.Geocoder(),
+	            token: _auth2.default.getToken(),
+	            authUser: _auth2.default.getUser(),
+	            fullname: '',
+	            github_profile: '',
+	            website: '',
+	            hire_status: 'No',
+	            bio: '',
+	            user_avatar: 'http://s3.amazonaws.com/37assets/svn/765-default-avatar.png',
+	            registered: '1454521239279',
+	            address: '',
+	            username: '',
+	            longitude: 3.540790900000047300,
+	            latitude: 6.523276500000000000,
+	            zoom: 11,
+	            showModal: false
+	        };
+	        return _this;
+	    }
+
+	    _createClass(Profile, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            _DeveloperActions2.default.fetchADeveloper(this.props.params.username);
+	            _DeveloperStore2.default.addChangeListener(this.handleUserProfileFetch, 'fetchDeveloper');
+	            _ProjectStore2.default.addChangeListener(this.handleShareProjectResult, 'shareProject');
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            _DeveloperStore2.default.removeChangeListener(this.handleUserProfileFetch, 'fetchDeveloper');
+	            _ProjectStore2.default.removeChangeListener(this.handleShareProjectResult, 'shareProject');
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var owner;
+	            if (this.state.id && this.state.authUser) {
+	                owner = JSON.parse(this.state.authUser)._id == this.state.id;
+	            }
+	            return _react2.default.createElement(
+	                'span',
+	                null,
+	                _react2.default.createElement(_index2.default, null),
+	                _react2.default.createElement(
+	                    'div',
+	                    { style: { minHeight: 580 }, className: 'main-container' },
+	                    _react2.default.createElement(
+	                        'section',
+	                        { className: 'header header-12' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'container' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'row' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'col-sm-12 text-white' },
+	                                    _react2.default.createElement(
+	                                        'h4',
+	                                        { className: 'text-white' },
+	                                        this.state.fullname
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'ul',
+	                                        null,
+	                                        _react2.default.createElement(
+	                                            'li',
+	                                            null,
+	                                            _react2.default.createElement('i', { className: 'fa fa-clock-o' }),
+	                                            ' Member since',
+	                                            _react2.default.createElement(
+	                                                'span',
+	                                                null,
+	                                                ' ',
+	                                                (0, _moment2.default)(this.state.registered, "x").format("DD MMM YYYY"),
+	                                                ' '
+	                                            )
+	                                        )
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'section',
+	                        { className: 'faq faq-1' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'container' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'row' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'col-sm-6' },
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { className: 'faq' },
+	                                        _react2.default.createElement('img', { width: 200, height: 200, src: this.state.user_avatar,
+	                                            alt: this.state.fullname, className: 'img-rounded' })
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { className: 'faq' },
+	                                        _react2.default.createElement(
+	                                            'h5',
+	                                            null,
+	                                            this.state.fullname
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'ul',
+	                                            null,
+	                                            this.state.github_profile != '' ? _react2.default.createElement(
+	                                                'li',
+	                                                null,
+	                                                _react2.default.createElement(
+	                                                    'a',
+	                                                    { target: '_blank', href: this.state.github_profile },
+	                                                    _react2.default.createElement('i', { className: 'fa fa-github' }),
+	                                                    ' GitHub'
+	                                                )
+	                                            ) : null,
+	                                            this.state.website != '' ? _react2.default.createElement(
+	                                                'li',
+	                                                null,
+	                                                _react2.default.createElement(
+	                                                    'a',
+	                                                    { target: '_blank', href: this.state.website },
+	                                                    _react2.default.createElement('i', { className: 'fa fa-globe' }),
+	                                                    ' Website / Blog'
+	                                                )
+	                                            ) : null
+	                                        ),
+	                                        _react2.default.createElement('br', null),
+	                                        _react2.default.createElement(
+	                                            'ul',
+	                                            null,
+	                                            this.state.hire_status == 'yes' ? _react2.default.createElement(
+	                                                'li',
+	                                                null,
+	                                                _react2.default.createElement('i', { className: 'fa fa-suitcase' }),
+	                                                ' Not Available for Hire'
+	                                            ) : _react2.default.createElement(
+	                                                'li',
+	                                                null,
+	                                                _react2.default.createElement('i', { className: 'fa fa-suitcase' }),
+	                                                ' Available for Hire'
+	                                            ),
+	                                            _react2.default.createElement('br', null)
+	                                        ),
+	                                        owner ? _react2.default.createElement(
+	                                            'ul',
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                'li',
+	                                                null,
+	                                                _react2.default.createElement('i', { className: 'fa fa-project' }),
+	                                                _react2.default.createElement(
+	                                                    'a',
+	                                                    { onClick: this.showModal,
+	                                                        className: 'btn btn-default' },
+	                                                    'Share Project'
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    _FlyModal2.default,
+	                                                    { ref: 'modal', contentStyle: contentStyle },
+	                                                    _react2.default.createElement(_CreateIndex2.default, { onClose: this.hideModal,
+	                                                        onDataSubmit: this.handleProjectShare })
+	                                                )
+	                                            ),
+	                                            _react2.default.createElement('br', null)
+	                                        ) : null
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'col-sm-6' },
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { className: 'faq' },
+	                                        _react2.default.createElement(
+	                                            'h5',
+	                                            null,
+	                                            'Tell Us About Yourself'
+	                                        ),
+	                                        _react2.default.createElement('p', { dangerouslySetInnerHTML: { __html: (0, _marked2.default)(this.state.bio) } })
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { className: 'faq' },
+	                                        _react2.default.createElement(
+	                                            'h5',
+	                                            null,
+	                                            'Location'
+	                                        ),
+	                                        _react2.default.createElement('div', { id: 'map', className: 'leaflet-container' })
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(_Index2.default, null)
+	            );
+	        }
+	    }]);
+
+	    return Profile;
+	}(_react2.default.Component);
+
+	exports.default = Profile;
+
+/***/ },
+/* 423 */
 /*!********************************************!*\
   !*** ./src/components/Jobs/CreateIndex.js ***!
   \********************************************/

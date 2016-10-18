@@ -5,9 +5,9 @@ import React from 'react';
 import { Link, hashHistory } from 'react-router';
 import NavBar from '../NavBar/index';
 import Footer from '../Footer/Index';
-import UserStore from '../../stores/UserStore';
+import DeveloperStore from '../../stores/DeveloperStore';
 import ProjectStore from '../../stores/ProjectStore';
-import UserActions from '../../actions/UserActions';
+import DeveloperActions from '../../actions/DeveloperActions';
 import ProjectActions from '../../actions/ProjectActions';
 import Auth from '../../utils/auth';
 import marked from 'marked';
@@ -23,23 +23,23 @@ var contentStyle = {
     height: '100%',
     width: '600px'
 };
-export default class Account extends React.Component {
+export default class Profile extends React.Component {
     constructor() {
         super();
         L.Icon.Default.imagePath = "//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/";
         this.state = {
             geocoder: new google.maps.Geocoder(),
             token: Auth.getToken(),
-            displayImage: '',
-            fullName: '',
-            hireStatus: 'No',
-            twitter:'',
+            authUser: Auth.getUser(),
+            fullname: '',
+            github_profile: '',
             website: '',
-            github: '',
+            hire_status: 'No',
             bio: '',
+            user_avatar: 'http://s3.amazonaws.com/37assets/svn/765-default-avatar.png',
+            registered: '1454521239279',
             address: '',
             username: '',
-            registered_on: '1454521239279',
             longitude: 3.540790900000047300,
             latitude: 6.523276500000000000,
             zoom: 11,
@@ -48,30 +48,29 @@ export default class Account extends React.Component {
     }
 
     componentDidMount() {
-        UserActions.fetchAuthUser(this.state.token);
-        UserStore.addChangeListener(this.handleAuthUserFetch);
+        DeveloperActions.fetchADeveloper(this.props.params.username);
+        DeveloperStore.addChangeListener(this.handleUserProfileFetch, 'fetchDeveloper');
         ProjectStore.addChangeListener(this.handleShareProjectResult, 'shareProject');
     }
 
     componentWillUnmount(){
-        UserStore.removeChangeListener(this.handleAuthUserFetch);
+        DeveloperStore.removeChangeListener(this.handleUserProfileFetch, 'fetchDeveloper');
         ProjectStore.removeChangeListener(this.handleShareProjectResult, 'shareProject');
     }
 
-    handleAuthUserFetch = () => {
-        let authUser = UserStore.getAuthUserResult();
-        Auth.checkAuthRequired(authUser);
+    handleUserProfileFetch = () => {
+        let User = DeveloperStore.getDeveloper().data.user;
         this.setState({
-            fullName: authUser.data.fullname,
-            hireStatus: authUser.data.hire_status,
-            twitter: authUser.data.twitter_handle,
-            website: authUser.data.website,
-            github: authUser.data.github_profile,
-            bio: authUser.data.bio,
-            address: authUser.data.address,
-            displayImage: authUser.data.user_avi,
-            registered_on: authUser.data.registered_on,
-            username: authUser.data.username
+            fullname: User.fullname,
+            registered: User.registered,
+            username: User.username,
+            user_avatar: User.user_avatar,
+            github_profile: User.github_profile,
+            website: User.website,
+            hire_status: User.hire_status,
+            bio: User.bio,
+            id: User.id,
+            address: User.address
         });
         this.handleAddressResolve();
     }
@@ -101,7 +100,7 @@ export default class Account extends React.Component {
             let map = L.map("map", {center: [this.state.latitude, this.state.longitude],zoom: this.state.zoom});
             L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {attribution: "OpenStreetMap"}).addTo(map);
             let marker = L.marker([result.lat(), result.lng()]).addTo(map);
-            marker.bindPopup("<strong>You are here!</strong>").openPopup();
+            marker.bindPopup("<strong>" + this.state.username + "</strong>").openPopup();
         }
     }
 
@@ -116,18 +115,20 @@ export default class Account extends React.Component {
     }
 
     handleProjectShare = (data) => {
-        console.log(JSON.stringify(data));
         var projectPayLoad = {
             name: data.project_name,
             url: data.project_url,
             description: data.project_description
         };
-        //UserActions.signup(projectPayLoad);
         ProjectActions.shareProject(projectPayLoad, this.state.token);
     }
 
 
     render(){
+        var owner;
+        if (this.state.id && this.state.authUser) {
+            owner = JSON.parse(this.state.authUser)._id == this.state.id;
+        }
         return (
             <span>
                 <NavBar />
@@ -136,10 +137,10 @@ export default class Account extends React.Component {
                         <div className="container">
                             <div className="row">
                                 <div className="col-sm-12 text-white">
-                                    <h4 className="text-white">{this.state.fullName}</h4>
+                                    <h4 className="text-white">{this.state.fullname}</h4>
                                     <ul>
                                         <li><i className="fa fa-clock-o" /> Member since
-                                            <span> { moment(this.state.registered_on, "x").format("DD MMM YYYY")} </span></li>
+                                            <span> { moment(this.state.registered, "x").format("DD MMM YYYY")} </span></li>
                                     </ul>
                                 </div>
                             </div>
@@ -150,41 +151,44 @@ export default class Account extends React.Component {
                             <div className="row">
                                 <div className="col-sm-6">
                                     <div className="faq">
-                                        <img width={200} height={200} src={ this.state.displayImage }
-                                             alt={this.state.fullName} className="img-rounded" />
+                                        <img width={200} height={200} src={this.state.user_avatar }
+                                             alt={this.state.fullname} className="img-rounded" />
                                     </div>
                                     <div className="faq">
-                                        <h5>{this.state.fullName}</h5>
+                                        <h5>{this.state.fullname}</h5>
                                         <ul>
-                                            {(this.state.github != '') ?
-                                                <li><a target="_blank" href={this.state.github}>
+                                            {(this.state.github_profile != '') ?
+                                                <li><a target="_blank" href={this.state.github_profile}>
                                                     <i className="fa fa-github" /> GitHub</a></li>
-                                                : null }
+                                            : null }
                                             {(this.state.website != '') ?
                                                 <li><a target="_blank" href={this.state.website}>
                                                     <i className="fa fa-globe" /> Website / Blog</a></li>
-                                                : null }
+                                            : null }
 
                                         </ul>
                                         <br />
                                         <ul>
-                                            {(this.state.hireStatus == 'yes') ?
+                                            {(this.state.hire_status == 'yes') ?
                                                 <li ><i className="fa fa-suitcase" /> Not Available for Hire</li>
                                                 :
-                                                <li><i className="fa fa-suitcase" /> Available for Hire</li> }
+                                                <li><i className="fa fa-suitcase" /> Available for Hire</li>
+                                            }
                                             <br />
                                         </ul>
-                                        <ul>
-                                            <li><i className="fa fa-project" />
-                                                <a onClick={this.showModal}
-                                                   className="btn btn-default">Share Project</a>
-                                                <Modal ref="modal" contentStyle={contentStyle}>
-                                                    <CreateIndex onClose={this.hideModal}
-                                                                 onDataSubmit={this.handleProjectShare} />
-                                                </Modal>
-                                            </li>
-                                            <br />
-                                        </ul>
+                                        {(owner) ?
+                                            <ul>
+                                                <li><i className="fa fa-project" />
+                                                    <a onClick={this.showModal}
+                                                       className="btn btn-default">Share Project</a>
+                                                    <Modal ref="modal" contentStyle={contentStyle}>
+                                                        <CreateIndex onClose={this.hideModal}
+                                                                     onDataSubmit={this.handleProjectShare} />
+                                                    </Modal>
+                                                </li>
+                                                <br />
+                                            </ul> :
+                                        null }
                                     </div>
                                 </div>
                                 <div className="col-sm-6">

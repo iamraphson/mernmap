@@ -144,10 +144,11 @@ module.exports = {
             }
             else if(user.length == 1) {
                 var userDetails = {};
+                userDetails.id              = user[0]._id;
                 userDetails.email           = user[0].email;
                 userDetails.fullname        = user[0].fullname;
                 userDetails.username        = user[0].username;
-                userDetails.user_avatar     = user[0].user_avatar;
+                userDetails.user_avatar     = user[0].user_avi;
                 userDetails.admin           = user[0].admin;
                 userDetails.bio             = user[0].bio;
                 userDetails.hire_status     = user[0].hire_status;
