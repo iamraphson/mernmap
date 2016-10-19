@@ -14,7 +14,7 @@ import DeveloperActions from '../../actions/DeveloperActions';
 import DeveloperStore from '../../stores/DeveloperStore';
 import DeveloperList from './DeveloperList';
 
-export default class Jobs extends Component {
+export default class Developers extends Component {
     constructor() {
         super();
         this.state = {

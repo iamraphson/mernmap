@@ -4,9 +4,59 @@
 import React from 'react';
 import NavBar from '../NavBar/index';
 import Footer from '../Footer/Index';
+import DeveloperActions from '../../actions/DeveloperActions';
+import DeveloperStore from '../../stores/DeveloperStore';
+import L from 'leaflet';
+
+var contentStyle = {
+    height: '100%',
+    width: '600px'
+};
 export default class Index extends React.Component{
     constructor(){
-        super()
+        super();
+        L.Icon.Default.imagePath = "//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/";
+        this.state = {
+            geocoder: new google.maps.Geocoder(),
+            markers: [],
+            longitude: 3.540790900000047300,
+            latitude: 6.523276500000000000,
+            zoom: 3,
+        }
+    }
+
+    componentDidMount() {
+        DeveloperActions.fetchAllDevelopers();
+        DeveloperStore.addChangeListener(this.handleDevelopersResult, 'fetchDevelopers');
+    }
+
+    componentWillUnmount(){
+        DeveloperStore.removeChangeListener(this.handleDevelopersResult, 'fetchDevelopers');
+    }
+
+    handleDevelopersResult = () => {
+        let result = DeveloperStore.getDevelopers();
+        if(result.status == 200){
+            this.setState({
+                developers: result.data
+            });
+        }
+        this.resolveDevelopersAddress();
+    }
+
+    resolveDevelopersAddress = () => {
+        var map = L.map("map-main", {center: [this.state.latitude, this.state.longitude],zoom: this.state.zoom});
+        L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {attribution: "OpenStreetMap"}).addTo(map);
+        this.state.developers.map((developer, i) => {
+            this.state.geocoder.geocode({'address': developer.address}, (results, status) => {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    let result = results[0].geometry.location;
+                    let marker = L.marker([result.lat(), result.lng()]).addTo(map);
+                    marker.bindPopup("<strong>" + developer.username + "</strong>").openPopup();
+                }
+            });
+            //console.log(developer);
+        })
     }
 
     render(){
@@ -16,6 +66,7 @@ export default class Index extends React.Component{
                 <div className="main-container" style={{minHeight: 580}}>
                     <div className="MeanMap">
                         <div style={{border: '1px solid #ccc', boxShadow: '10px 10px #000'}}>
+                            <div id="map-main" className="leaflet-container-main"></div>
                             {/* Map goes here */}
                         </div>
                     </div>

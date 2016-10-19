@@ -177,17 +177,17 @@ export default class Profile extends React.Component {
                                             <br />
                                         </ul>
                                         {(owner) ?
-                                            <ul>
-                                                <li><i className="fa fa-project" />
-                                                    <a onClick={this.showModal}
-                                                       className="btn btn-default">Share Project</a>
-                                                    <Modal ref="modal" contentStyle={contentStyle}>
-                                                        <CreateIndex onClose={this.hideModal}
-                                                                     onDataSubmit={this.handleProjectShare} />
-                                                    </Modal>
-                                                </li>
-                                                <br />
-                                            </ul> :
+                                        <ul>
+                                            <li><i className="fa fa-project" />
+                                                <a onClick={this.showModal}
+                                                   className="btn btn-default">Share Project</a>
+                                                <Modal ref="modal" contentStyle={contentStyle}>
+                                                    <CreateIndex onClose={this.hideModal}
+                                                                 onDataSubmit={this.handleProjectShare} />
+                                                </Modal>
+                                            </li>
+                                            <br />
+                                        </ul> :
                                         null }
                                     </div>
                                 </div>

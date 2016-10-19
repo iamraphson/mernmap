@@ -70,8 +70,6 @@ export default class Nav extends React.Component{
                                                     <li><Link to="account"><i className="fa fa-user" />{'  '}My Profile</Link></li>
                                                     <li><Link to="/account/edit"><i className="fa fa-pencil-square-o" />{'  '}
                                                         Edit Profile</Link></li>
-                                                    <li><a href="/tutorial/create"><i className="fa fa-leanpub" /> {'  '}
-                                                        Post MERN Tutorial </a></li>
                                                     <li className="divider" />
                                                     <li><a href="/#" style={{cursor: 'pointer'}}
                                                            onClick={this.handleLogoutResult}>
@@ -94,7 +92,6 @@ export default class Nav extends React.Component{
                                         <li><Link to="mern-developers">MERN DEVELOPERS</Link></li>
                                         <li><Link to="projects">PROJECTS</Link></li>
                                         <li><Link to="/jobs">JOBS</Link></li>
-                                        <li><Link href="/tutorials">TUTORIALS</Link></li>
                                     </ul>
                                 </div>
                             </div>

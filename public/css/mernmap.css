@@ -11212,8 +11212,13 @@ footer .container {
   margin-top: 10px;
 }
 .leaflet-container {
-  height: 400px;
-  width: 100%;
+   height: 400px;
+   width: 100%;
+   margin: 0 auto;
+ }
+.leaflet-container-main {
+  height:450px;
+  width:1500px;
   margin: 0 auto;
 }
 .Demo__some-network {
