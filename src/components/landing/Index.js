@@ -7,6 +7,8 @@ import Footer from '../Footer/Index';
 import DeveloperActions from '../../actions/DeveloperActions';
 import DeveloperStore from '../../stores/DeveloperStore';
 import L from 'leaflet';
+require('leaflet.markercluster');
+import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 
 var contentStyle = {
     height: '100%',
@@ -45,18 +47,37 @@ export default class Index extends React.Component{
     }
 
     resolveDevelopersAddress = () => {
-        var map = L.map("map-main", {center: [this.state.latitude, this.state.longitude],zoom: this.state.zoom});
-        L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {attribution: "OpenStreetMap"}).addTo(map);
+        let tiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+            attribution:
+                '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors, Points &copy 2012 LINZ'
+            }),
+            latlng = L.latLng(this.state.latitude, this.state.longitude);
+
+        var map = L.map('map-main', {center: latlng, zoom: 2, layers: [tiles]});
+        var markers = L.markerClusterGroup({ chunkedLoading: true });
         this.state.developers.map((developer, i) => {
             this.state.geocoder.geocode({'address': developer.address}, (results, status) => {
                 if (status == google.maps.GeocoderStatus.OK) {
                     let result = results[0].geometry.location;
-                    let marker = L.marker([result.lat(), result.lng()]).addTo(map);
-                    marker.bindPopup("<strong>" + developer.username + "</strong>").openPopup();
+                    let marker = L.marker(L.latLng(result.lat(), result.lng()));
+                    marker.bindPopup("<strong>" + developer.username + "</strong>");
+                    markers.addLayer(marker);
                 }
             });
+        });
+
+        map.addLayer(markers);
+         /*this.state.developers.map((developer, i) => {
+         this.state.geocoder.geocode({'address': developer.address}, (results, status) => {
+         if (status == google.maps.GeocoderStatus.OK) {
+         let result = results[0].geometry.location;
+         let marker = L.marker([result.lat(), result.lng()]).addTo(map);
+         marker.bindPopup("<strong>" + developer.username + "</strong>").openPopup();
+         }
+         });
             //console.log(developer);
-        })
+        })*/
     }
 
     render(){
