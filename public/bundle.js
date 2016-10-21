@@ -93,6 +93,10 @@
 
 	var _index2 = _interopRequireDefault(_index);
 
+	var _ResetPaasword = __webpack_require__(/*! ./components/Account/ResetPaasword */ 427);
+
+	var _ResetPaasword2 = _interopRequireDefault(_ResetPaasword);
+
 	var _Index7 = __webpack_require__(/*! ./components/Project/Index */ 414);
 
 	var _Index8 = _interopRequireDefault(_Index7);
@@ -140,6 +144,7 @@
 	        _react2.default.createElement(_reactRouter.IndexRoute, { component: _Index2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'user/create', component: _Index4.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'auth/login', component: _Index6.default }),
+	        _react2.default.createElement(_reactRouter.Route, { path: 'reset-password', component: _ResetPaasword2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'projects', component: _Index8.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'jobs', component: _Index10.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'mern-developers', component: _Index12.default }),
@@ -84541,6 +84546,186 @@
 	}(_react.Component);
 
 	exports.default = Create;
+
+/***/ },
+/* 427 */
+/*!*************************************************!*\
+  !*** ./src/components/Account/ResetPaasword.js ***!
+  \*************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(/*! react */ 2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(/*! react-router */ 189);
+
+	var _index = __webpack_require__(/*! ../NavBar/index */ 188);
+
+	var _index2 = _interopRequireDefault(_index);
+
+	var _Index = __webpack_require__(/*! ../Footer/Index */ 255);
+
+	var _Index2 = _interopRequireDefault(_Index);
+
+	var _UserStore = __webpack_require__(/*! ../../stores/UserStore */ 288);
+
+	var _UserStore2 = _interopRequireDefault(_UserStore);
+
+	var _UserActions = __webpack_require__(/*! ../../actions/UserActions */ 289);
+
+	var _UserActions2 = _interopRequireDefault(_UserActions);
+
+	var _Input = __webpack_require__(/*! ../forms/Input */ 279);
+
+	var _Input2 = _interopRequireDefault(_Input);
+
+	var _reactSAlert = __webpack_require__(/*! react-s-alert */ 174);
+
+	var _reactSAlert2 = _interopRequireDefault(_reactSAlert);
+
+	__webpack_require__(/*! react-s-alert/dist/s-alert-default.css */ 181);
+
+	__webpack_require__(/*! react-s-alert/dist/s-alert-css-effects/bouncyflip.css */ 253);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by Raphson on 10/21/16.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+	var ResetPaasword = function (_React$Component) {
+	    _inherits(ResetPaasword, _React$Component);
+
+	    function ResetPaasword() {
+	        _classCallCheck(this, ResetPaasword);
+
+	        var _this = _possibleConstructorReturn(this, (ResetPaasword.__proto__ || Object.getPrototypeOf(ResetPaasword)).call(this));
+
+	        _this.componentDidMount = function () {
+	            _UserStore2.default.addChangeListener(_this.handleLogin, 'login');
+	        };
+
+	        _this.componentWillUnmount = function () {
+	            _UserStore2.default.removeChangeListener(_this.handleLogin, 'login');
+	        };
+
+	        _this.handleReset = function () {
+	            var data = _UserStore2.default.getLoginResult();
+	            if (data.status == 401) {
+	                _reactSAlert2.default.error(data.data.message, { position: 'top-right', effect: 'bouncyflip' });
+	            } else {
+	                Auth.setToken(data.data);
+	                _reactSAlert2.default.success('Login Successful', { position: 'top-right', effect: 'bouncyflip' });
+	                _reactRouter.hashHistory.push('/');
+	            }
+	        };
+
+	        _this.handleSubmit = function (data) {
+	            console.log(data);
+	            /*let loginPayload = {
+	                email: data.email,
+	                password: data.password
+	            };
+	             UserActions.login(loginPayload);*/
+	        };
+
+	        _this.enableButton = function () {
+	            _this.setState({ canSubmit: true });
+	        };
+
+	        _this.disableButton = function () {
+	            _this.setState({ canSubmit: false });
+	        };
+
+	        _this.state = {
+	            canSubmit: false
+	        };
+	        return _this;
+	    }
+
+	    _createClass(ResetPaasword, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'span',
+	                null,
+	                _react2.default.createElement(_index2.default, null),
+	                _react2.default.createElement(
+	                    'div',
+	                    { style: { minHeight: 580 }, className: 'main-container' },
+	                    _react2.default.createElement(
+	                        'section',
+	                        null,
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'container' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'row' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'col-md-4 col-md-offset-4' },
+	                                    _react2.default.createElement(
+	                                        Formsy.Form,
+	                                        { className: 'form-signin', role: 'form', onValidSubmit: this.handleSubmit,
+	                                            onValid: this.enableButton, onInvalid: this.disableButton },
+	                                        _react2.default.createElement(
+	                                            'h5',
+	                                            null,
+	                                            'Request password reset'
+	                                        ),
+	                                        _react2.default.createElement('hr', { className: 'colorgraph' }),
+	                                        _react2.default.createElement(_Input2.default, { className: 'form-group', name: 'email', title: '',
+	                                            placeholder: 'Enter your E-mail', validations: 'isEmail',
+	                                            validationError: 'Email is required.', required: true }),
+	                                        _react2.default.createElement(
+	                                            'p',
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                'button',
+	                                                { type: 'submit', className: 'btn btn-lg btn-block' },
+	                                                'Request Password reset'
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'p',
+	                                            { className: 'text-center' },
+	                                            'Remembered your password?',
+	                                            _react2.default.createElement(
+	                                                'a',
+	                                                { href: '/auth/login' },
+	                                                'Login here'
+	                                            )
+	                                        )
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(_Index2.default, null)
+	            );
+	        }
+	    }]);
+
+	    return ResetPaasword;
+	}(_react2.default.Component);
+
+	exports.default = ResetPaasword;
 
 /***/ }
 /******/ ]);
