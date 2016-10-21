@@ -19,6 +19,9 @@ module.exports = {
 
     update:(userPayload, token) =>{
         BaseActions.put('/api/me', userPayload, AppConstants.USER_UPDATE, token);
-    }
+    },
 
+    resetPasssword: (reset) => {
+        BaseActions.post('/api/password', reset, AppConstants.RESET);
+    },
 }

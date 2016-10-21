@@ -14,5 +14,6 @@ module.exports = keyMirror({
     POST_JOB: null,
     GET_JOBS: null,
     GET_DEVELOPERS: null,
-    GET_DEVELOPER: null
+    GET_DEVELOPER: null,
+    RESET : null
 });

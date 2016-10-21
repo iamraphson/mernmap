@@ -30226,7 +30226,8 @@
 	    POST_JOB: null,
 	    GET_JOBS: null,
 	    GET_DEVELOPERS: null,
-	    GET_DEVELOPER: null
+	    GET_DEVELOPER: null,
+	    RESET: null
 	});
 
 /***/ },
@@ -64232,8 +64233,11 @@
 
 	    update: function update(userPayload, token) {
 	        BaseActions.put('/api/me', userPayload, AppConstants.USER_UPDATE, token);
-	    }
+	    },
 
+	    resetPasssword: function resetPasssword(reset) {
+	        BaseActions.post('/api/password', reset, AppConstants.RESET);
+	    }
 	};
 
 /***/ },
@@ -84637,11 +84641,11 @@
 
 	        _this.handleSubmit = function (data) {
 	            console.log(data);
-	            /*let loginPayload = {
-	                email: data.email,
-	                password: data.password
+	            var resetPayload = {
+	                email: data.email
 	            };
-	             UserActions.login(loginPayload);*/
+
+	            _UserActions2.default.login(loginPayload);
 	        };
 
 	        _this.enableButton = function () {
@@ -84707,8 +84711,8 @@
 	                                            { className: 'text-center' },
 	                                            'Remembered your password?',
 	                                            _react2.default.createElement(
-	                                                'a',
-	                                                { href: '/auth/login' },
+	                                                _reactRouter.Link,
+	                                                { to: 'auth/login' },
 	                                                'Login here'
 	                                            )
 	                                        )

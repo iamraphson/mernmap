@@ -41,12 +41,11 @@ export default class ResetPaasword extends React.Component {
 
     handleSubmit = (data) => {
         console.log(data);
-        /*let loginPayload = {
-            email: data.email,
-            password: data.password
+        let resetPayload = {
+            email: data.email
         };
 
-        UserActions.login(loginPayload);*/
+        UserActions.login(loginPayload);
     }
 
     enableButton = () => {
@@ -79,7 +78,7 @@ export default class ResetPaasword extends React.Component {
                                                 Request Password reset</button>
                                         </p>
                                         <p className="text-center">Remembered your password?
-                                            <a href="/auth/login">Login here</a></p>
+                                            <Link to="auth/login">Login here</Link></p>
                                     </Formsy.Form>
                                 </div>
                             </div>
