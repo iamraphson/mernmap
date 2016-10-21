@@ -13,6 +13,16 @@ let UserStore = Object.assign({}, BaseStore, {
     loginResult: null,
     AuthUserResult: null,
     updateResult: null,
+    resetResult: null,
+
+    setResetResult(resetResult) {
+        this.resetResult = resetResult;
+        this.emitChange('reset');
+    },
+
+    getResetResult()  {
+        return this.resetResult
+    },
 
     setUpdateResult(updateResult) {
         this.updateResult = updateResult;
@@ -64,6 +74,9 @@ AppDispatcher.register((action) => {
             break;
         case AppConstants.USER_UPDATE :
             UserStore.setUpdateResult(action.data);
+            break;
+        case AppConstants.RESET :
+            UserStore.setResetResult(action.data);
             break;
         default:
         // no default action

@@ -64150,7 +64150,15 @@
 	    loginResult: null,
 	    AuthUserResult: null,
 	    updateResult: null,
+	    resetResult: null,
 
+	    setResetResult: function setResetResult(resetResult) {
+	        this.resetResult = resetResult;
+	        this.emitChange('reset');
+	    },
+	    getResetResult: function getResetResult() {
+	        return this.resetResult;
+	    },
 	    setUpdateResult: function setUpdateResult(updateResult) {
 	        this.updateResult = updateResult;
 	        this.emitChange('update');
@@ -64194,6 +64202,9 @@
 	            break;
 	        case AppConstants.USER_UPDATE:
 	            UserStore.setUpdateResult(action.data);
+	            break;
+	        case AppConstants.RESET:
+	            UserStore.setResetResult(action.data);
 	            break;
 	        default:
 	        // no default action
@@ -84645,7 +84656,7 @@
 	                email: data.email
 	            };
 
-	            _UserActions2.default.login(loginPayload);
+	            _UserActions2.default.resetPasssword(resetPayload);
 	        };
 
 	        _this.enableButton = function () {

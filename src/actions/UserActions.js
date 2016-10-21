@@ -23,5 +23,5 @@ module.exports = {
 
     resetPasssword: (reset) => {
         BaseActions.post('/api/password', reset, AppConstants.RESET);
-    },
+    }
 }

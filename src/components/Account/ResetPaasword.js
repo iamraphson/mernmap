@@ -45,7 +45,7 @@ export default class ResetPaasword extends React.Component {
             email: data.email
         };
 
-        UserActions.login(loginPayload);
+        UserActions.resetPasssword(resetPayload);
     }
 
     enableButton = () => {
