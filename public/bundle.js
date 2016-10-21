@@ -64396,8 +64396,9 @@
 	                                            'div',
 	                                            { className: 'form-group col-lg-6' },
 	                                            _react2.default.createElement(
-	                                                'a',
-	                                                { href: '/reset-password', className: 'form-control btn btn-block' },
+	                                                _reactRouter.Link,
+	                                                { to: '/reset-password',
+	                                                    className: 'form-control btn btn-block' },
 	                                                'Reset Password'
 	                                            )
 	                                        )

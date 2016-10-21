@@ -83,7 +83,8 @@ export default class Login extends React.Component {
                                                 disabled={!this.state.canSubmit}>Sign in</button>
                                         </div>
                                         <div className="form-group col-lg-6">
-                                            <a href="/reset-password" className="form-control btn btn-block">Reset Password</a>
+                                            <Link to="/reset-password"
+                                                  className="form-control btn btn-block">Reset Password</Link>
                                         </div>
                                     </div>
                                 </Formsy.Form>
