@@ -55,29 +55,17 @@ export default class Index extends React.Component{
             latlng = L.latLng(this.state.latitude, this.state.longitude);
 
         var map = L.map('map-main', {center: latlng, zoom: 2, layers: [tiles]});
-        var markers = L.markerClusterGroup({ chunkedLoading: true });
         this.state.developers.map((developer, i) => {
             this.state.geocoder.geocode({'address': developer.address}, (results, status) => {
                 if (status == google.maps.GeocoderStatus.OK) {
                     let result = results[0].geometry.location;
-                    let marker = L.marker(L.latLng(result.lat(), result.lng()));
-                    marker.bindPopup("<strong>" + developer.username + "</strong>");
-                    markers.addLayer(marker);
+                    var popup1 = new L.Popup();
+                    popup1.setLatLng(L.latLng(result.lat(), result.lng()));
+                    popup1.setContent("<strong>" + developer.username + "</strong>")
+                    map.addLayer(popup1);
                 }
             });
         });
-
-        map.addLayer(markers);
-         /*this.state.developers.map((developer, i) => {
-         this.state.geocoder.geocode({'address': developer.address}, (results, status) => {
-         if (status == google.maps.GeocoderStatus.OK) {
-         let result = results[0].geometry.location;
-         let marker = L.marker([result.lat(), result.lng()]).addTo(map);
-         marker.bindPopup("<strong>" + developer.username + "</strong>").openPopup();
-         }
-         });
-            //console.log(developer);
-        })*/
     }
 
     render(){
