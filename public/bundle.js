@@ -23552,6 +23552,8 @@
 
 	var _leaflet2 = _interopRequireDefault(_leaflet);
 
+	var _reactRouter = __webpack_require__(/*! react-router */ 189);
+
 	__webpack_require__(/*! leaflet.markercluster/dist/MarkerCluster.Default.css */ 275);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -23603,9 +23605,12 @@
 	                _this.state.geocoder.geocode({ 'address': developer.address }, function (results, status) {
 	                    if (status == google.maps.GeocoderStatus.OK) {
 	                        var result = results[0].geometry.location;
-	                        var popup1 = new _leaflet2.default.Popup();
-	                        popup1.setLatLng(_leaflet2.default.latLng(result.lat(), result.lng()));
-	                        popup1.setContent("<strong>" + developer.username + "</strong>");
+	                        var latlog = new _leaflet2.default.latLng(result.lat(), result.lng());
+	                        var popup1 = new _leaflet2.default.Popup({ 'autoClose': false });
+	                        popup1.setLatLng(latlog);
+	                        popup1.setContent("<strong><a href='#/mern-developers/" + developer.username + "'>@" + developer.username + "</a></strong>");
+	                        _leaflet2.default.marker(latlog).addTo(map).bindPopup(popup1).openPopup();
+
 	                        map.addLayer(popup1);
 	                    }
 	                });

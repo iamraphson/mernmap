@@ -7,6 +7,7 @@ import Footer from '../Footer/Index';
 import DeveloperActions from '../../actions/DeveloperActions';
 import DeveloperStore from '../../stores/DeveloperStore';
 import L from 'leaflet';
+import { Link } from 'react-router';
 require('leaflet.markercluster');
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 
@@ -59,9 +60,13 @@ export default class Index extends React.Component{
             this.state.geocoder.geocode({'address': developer.address}, (results, status) => {
                 if (status == google.maps.GeocoderStatus.OK) {
                     let result = results[0].geometry.location;
-                    var popup1 = new L.Popup();
-                    popup1.setLatLng(L.latLng(result.lat(), result.lng()));
-                    popup1.setContent("<strong>" + developer.username + "</strong>")
+                    let latlog = new L.latLng(result.lat(), result.lng());
+                    let popup1 = new L.Popup({'autoClose':false});
+                    popup1.setLatLng(latlog);
+                    popup1.setContent("<strong><a href='#/mern-developers/" + developer.username + "'>@" +  developer.username + "</a></strong>");
+                    L.marker(latlog).addTo(map)
+                        .bindPopup(popup1).openPopup();
+
                     map.addLayer(popup1);
                 }
             });
