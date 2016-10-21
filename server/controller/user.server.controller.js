@@ -7,6 +7,9 @@ var gravatar = require('gravatar');
 var _  = require('lodash');
 var cloudinary  = require('cloudinary');
 var  multiparty  = require('multiparty');
+var generatePassword = require('password-generator');
+var helper = require('sendgrid').mail;
+var sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
 module.exports = {
 
     /*
@@ -159,9 +162,49 @@ module.exports = {
 
                 return res.json({success: true, user: userDetails});
             }
-            next();
         });
+    },
+
+    resetUserPassword : (req, res) =>{
+        let userEmail = req.body.email;
+
+        User.find({email: userEmail}, (err, user) => {
+            if(err) {
+                return res.status(404).json({ err: err , req: req.body})
+            }
+
+            if(user.length === 0){
+                return res.status(200).json({success: true, message: 'User not found'});
+            } else  {
+                var newPassword = generatePassword(8);
+                user[0].password = newPassword;
+                user[0].save(function(err) {
+                    if (err) throw err;
+
+                    let from_email = new helper.Email('admin@mernmap.com');
+                    let to_email = new helper.Email(user[0].email);
+                    let subject = 'Password Reset';
+                    let content = new helper.Content('text/html',
+                        "<h2>MERNMAP Password Reset</h2><br />" +
+                        "Your new MERNMAP password is <br/>" +
+                        "<strong>" + newPassword + "</strong>");
+
+                    let mail = new helper.Mail(from_email, subject, to_email, content);
+                    let request = sg.emptyRequest({
+                        method: 'POST',
+                        path: '/v3/mail/send',
+                        body: mail.toJSON()
+                    });
+
+                    sg.API(request, function(error, response) {
+                        console.log(response.statusCode);
+                        console.log(response.body);
+                        console.log(response.headers);
+                        console.log('User successfully updated!');
+                        return res.status(200).json({success: true, message: "New password was sent to your email!"});
+                    });
+                });
+            }
+        })
     }
-
 };
-
