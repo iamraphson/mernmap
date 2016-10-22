@@ -24003,7 +24003,7 @@
 	                                                    _react2.default.createElement(
 	                                                        _reactRouter.Link,
 	                                                        { to: 'change-password' },
-	                                                        _react2.default.createElement('i', { className: 'fa fa-pencil-square-o' }),
+	                                                        _react2.default.createElement('i', { className: 'fa fa-key' }),
 	                                                        '  ',
 	                                                        'Change Password'
 	                                                    )
@@ -84551,7 +84551,7 @@
 	            username: '',
 	            longitude: 3.540790900000047300,
 	            latitude: 6.523276500000000000,
-	            zoom: 11,
+	            zoom: 3,
 	            showModal: false
 	        };
 	        return _this;

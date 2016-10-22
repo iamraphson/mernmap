@@ -70,7 +70,7 @@ export default class Nav extends React.Component{
                                                     <li><Link to="account"><i className="fa fa-user" />{'  '}My Profile</Link></li>
                                                     <li><Link to="account/edit"><i className="fa fa-pencil-square-o" />{'  '}
                                                         Edit Profile</Link></li>
-                                                    <li><Link to="change-password"><i className="fa fa-pencil-square-o" />{'  '}
+                                                    <li><Link to="change-password"><i className="fa fa-key" />{'  '}
                                                         Change Password</Link></li>
                                                     <li className="divider" />
                                                     <li><a href="/#" style={{cursor: 'pointer'}}

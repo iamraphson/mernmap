@@ -42,7 +42,7 @@ export default class Profile extends React.Component {
             username: '',
             longitude: 3.540790900000047300,
             latitude: 6.523276500000000000,
-            zoom: 11,
+            zoom: 3,
             showModal: false
         }
     }
