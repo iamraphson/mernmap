@@ -85263,9 +85263,17 @@
 
 	var _ContactStore2 = _interopRequireDefault(_ContactStore);
 
-	var _ContactAction = __webpack_require__(/*! ../actions/ContactAction */ 432);
+	var _ContactActions = __webpack_require__(/*! ../actions/ContactActions */ 433);
 
-	var _ContactAction2 = _interopRequireDefault(_ContactAction);
+	var _ContactActions2 = _interopRequireDefault(_ContactActions);
+
+	var _reactSAlert = __webpack_require__(/*! react-s-alert */ 174);
+
+	var _reactSAlert2 = _interopRequireDefault(_reactSAlert);
+
+	__webpack_require__(/*! react-s-alert/dist/s-alert-default.css */ 181);
+
+	__webpack_require__(/*! react-s-alert/dist/s-alert-css-effects/bouncyflip.css */ 253);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -85287,15 +85295,27 @@
 	        var _this = _possibleConstructorReturn(this, (Contact.__proto__ || Object.getPrototypeOf(Contact)).call(this));
 
 	        _this.componentDidMount = function () {
-	            _ContactStore2.default.addChangeListener(_this.handleReset, 'reset');
+	            _ContactStore2.default.addChangeListener(_this.handleContact, 'contact');
 	        };
 
 	        _this.componentWillUnmount = function () {
-	            _ContactStore2.default.removeChangeListener(_this.handleReset, 'reset');
+	            _ContactStore2.default.removeChangeListener(_this.handleContact, 'contact');
+	        };
+
+	        _this.handleContact = function () {
+	            var data = _ContactStore2.default.getContactResult();
+	            _reactSAlert2.default.success(data.data.message, { position: 'top-right', effect: 'bouncyflip' });
 	        };
 
 	        _this.handleSubmit = function (data) {
 	            console.log(data);
+	            var contactPayload = {
+	                name: data.name,
+	                email: data.email,
+	                message: data.message
+	            };
+
+	            _ContactActions2.default.contact(contactPayload);
 	        };
 
 	        _this.enableButton = function () {
@@ -85476,10 +85496,11 @@
 	module.exports = ContactStore;
 
 /***/ },
-/* 432 */
-/*!**************************************!*\
-  !*** ./src/actions/ContactAction.js ***!
-  \**************************************/
+/* 432 */,
+/* 433 */
+/*!***************************************!*\
+  !*** ./src/actions/ContactActions.js ***!
+  \***************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

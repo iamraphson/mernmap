@@ -9,7 +9,10 @@ import MyTextarea from './forms/Textarea';
 import MyInput from './forms/Input';
 import Formsy from 'formsy-react';
 import ContactStore from '../stores/ContactStore';
-import ContactAction from '../actions/ContactAction';
+import ContactActions from '../actions/ContactActions';
+import Alert from 'react-s-alert';
+import 'react-s-alert/dist/s-alert-default.css';
+import 'react-s-alert/dist/s-alert-css-effects/bouncyflip.css';
 
 export default class Contact extends React.Component{
     constructor(){
@@ -20,15 +23,27 @@ export default class Contact extends React.Component{
     }
 
     componentDidMount = () => {
-        ContactStore.addChangeListener(this.handleReset, 'reset');
+        ContactStore.addChangeListener(this.handleContact, 'contact');
     }
 
     componentWillUnmount = () => {
-        ContactStore.removeChangeListener(this.handleReset, 'reset');
+        ContactStore.removeChangeListener(this.handleContact, 'contact');
+    }
+
+    handleContact = () => {
+        let data = ContactStore.getContactResult();
+        Alert.success(data.data.message, { position: 'top-right',  effect: 'bouncyflip'});
     }
 
     handleSubmit = (data) => {
         console.log(data);
+        let contactPayload = {
+            name: data.name,
+            email: data.email,
+            message: data.message
+        };
+
+        ContactActions.contact(contactPayload);
     }
 
     enableButton = () => {
