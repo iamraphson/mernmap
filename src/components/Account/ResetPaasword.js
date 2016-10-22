@@ -64,8 +64,9 @@ export default class ResetPaasword extends React.Component {
                         <div className="container">
                             <div className="row">
                                 <div className="col-md-4 col-md-offset-4">
-                                    <Formsy.Form className="form-signin" role="form" onValidSubmit={this.handleSubmit}
-                                         onValid={this.enableButton} onInvalid={this.disableButton}>
+                                    <Formsy.Form className="form-signin" role="form" onInvalid={this.disableButton}
+                                         onValidSubmit={this.handleSubmit}
+                                         onValid={this.enableButton} >
                                         <h5>Request password reset</h5>
                                         <hr className="colorgraph" />
                                         <MyInput className="form-group" name="email" title=""

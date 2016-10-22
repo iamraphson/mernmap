@@ -22,7 +22,7 @@ export default class Footer extends React.Component{
                                 <div><a href="https://twitter.com/iamraphson" target="_target">Twitter</a></div>
                                 <div><Link to="/page/about">About</Link></div>
                                 <div><a href="mailto:nsegun5@gmail.com">Help</a></div>
-                                <div><a href="/page/contact">Contact</a></div>
+                                <div><Link to="page/contact">Contact</Link></div>
                             </div>
                             <div className="span3">
                                 <h5>CO-PLANETS</h5>

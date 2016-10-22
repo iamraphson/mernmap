@@ -97,6 +97,10 @@
 
 	var _About2 = _interopRequireDefault(_About);
 
+	var _Contact = __webpack_require__(/*! ./components/Contact */ 430);
+
+	var _Contact2 = _interopRequireDefault(_Contact);
+
 	var _ResetPaasword = __webpack_require__(/*! ./components/Account/ResetPaasword */ 415);
 
 	var _ResetPaasword2 = _interopRequireDefault(_ResetPaasword);
@@ -162,6 +166,7 @@
 	        _react2.default.createElement(_reactRouter.Route, { path: 'account/edit', component: _EditIndex2.default, onEnter: requireAuth }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'account', component: _index2.default, onEnter: requireAuth }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'page/about', component: _About2.default }),
+	        _react2.default.createElement(_reactRouter.Route, { path: 'page/contact', component: _Contact2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: '/projects/featured/:slug', component: _ProjectDetails2.default })
 	    )
 	), document.getElementById('app'));
@@ -30119,8 +30124,8 @@
 	                                    'div',
 	                                    null,
 	                                    _react2.default.createElement(
-	                                        'a',
-	                                        { href: '/page/contact' },
+	                                        _reactRouter.Link,
+	                                        { to: 'page/contact' },
 	                                        'Contact'
 	                                    )
 	                                )
@@ -62953,7 +62958,8 @@
 	                                    _react2.default.createElement(
 	                                        'div',
 	                                        { className: 'col-lg-12' },
-	                                        _react2.default.createElement(_Textarea2.default, { className: 'form-group col-lg-12', title: 'Address (For the map)',
+	                                        _react2.default.createElement(_Textarea2.default, { className: 'form-group col-lg-12',
+	                                            title: 'Address (For the map)',
 	                                            placeholder: 'e.g. Class 7, Herbert Macaulay, Sabo Yaba, Lagos, Nigeria',
 	                                            name: 'address', validationError: 'Address is required.', required: true })
 	                                    ),
@@ -82954,8 +82960,9 @@
 	                                    { className: 'col-md-4 col-md-offset-4' },
 	                                    _react2.default.createElement(
 	                                        Formsy.Form,
-	                                        { className: 'form-signin', role: 'form', onValidSubmit: this.handleSubmit,
-	                                            onValid: this.enableButton, onInvalid: this.disableButton },
+	                                        { className: 'form-signin', role: 'form', onInvalid: this.disableButton,
+	                                            onValidSubmit: this.handleSubmit,
+	                                            onValid: this.enableButton },
 	                                        _react2.default.createElement(
 	                                            'h5',
 	                                            null,
@@ -85209,6 +85216,198 @@
 	}(_react.Component);
 
 	exports.default = Create;
+
+/***/ },
+/* 430 */
+/*!***********************************!*\
+  !*** ./src/components/Contact.js ***!
+  \***********************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(/*! react */ 2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _index = __webpack_require__(/*! ./NavBar/index */ 188);
+
+	var _index2 = _interopRequireDefault(_index);
+
+	var _Index = __webpack_require__(/*! ./Footer/Index */ 255);
+
+	var _Index2 = _interopRequireDefault(_Index);
+
+	var _reactRouter = __webpack_require__(/*! react-router */ 189);
+
+	var _Textarea = __webpack_require__(/*! ./forms/Textarea */ 287);
+
+	var _Textarea2 = _interopRequireDefault(_Textarea);
+
+	var _Input = __webpack_require__(/*! ./forms/Input */ 279);
+
+	var _Input2 = _interopRequireDefault(_Input);
+
+	var _formsyReact = __webpack_require__(/*! formsy-react */ 280);
+
+	var _formsyReact2 = _interopRequireDefault(_formsyReact);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by Raphson on 10/22/16.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+	var Contact = function (_React$Component) {
+	    _inherits(Contact, _React$Component);
+
+	    function Contact() {
+	        _classCallCheck(this, Contact);
+
+	        var _this = _possibleConstructorReturn(this, (Contact.__proto__ || Object.getPrototypeOf(Contact)).call(this));
+
+	        _this.handleSubmit = function (data) {
+	            console.log(data);
+	        };
+
+	        _this.enableButton = function () {
+	            _this.setState({ canSubmit: true });
+	        };
+
+	        _this.disableButton = function () {
+	            _this.setState({ canSubmit: false });
+	        };
+
+	        _this.state = {
+	            canSubmit: false
+	        };
+	        return _this;
+	    }
+
+	    _createClass(Contact, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'span',
+	                null,
+	                _react2.default.createElement(_index2.default, null),
+	                _react2.default.createElement(
+	                    'div',
+	                    { style: { minHeight: 580 }, className: 'main-container' },
+	                    _react2.default.createElement(
+	                        'section',
+	                        { className: 'contact contact-3' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'container' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'row' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'col-sm-12 text-center' },
+	                                    _react2.default.createElement(
+	                                        'h3',
+	                                        null,
+	                                        'MAKE ENQUIRIES'
+	                                    )
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'row' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1' },
+	                                    _react2.default.createElement(
+	                                        _formsyReact2.default.Form,
+	                                        { name: 'contactForm', onInvalid: this.disableButton,
+	                                            onValidSubmit: this.handleSubmit, onValid: this.enableButton },
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'form-group col-lg-12' },
+	                                            _react2.default.createElement(_Input2.default, { className: 'form-group', name: 'name', required: true,
+	                                                placeholder: 'Name...e.g Ayeni Olusegun',
+	                                                validationError: 'Name is required.' })
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'form-group col-lg-12' },
+	                                            _react2.default.createElement(_Input2.default, { className: 'form-group', name: 'email', validations: 'isEmail',
+	                                                placeholder: 'Email...e.g nsegun5@gmail.com', required: true,
+	                                                validationError: 'Email is required.' })
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'form-group' },
+	                                            _react2.default.createElement(_Textarea2.default, { className: 'form-group col-lg-12', rows: '10', cols: '50',
+	                                                required: true, name: 'message', placeholder: 'Message',
+	                                                validationError: 'Message is required.' })
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'form-group' },
+	                                            _react2.default.createElement(
+	                                                'button',
+	                                                { type: 'submit', disabled: !this.state.canSubmit,
+	                                                    className: 'form-control btn btn-block' },
+	                                                'Submit'
+	                                            )
+	                                        )
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'section',
+	                        { className: 'social social-1 near-footer' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'container' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'row' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'leader col-sm-12 text-center' },
+	                                    _react2.default.createElement(
+	                                        'span',
+	                                        null,
+	                                        '"Don’t worry if it doesn’t work right. ',
+	                                        _react2.default.createElement('br', { className: 'visible-desktop' }),
+	                                        ' If everything did, you’d be out of a job.."'
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'h5',
+	                                        { className: 'lead-author' },
+	                                        '- Mosher’s Law '
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(_Index2.default, null)
+	            );
+	        }
+	    }]);
+
+	    return Contact;
+	}(_react2.default.Component);
+
+	exports.default = Contact;
 
 /***/ }
 /******/ ]);

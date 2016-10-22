@@ -116,9 +116,10 @@ export default class SignUp extends React.Component{
                                     </div>
                                     <div className="col-lg-12">
                                         {/* Address Form Input */}
-                                        <MyTextarea className="form-group col-lg-12" title="Address (For the map)"
+                                        <MyTextarea className="form-group col-lg-12"
+                                            title="Address (For the map)"
                                             placeholder="e.g. Class 7, Herbert Macaulay, Sabo Yaba, Lagos, Nigeria"
-                                                name="address" validationError="Address is required." required />
+                                            name="address" validationError="Address is required." required />
                                     </div>
                                     {/* Sign up Form Input */}
                                     <div className="form-group col-lg-6">
