@@ -64168,7 +64168,15 @@
 	    AuthUserResult: null,
 	    updateResult: null,
 	    resetResult: null,
+	    changeResult: null,
 
+	    setChangeResult: function setChangeResult(changeResult) {
+	        this.changeResult = changeResult;
+	        this.emitChange('change');
+	    },
+	    getChangeResult: function getChangeResult() {
+	        return this.changeResult;
+	    },
 	    setResetResult: function setResetResult(resetResult) {
 	        this.resetResult = resetResult;
 	        this.emitChange('reset');
@@ -64222,6 +64230,9 @@
 	            break;
 	        case AppConstants.RESET:
 	            UserStore.setResetResult(action.data);
+	            break;
+	        case AppConstants.CHANGE:
+	            UserStore.setChangeResult(action.data);
 	            break;
 	        default:
 	        // no default action
