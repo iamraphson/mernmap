@@ -21,21 +21,19 @@ export default class ResetPaasword extends React.Component {
     }
 
     componentDidMount = () => {
-        UserStore.addChangeListener(this.handleLogin, 'login');
+        UserStore.addChangeListener(this.handleReset, 'reset');
     }
 
     componentWillUnmount = () => {
-        UserStore.removeChangeListener(this.handleLogin, 'login');
+        UserStore.removeChangeListener(this.handleReset, 'reset');
     }
 
     handleReset = () => {
-        let data = UserStore.getLoginResult();
-        if(data.status == 401){
+        let data = UserStore.getResetResult();
+        if(data.status == 404){
             Alert.error(data.data.message, { position: 'top-right',  effect: 'bouncyflip'});
         } else {
-            Auth.setToken(data.data);
-            Alert.success('Login Successful', { position: 'top-right',  effect: 'bouncyflip'});
-            hashHistory.push('/');
+            Alert.success(data.data.message, { position: 'top-right',  effect: 'bouncyflip'});
         }
     }
 

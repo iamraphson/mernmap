@@ -84632,21 +84632,19 @@
 	        var _this = _possibleConstructorReturn(this, (ResetPaasword.__proto__ || Object.getPrototypeOf(ResetPaasword)).call(this));
 
 	        _this.componentDidMount = function () {
-	            _UserStore2.default.addChangeListener(_this.handleLogin, 'login');
+	            _UserStore2.default.addChangeListener(_this.handleReset, 'reset');
 	        };
 
 	        _this.componentWillUnmount = function () {
-	            _UserStore2.default.removeChangeListener(_this.handleLogin, 'login');
+	            _UserStore2.default.removeChangeListener(_this.handleReset, 'reset');
 	        };
 
 	        _this.handleReset = function () {
-	            var data = _UserStore2.default.getLoginResult();
-	            if (data.status == 401) {
+	            var data = _UserStore2.default.getResetResult();
+	            if (data.status == 404) {
 	                _reactSAlert2.default.error(data.data.message, { position: 'top-right', effect: 'bouncyflip' });
 	            } else {
-	                Auth.setToken(data.data);
-	                _reactSAlert2.default.success('Login Successful', { position: 'top-right', effect: 'bouncyflip' });
-	                _reactRouter.hashHistory.push('/');
+	                _reactSAlert2.default.success(data.data.message, { position: 'top-right', effect: 'bouncyflip' });
 	            }
 	        };
 
