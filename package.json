@@ -4,7 +4,8 @@
   "description": "MERN Map is a directory for mern stack developers all over the world",
   "main": "server.js",
   "scripts": {
-    "test": "node server.js"
+    "start": "node server.js",
+    "postinstall": "bower cache clean && bower install"
   },
   "keywords": [
     "MERN",

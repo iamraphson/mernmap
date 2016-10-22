@@ -1,1 +1,1 @@
-web: node server.js
+web: node --use_strict server.js
