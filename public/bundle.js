@@ -23778,8 +23778,8 @@
 	                                    'div',
 	                                    { className: 'col-md-4 col-sm-5 text-right' },
 	                                    _react2.default.createElement(
-	                                        'a',
-	                                        { className: 'btn', href: 'page/about' },
+	                                        _reactRouter.Link,
+	                                        { className: 'btn', to: 'page/about' },
 	                                        'More Info'
 	                                    ),
 	                                    _react2.default.createElement(

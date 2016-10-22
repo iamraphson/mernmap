@@ -4,6 +4,7 @@
 var userCtrl = require('./controller/user.server.controller');
 var projectCtrl = require('./controller/project.server.controller');
 var jobCtrl = require('./controller/job.server.controller');
+var contactCtrl = require('./controller/contact.server.controller');
 var token = require('./../config/token');
 module.exports = function(app){
 
@@ -23,4 +24,6 @@ module.exports = function(app){
 
     app.get('/api/users', userCtrl.getAllUsers);
     app.get('/api/user/:username', userCtrl.getEachUserByUsername);
+
+    app.post('/api/contact', contactCtrl.sendMessage);
 }

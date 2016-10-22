@@ -122,7 +122,7 @@ export default class Index extends React.Component{
                                     <p>...The Exhibition Of MERN Stack Developers. <strong>MERN CHAP 2:9 </strong></p>
                                 </div>
                                 <div className="col-md-4 col-sm-5 text-right">
-                                    <a className="btn" href="page/about">More Info</a>
+                                    <Link className="btn" to="page/about">More Info</Link>
                                     <Link className="btn btn-filled" to="user/create">Join Now</Link>
                                 </div>
                             </div>
