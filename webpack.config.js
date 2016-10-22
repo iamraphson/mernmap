@@ -14,14 +14,14 @@ module.exports = {
     },
     plugins: [
         new webpack.NoErrorsPlugin(),
-        new WriteFilePlugin()
-        //new webpack.optimize.UglifyJsPlugin(),
-        //new webpack.optimize.DedupePlugin(),
-        /*new webpack.DefinePlugin({
+        new WriteFilePlugin(),
+        new webpack.optimize.UglifyJsPlugin(),
+        new webpack.optimize.DedupePlugin(),
+        new webpack.DefinePlugin({
             'process.env': {
                 'NODE_ENV': JSON.stringify('production')
             }
-        })*/
+        })
     ],
 
     module: {
