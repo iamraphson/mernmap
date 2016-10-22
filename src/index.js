@@ -12,6 +12,7 @@ import SignUp from './components/SignUp/Index';
 import Login from './components/Login/Index';
 import EditAccount from './components/Account/EditIndex';
 import Account from './components/Account/index';
+import About from './components/About';
 import Reset from './components/Account/ResetPaasword';
 import ChangePassword from './components/Account/ChangePassword';
 import Project from './components/Project/Index';
@@ -44,6 +45,7 @@ render(
             <Route path="post-a-job" component={CreateJob} onEnter={requireAuth} />
             <Route path="account/edit" component={EditAccount} onEnter={requireAuth} />
             <Route path="account" component={Account} onEnter={requireAuth} />
+            <Route path="page/about" component={About} />
             <Route path="/projects/featured/:slug" component={ProjectDetails} />
         </Route>
     </Router>,

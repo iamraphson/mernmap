@@ -25,6 +25,7 @@ export default class Index extends React.Component{
             longitude: 3.540790900000047300,
             latitude: 6.523276500000000000,
             zoom: 3,
+            developers: [],
         }
     }
 
@@ -117,12 +118,12 @@ export default class Index extends React.Component{
                         <div className="container">
                             <div className="row v-align-children">
                                 <div className="col-md-8 col-sm-7">
-                                    <h3> MERN Developers are on the Planet..</h3>
+                                    <h3>{ this.state.developers.length } MERN Developers are on the Planet..</h3>
                                     <p>...The Exhibition Of MERN Stack Developers. <strong>MERN CHAP 2:9 </strong></p>
                                 </div>
                                 <div className="col-md-4 col-sm-5 text-right">
                                     <a className="btn" href="page/about">More Info</a>
-                                    <a className="btn btn-filled" href="user/create">Join Now</a>
+                                    <Link className="btn btn-filled" to="user/create">Join Now</Link>
                                 </div>
                             </div>
                         </div>
