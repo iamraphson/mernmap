@@ -8,6 +8,8 @@ import Formsy from 'formsy-react';
 import NavBar from '../NavBar/index';
 import Footer from '../Footer/Index';
 import Auth from '../../utils/auth';
+import UserStore from '../../stores/UserStore';
+import UserActions from '../../actions/UserActions';
 import { hashHistory } from 'react-router';
 import Alert from 'react-s-alert';
 import 'react-s-alert/dist/s-alert-default.css';
@@ -23,23 +25,27 @@ export default class Create extends Component {
     }
 
     componentDidMount() {
-        //JobStore.addChangeListener(this.handlePostJobResult, 'postjob');
+        UserStore.addChangeListener(this.handleChangePasswordResult, 'change');
     }
 
     componentWillUnmount(){
-        //JobStore.removeChangeListener(this.handlePostJobResult, 'postjob');
+        UserStore.removeChangeListener(this.handleChangePasswordResult, 'change');
     }
 
-    handlePostJobResult = () => {
-        let result = JobStore.getPostJobResult();
+    handleChangePasswordResult = () => {
+        let result = UserStore.getChangeResult();
         Auth.checkAuthRequired(result);
-        if(result.status == 500){
+        if(result.status == 404){
             Alert.error(result.data.message, { position: 'top-right',  effect: 'bouncyflip'});
-        } else {
-            Alert.success(result.data.message, { position: 'top-right',  effect: 'bouncyflip'});
-            hashHistory.push('/jobs');
+        }  else {
+            if(result.data.success){
+                Alert.success(result.data.message, { position: 'top-right',  effect: 'bouncyflip'});
+                hashHistory.push('account');
+            } else {
+                Alert.error(result.data.message, { position: 'top-right',  effect: 'bouncyflip'});
+            }
         }
-    }
+    };
 
     enableButton = () => {
         this.setState({ canSubmit: true });
@@ -50,9 +56,12 @@ export default class Create extends Component {
     }
 
     handleSubmit = (data) => {
-        console.log(data);
-        //JobActions.postJob(jobPayload, this.state.token);
-    }
+        var changePayload = {
+            oldPassword: data.oldpassword,
+            newPassword: data.newpassword
+        };
+        UserActions.changePassword(changePayload, this.state.token);
+    };
 
     render() {
         return (

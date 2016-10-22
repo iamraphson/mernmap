@@ -173,7 +173,7 @@ module.exports = {
 
             user.comparePassword(req.body.oldPassword, function(err, isMatch){
                 if(!isMatch){
-                    return res.status(401).json({message : "Invalid Password"});
+                    return res.status(200).json({success: false, message : "Old Password is wrong"});
                 }
 
                 user.password = req.body.newPassword;

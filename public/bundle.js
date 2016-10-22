@@ -93,35 +93,35 @@
 
 	var _index2 = _interopRequireDefault(_index);
 
-	var _ResetPaasword = __webpack_require__(/*! ./components/Account/ResetPaasword */ 427);
+	var _ResetPaasword = __webpack_require__(/*! ./components/Account/ResetPaasword */ 414);
 
 	var _ResetPaasword2 = _interopRequireDefault(_ResetPaasword);
 
-	var _ChangePassword = __webpack_require__(/*! ./components/Account/ChangePassword */ 428);
+	var _ChangePassword = __webpack_require__(/*! ./components/Account/ChangePassword */ 415);
 
 	var _ChangePassword2 = _interopRequireDefault(_ChangePassword);
 
-	var _Index7 = __webpack_require__(/*! ./components/Project/Index */ 414);
+	var _Index7 = __webpack_require__(/*! ./components/Project/Index */ 416);
 
 	var _Index8 = _interopRequireDefault(_Index7);
 
-	var _ProjectDetails = __webpack_require__(/*! ./components/Project/ProjectDetails */ 416);
+	var _ProjectDetails = __webpack_require__(/*! ./components/Project/ProjectDetails */ 418);
 
 	var _ProjectDetails2 = _interopRequireDefault(_ProjectDetails);
 
-	var _Index9 = __webpack_require__(/*! ./components/Jobs/Index */ 419);
+	var _Index9 = __webpack_require__(/*! ./components/Jobs/Index */ 421);
 
 	var _Index10 = _interopRequireDefault(_Index9);
 
-	var _Index11 = __webpack_require__(/*! ./components/Developer/Index */ 423);
+	var _Index11 = __webpack_require__(/*! ./components/Developer/Index */ 425);
 
 	var _Index12 = _interopRequireDefault(_Index11);
 
-	var _UserProfile = __webpack_require__(/*! ./components/Account/UserProfile */ 425);
+	var _UserProfile = __webpack_require__(/*! ./components/Account/UserProfile */ 427);
 
 	var _UserProfile2 = _interopRequireDefault(_UserProfile);
 
-	var _CreateIndex = __webpack_require__(/*! ./components/Jobs/CreateIndex */ 426);
+	var _CreateIndex = __webpack_require__(/*! ./components/Jobs/CreateIndex */ 428);
 
 	var _CreateIndex2 = _interopRequireDefault(_CreateIndex);
 
@@ -82594,6 +82594,391 @@
 
 /***/ },
 /* 414 */
+/*!*************************************************!*\
+  !*** ./src/components/Account/ResetPaasword.js ***!
+  \*************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(/*! react */ 2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(/*! react-router */ 189);
+
+	var _index = __webpack_require__(/*! ../NavBar/index */ 188);
+
+	var _index2 = _interopRequireDefault(_index);
+
+	var _Index = __webpack_require__(/*! ../Footer/Index */ 255);
+
+	var _Index2 = _interopRequireDefault(_Index);
+
+	var _UserStore = __webpack_require__(/*! ../../stores/UserStore */ 288);
+
+	var _UserStore2 = _interopRequireDefault(_UserStore);
+
+	var _UserActions = __webpack_require__(/*! ../../actions/UserActions */ 289);
+
+	var _UserActions2 = _interopRequireDefault(_UserActions);
+
+	var _Input = __webpack_require__(/*! ../forms/Input */ 279);
+
+	var _Input2 = _interopRequireDefault(_Input);
+
+	var _reactSAlert = __webpack_require__(/*! react-s-alert */ 174);
+
+	var _reactSAlert2 = _interopRequireDefault(_reactSAlert);
+
+	__webpack_require__(/*! react-s-alert/dist/s-alert-default.css */ 181);
+
+	__webpack_require__(/*! react-s-alert/dist/s-alert-css-effects/bouncyflip.css */ 253);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by Raphson on 10/21/16.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+	var ResetPaasword = function (_React$Component) {
+	    _inherits(ResetPaasword, _React$Component);
+
+	    function ResetPaasword() {
+	        _classCallCheck(this, ResetPaasword);
+
+	        var _this = _possibleConstructorReturn(this, (ResetPaasword.__proto__ || Object.getPrototypeOf(ResetPaasword)).call(this));
+
+	        _this.componentDidMount = function () {
+	            _UserStore2.default.addChangeListener(_this.handleReset, 'reset');
+	        };
+
+	        _this.componentWillUnmount = function () {
+	            _UserStore2.default.removeChangeListener(_this.handleReset, 'reset');
+	        };
+
+	        _this.handleReset = function () {
+	            var data = _UserStore2.default.getResetResult();
+	            if (data.status == 404) {
+	                _reactSAlert2.default.error(data.data.message, { position: 'top-right', effect: 'bouncyflip' });
+	            } else {
+	                _reactSAlert2.default.success(data.data.message, { position: 'top-right', effect: 'bouncyflip' });
+	            }
+	        };
+
+	        _this.handleSubmit = function (data) {
+	            console.log(data);
+	            var resetPayload = {
+	                email: data.email
+	            };
+
+	            _UserActions2.default.resetPasssword(resetPayload);
+	        };
+
+	        _this.enableButton = function () {
+	            _this.setState({ canSubmit: true });
+	        };
+
+	        _this.disableButton = function () {
+	            _this.setState({ canSubmit: false });
+	        };
+
+	        _this.state = {
+	            canSubmit: false
+	        };
+	        return _this;
+	    }
+
+	    _createClass(ResetPaasword, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'span',
+	                null,
+	                _react2.default.createElement(_index2.default, null),
+	                _react2.default.createElement(
+	                    'div',
+	                    { style: { minHeight: 580 }, className: 'main-container' },
+	                    _react2.default.createElement(
+	                        'section',
+	                        null,
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'container' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'row' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'col-md-4 col-md-offset-4' },
+	                                    _react2.default.createElement(
+	                                        Formsy.Form,
+	                                        { className: 'form-signin', role: 'form', onValidSubmit: this.handleSubmit,
+	                                            onValid: this.enableButton, onInvalid: this.disableButton },
+	                                        _react2.default.createElement(
+	                                            'h5',
+	                                            null,
+	                                            'Request password reset'
+	                                        ),
+	                                        _react2.default.createElement('hr', { className: 'colorgraph' }),
+	                                        _react2.default.createElement(_Input2.default, { className: 'form-group', name: 'email', title: '',
+	                                            placeholder: 'Enter your E-mail', validations: 'isEmail',
+	                                            validationError: 'Email is required.', required: true }),
+	                                        _react2.default.createElement(
+	                                            'p',
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                'button',
+	                                                { type: 'submit', className: 'btn btn-lg btn-block' },
+	                                                'Request Password reset'
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'p',
+	                                            { className: 'text-center' },
+	                                            'Remembered your password?',
+	                                            _react2.default.createElement(
+	                                                _reactRouter.Link,
+	                                                { to: 'auth/login' },
+	                                                'Login here'
+	                                            )
+	                                        )
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(_Index2.default, null)
+	            );
+	        }
+	    }]);
+
+	    return ResetPaasword;
+	}(_react2.default.Component);
+
+	exports.default = ResetPaasword;
+
+/***/ },
+/* 415 */
+/*!**************************************************!*\
+  !*** ./src/components/Account/ChangePassword.js ***!
+  \**************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(/*! react */ 2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(/*! react-dom */ 35);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _Input = __webpack_require__(/*! ../forms/Input */ 279);
+
+	var _Input2 = _interopRequireDefault(_Input);
+
+	var _formsyReact = __webpack_require__(/*! formsy-react */ 280);
+
+	var _formsyReact2 = _interopRequireDefault(_formsyReact);
+
+	var _index = __webpack_require__(/*! ../NavBar/index */ 188);
+
+	var _index2 = _interopRequireDefault(_index);
+
+	var _Index = __webpack_require__(/*! ../Footer/Index */ 255);
+
+	var _Index2 = _interopRequireDefault(_Index);
+
+	var _auth = __webpack_require__(/*! ../../utils/auth */ 252);
+
+	var _auth2 = _interopRequireDefault(_auth);
+
+	var _UserStore = __webpack_require__(/*! ../../stores/UserStore */ 288);
+
+	var _UserStore2 = _interopRequireDefault(_UserStore);
+
+	var _UserActions = __webpack_require__(/*! ../../actions/UserActions */ 289);
+
+	var _UserActions2 = _interopRequireDefault(_UserActions);
+
+	var _reactRouter = __webpack_require__(/*! react-router */ 189);
+
+	var _reactSAlert = __webpack_require__(/*! react-s-alert */ 174);
+
+	var _reactSAlert2 = _interopRequireDefault(_reactSAlert);
+
+	__webpack_require__(/*! react-s-alert/dist/s-alert-default.css */ 181);
+
+	__webpack_require__(/*! react-s-alert/dist/s-alert-css-effects/bouncyflip.css */ 253);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by Raphson on 10/22/16.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+	var Create = function (_Component) {
+	    _inherits(Create, _Component);
+
+	    function Create() {
+	        _classCallCheck(this, Create);
+
+	        var _this = _possibleConstructorReturn(this, (Create.__proto__ || Object.getPrototypeOf(Create)).call(this));
+
+	        _this.handleChangePasswordResult = function () {
+	            var result = _UserStore2.default.getChangeResult();
+	            _auth2.default.checkAuthRequired(result);
+	            if (result.status == 404) {
+	                _reactSAlert2.default.error(result.data.message, { position: 'top-right', effect: 'bouncyflip' });
+	            } else {
+	                if (result.data.success) {
+	                    _reactSAlert2.default.success(result.data.message, { position: 'top-right', effect: 'bouncyflip' });
+	                    _reactRouter.hashHistory.push('account');
+	                } else {
+	                    _reactSAlert2.default.error(result.data.message, { position: 'top-right', effect: 'bouncyflip' });
+	                }
+	            }
+	        };
+
+	        _this.enableButton = function () {
+	            _this.setState({ canSubmit: true });
+	        };
+
+	        _this.disableButton = function () {
+	            _this.setState({ canSubmit: false });
+	        };
+
+	        _this.handleSubmit = function (data) {
+	            var changePayload = {
+	                oldPassword: data.oldpassword,
+	                newPassword: data.newpassword
+	            };
+	            _UserActions2.default.changePassword(changePayload, _this.state.token);
+	        };
+
+	        _this.state = {
+	            canSubmit: false,
+	            token: _auth2.default.getToken()
+	        };
+	        return _this;
+	    }
+
+	    _createClass(Create, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            _UserStore2.default.addChangeListener(this.handleChangePasswordResult, 'change');
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            _UserStore2.default.removeChangeListener(this.handleChangePasswordResult, 'change');
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'span',
+	                null,
+	                _react2.default.createElement(_index2.default, null),
+	                _react2.default.createElement(
+	                    'div',
+	                    { style: { minHeight: 580 }, className: 'main-container' },
+	                    _react2.default.createElement(
+	                        'section',
+	                        null,
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'container' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'row' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'col-sm-12 text-center' },
+	                                    _react2.default.createElement(
+	                                        'h3',
+	                                        null,
+	                                        ' Change Password '
+	                                    )
+	                                )
+	                            ),
+	                            _react2.default.createElement('hr', null),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'row' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { style: { margin: '0 auto' }, className: 'col-md-8 col-md-offset-2' },
+	                                    _react2.default.createElement(
+	                                        _formsyReact2.default.Form,
+	                                        { className: 'col-md-10', onValidSubmit: this.handleSubmit,
+	                                            onValid: this.enableButton, onInvalid: this.disableButton },
+	                                        _react2.default.createElement(_Input2.default, { className: 'form-group', name: 'oldpassword', title: 'Old Password', required: true,
+	                                            validations: 'minLength:2', validationError: 'Old Password is required.',
+	                                            type: 'password'
+	                                        }),
+	                                        _react2.default.createElement(_Input2.default, { className: 'form-group', name: 'newpassword', title: 'New Password', required: true,
+	                                            validations: 'minLength:5', validationError: 'New Password is required.',
+	                                            type: 'password'
+	                                        }),
+	                                        _react2.default.createElement(_Input2.default, { className: 'form-group', name: 'confirmpassword',
+	                                            title: 'Confirm Password', required: true, type: 'password',
+	                                            validations: 'equalsField:newpassword',
+	                                            validationError: 'Confirm new password '
+	                                        }),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'form-group' },
+	                                            _react2.default.createElement(
+	                                                'button',
+	                                                { disabled: !this.state.canSubmit, id: 'submit-btn', type: 'submit',
+	                                                    className: 'form-control btn btn-lg' },
+	                                                'Submit'
+	                                            )
+	                                        )
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(_Index2.default, null)
+	            );
+	        }
+	    }]);
+
+	    return Create;
+	}(_react.Component);
+
+	exports.default = Create;
+
+/***/ },
+/* 416 */
 /*!*****************************************!*\
   !*** ./src/components/Project/Index.js ***!
   \*****************************************/
@@ -82637,7 +83022,7 @@
 
 	var _auth2 = _interopRequireDefault(_auth);
 
-	var _ProjectList = __webpack_require__(/*! ./ProjectList */ 415);
+	var _ProjectList = __webpack_require__(/*! ./ProjectList */ 417);
 
 	var _ProjectList2 = _interopRequireDefault(_ProjectList);
 
@@ -82746,7 +83131,7 @@
 	exports.default = Project;
 
 /***/ },
-/* 415 */
+/* 417 */
 /*!***********************************************!*\
   !*** ./src/components/Project/ProjectList.js ***!
   \***********************************************/
@@ -82834,7 +83219,7 @@
 	exports.default = ProjectList;
 
 /***/ },
-/* 416 */
+/* 418 */
 /*!**************************************************!*\
   !*** ./src/components/Project/ProjectDetails.js ***!
   \**************************************************/
@@ -82882,11 +83267,11 @@
 
 	var _marked2 = _interopRequireDefault(_marked);
 
-	var _reactTimeago = __webpack_require__(/*! react-timeago */ 417);
+	var _reactTimeago = __webpack_require__(/*! react-timeago */ 419);
 
 	var _reactTimeago2 = _interopRequireDefault(_reactTimeago);
 
-	var _reactDisqus = __webpack_require__(/*! react-disqus */ 418);
+	var _reactDisqus = __webpack_require__(/*! react-disqus */ 420);
 
 	var _reactDisqus2 = _interopRequireDefault(_reactDisqus);
 
@@ -83069,7 +83454,7 @@
 	exports.default = ProjectDetails;
 
 /***/ },
-/* 417 */
+/* 419 */
 /*!**************************************!*\
   !*** ./~/react-timeago/lib/index.js ***!
   \**************************************/
@@ -83235,7 +83620,7 @@
 	exports.default = TimeAgo;
 
 /***/ },
-/* 418 */
+/* 420 */
 /*!*********************************!*\
   !*** ./~/react-disqus/index.js ***!
   \*********************************/
@@ -83333,7 +83718,7 @@
 
 
 /***/ },
-/* 419 */
+/* 421 */
 /*!**************************************!*\
   !*** ./src/components/Jobs/Index.js ***!
   \**************************************/
@@ -83369,15 +83754,15 @@
 
 	var _auth2 = _interopRequireDefault(_auth);
 
-	var _JobStore = __webpack_require__(/*! ../../stores/JobStore */ 420);
+	var _JobStore = __webpack_require__(/*! ../../stores/JobStore */ 422);
 
 	var _JobStore2 = _interopRequireDefault(_JobStore);
 
-	var _JobActions = __webpack_require__(/*! ../../actions/JobActions */ 421);
+	var _JobActions = __webpack_require__(/*! ../../actions/JobActions */ 423);
 
 	var _JobActions2 = _interopRequireDefault(_JobActions);
 
-	var _JobList = __webpack_require__(/*! ./JobList */ 422);
+	var _JobList = __webpack_require__(/*! ./JobList */ 424);
 
 	var _JobList2 = _interopRequireDefault(_JobList);
 
@@ -83527,7 +83912,7 @@
 	exports.default = Jobs;
 
 /***/ },
-/* 420 */
+/* 422 */
 /*!********************************!*\
   !*** ./src/stores/JobStore.js ***!
   \********************************/
@@ -83587,7 +83972,7 @@
 	module.exports = JobStore;
 
 /***/ },
-/* 421 */
+/* 423 */
 /*!***********************************!*\
   !*** ./src/actions/JobActions.js ***!
   \***********************************/
@@ -83612,7 +83997,7 @@
 	};
 
 /***/ },
-/* 422 */
+/* 424 */
 /*!****************************************!*\
   !*** ./src/components/Jobs/JobList.js ***!
   \****************************************/
@@ -83636,7 +84021,7 @@
 
 	var _reactRouter = __webpack_require__(/*! react-router */ 189);
 
-	var _reactTimeago = __webpack_require__(/*! react-timeago */ 417);
+	var _reactTimeago = __webpack_require__(/*! react-timeago */ 419);
 
 	var _reactTimeago2 = _interopRequireDefault(_reactTimeago);
 
@@ -83706,7 +84091,7 @@
 	exports.default = JobList;
 
 /***/ },
-/* 423 */
+/* 425 */
 /*!*******************************************!*\
   !*** ./src/components/Developer/Index.js ***!
   \*******************************************/
@@ -83750,7 +84135,7 @@
 
 	var _DeveloperStore2 = _interopRequireDefault(_DeveloperStore);
 
-	var _DeveloperList = __webpack_require__(/*! ./DeveloperList */ 424);
+	var _DeveloperList = __webpack_require__(/*! ./DeveloperList */ 426);
 
 	var _DeveloperList2 = _interopRequireDefault(_DeveloperList);
 
@@ -83887,7 +84272,7 @@
 	exports.default = Developers;
 
 /***/ },
-/* 424 */
+/* 426 */
 /*!***************************************************!*\
   !*** ./src/components/Developer/DeveloperList.js ***!
   \***************************************************/
@@ -83985,7 +84370,7 @@
 	exports.default = DeveloperList;
 
 /***/ },
-/* 425 */
+/* 427 */
 /*!***********************************************!*\
   !*** ./src/components/Account/UserProfile.js ***!
   \***********************************************/
@@ -84367,7 +84752,7 @@
 	exports.default = Profile;
 
 /***/ },
-/* 426 */
+/* 428 */
 /*!********************************************!*\
   !*** ./src/components/Jobs/CreateIndex.js ***!
   \********************************************/
@@ -84413,11 +84798,11 @@
 
 	var _auth2 = _interopRequireDefault(_auth);
 
-	var _JobStore = __webpack_require__(/*! ../../stores/JobStore */ 420);
+	var _JobStore = __webpack_require__(/*! ../../stores/JobStore */ 422);
 
 	var _JobStore2 = _interopRequireDefault(_JobStore);
 
-	var _JobActions = __webpack_require__(/*! ../../actions/JobActions */ 421);
+	var _JobActions = __webpack_require__(/*! ../../actions/JobActions */ 423);
 
 	var _JobActions2 = _interopRequireDefault(_JobActions);
 
@@ -84579,376 +84964,6 @@
 	                                        'h5',
 	                                        { className: 'lead-author' },
 	                                        '- Prosper Otemuyiwa'
-	                                    )
-	                                )
-	                            )
-	                        )
-	                    )
-	                ),
-	                _react2.default.createElement(_Index2.default, null)
-	            );
-	        }
-	    }]);
-
-	    return Create;
-	}(_react.Component);
-
-	exports.default = Create;
-
-/***/ },
-/* 427 */
-/*!*************************************************!*\
-  !*** ./src/components/Account/ResetPaasword.js ***!
-  \*************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(/*! react */ 2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRouter = __webpack_require__(/*! react-router */ 189);
-
-	var _index = __webpack_require__(/*! ../NavBar/index */ 188);
-
-	var _index2 = _interopRequireDefault(_index);
-
-	var _Index = __webpack_require__(/*! ../Footer/Index */ 255);
-
-	var _Index2 = _interopRequireDefault(_Index);
-
-	var _UserStore = __webpack_require__(/*! ../../stores/UserStore */ 288);
-
-	var _UserStore2 = _interopRequireDefault(_UserStore);
-
-	var _UserActions = __webpack_require__(/*! ../../actions/UserActions */ 289);
-
-	var _UserActions2 = _interopRequireDefault(_UserActions);
-
-	var _Input = __webpack_require__(/*! ../forms/Input */ 279);
-
-	var _Input2 = _interopRequireDefault(_Input);
-
-	var _reactSAlert = __webpack_require__(/*! react-s-alert */ 174);
-
-	var _reactSAlert2 = _interopRequireDefault(_reactSAlert);
-
-	__webpack_require__(/*! react-s-alert/dist/s-alert-default.css */ 181);
-
-	__webpack_require__(/*! react-s-alert/dist/s-alert-css-effects/bouncyflip.css */ 253);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by Raphson on 10/21/16.
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-
-
-	var ResetPaasword = function (_React$Component) {
-	    _inherits(ResetPaasword, _React$Component);
-
-	    function ResetPaasword() {
-	        _classCallCheck(this, ResetPaasword);
-
-	        var _this = _possibleConstructorReturn(this, (ResetPaasword.__proto__ || Object.getPrototypeOf(ResetPaasword)).call(this));
-
-	        _this.componentDidMount = function () {
-	            _UserStore2.default.addChangeListener(_this.handleReset, 'reset');
-	        };
-
-	        _this.componentWillUnmount = function () {
-	            _UserStore2.default.removeChangeListener(_this.handleReset, 'reset');
-	        };
-
-	        _this.handleReset = function () {
-	            var data = _UserStore2.default.getResetResult();
-	            if (data.status == 404) {
-	                _reactSAlert2.default.error(data.data.message, { position: 'top-right', effect: 'bouncyflip' });
-	            } else {
-	                _reactSAlert2.default.success(data.data.message, { position: 'top-right', effect: 'bouncyflip' });
-	            }
-	        };
-
-	        _this.handleSubmit = function (data) {
-	            console.log(data);
-	            var resetPayload = {
-	                email: data.email
-	            };
-
-	            _UserActions2.default.resetPasssword(resetPayload);
-	        };
-
-	        _this.enableButton = function () {
-	            _this.setState({ canSubmit: true });
-	        };
-
-	        _this.disableButton = function () {
-	            _this.setState({ canSubmit: false });
-	        };
-
-	        _this.state = {
-	            canSubmit: false
-	        };
-	        return _this;
-	    }
-
-	    _createClass(ResetPaasword, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'span',
-	                null,
-	                _react2.default.createElement(_index2.default, null),
-	                _react2.default.createElement(
-	                    'div',
-	                    { style: { minHeight: 580 }, className: 'main-container' },
-	                    _react2.default.createElement(
-	                        'section',
-	                        null,
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'container' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'row' },
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'col-md-4 col-md-offset-4' },
-	                                    _react2.default.createElement(
-	                                        Formsy.Form,
-	                                        { className: 'form-signin', role: 'form', onValidSubmit: this.handleSubmit,
-	                                            onValid: this.enableButton, onInvalid: this.disableButton },
-	                                        _react2.default.createElement(
-	                                            'h5',
-	                                            null,
-	                                            'Request password reset'
-	                                        ),
-	                                        _react2.default.createElement('hr', { className: 'colorgraph' }),
-	                                        _react2.default.createElement(_Input2.default, { className: 'form-group', name: 'email', title: '',
-	                                            placeholder: 'Enter your E-mail', validations: 'isEmail',
-	                                            validationError: 'Email is required.', required: true }),
-	                                        _react2.default.createElement(
-	                                            'p',
-	                                            null,
-	                                            _react2.default.createElement(
-	                                                'button',
-	                                                { type: 'submit', className: 'btn btn-lg btn-block' },
-	                                                'Request Password reset'
-	                                            )
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'p',
-	                                            { className: 'text-center' },
-	                                            'Remembered your password?',
-	                                            _react2.default.createElement(
-	                                                _reactRouter.Link,
-	                                                { to: 'auth/login' },
-	                                                'Login here'
-	                                            )
-	                                        )
-	                                    )
-	                                )
-	                            )
-	                        )
-	                    )
-	                ),
-	                _react2.default.createElement(_Index2.default, null)
-	            );
-	        }
-	    }]);
-
-	    return ResetPaasword;
-	}(_react2.default.Component);
-
-	exports.default = ResetPaasword;
-
-/***/ },
-/* 428 */
-/*!**************************************************!*\
-  !*** ./src/components/Account/ChangePassword.js ***!
-  \**************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(/*! react */ 2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDom = __webpack_require__(/*! react-dom */ 35);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
-	var _Input = __webpack_require__(/*! ../forms/Input */ 279);
-
-	var _Input2 = _interopRequireDefault(_Input);
-
-	var _formsyReact = __webpack_require__(/*! formsy-react */ 280);
-
-	var _formsyReact2 = _interopRequireDefault(_formsyReact);
-
-	var _index = __webpack_require__(/*! ../NavBar/index */ 188);
-
-	var _index2 = _interopRequireDefault(_index);
-
-	var _Index = __webpack_require__(/*! ../Footer/Index */ 255);
-
-	var _Index2 = _interopRequireDefault(_Index);
-
-	var _auth = __webpack_require__(/*! ../../utils/auth */ 252);
-
-	var _auth2 = _interopRequireDefault(_auth);
-
-	var _reactRouter = __webpack_require__(/*! react-router */ 189);
-
-	var _reactSAlert = __webpack_require__(/*! react-s-alert */ 174);
-
-	var _reactSAlert2 = _interopRequireDefault(_reactSAlert);
-
-	__webpack_require__(/*! react-s-alert/dist/s-alert-default.css */ 181);
-
-	__webpack_require__(/*! react-s-alert/dist/s-alert-css-effects/bouncyflip.css */ 253);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by Raphson on 10/22/16.
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-
-
-	var Create = function (_Component) {
-	    _inherits(Create, _Component);
-
-	    function Create() {
-	        _classCallCheck(this, Create);
-
-	        var _this = _possibleConstructorReturn(this, (Create.__proto__ || Object.getPrototypeOf(Create)).call(this));
-
-	        _this.handlePostJobResult = function () {
-	            var result = JobStore.getPostJobResult();
-	            _auth2.default.checkAuthRequired(result);
-	            if (result.status == 500) {
-	                _reactSAlert2.default.error(result.data.message, { position: 'top-right', effect: 'bouncyflip' });
-	            } else {
-	                _reactSAlert2.default.success(result.data.message, { position: 'top-right', effect: 'bouncyflip' });
-	                _reactRouter.hashHistory.push('/jobs');
-	            }
-	        };
-
-	        _this.enableButton = function () {
-	            _this.setState({ canSubmit: true });
-	        };
-
-	        _this.disableButton = function () {
-	            _this.setState({ canSubmit: false });
-	        };
-
-	        _this.handleSubmit = function (data) {
-	            console.log(data);
-	            //JobActions.postJob(jobPayload, this.state.token);
-	        };
-
-	        _this.state = {
-	            canSubmit: false,
-	            token: _auth2.default.getToken()
-	        };
-	        return _this;
-	    }
-
-	    _createClass(Create, [{
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            //JobStore.addChangeListener(this.handlePostJobResult, 'postjob');
-	        }
-	    }, {
-	        key: 'componentWillUnmount',
-	        value: function componentWillUnmount() {
-	            //JobStore.removeChangeListener(this.handlePostJobResult, 'postjob');
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'span',
-	                null,
-	                _react2.default.createElement(_index2.default, null),
-	                _react2.default.createElement(
-	                    'div',
-	                    { style: { minHeight: 580 }, className: 'main-container' },
-	                    _react2.default.createElement(
-	                        'section',
-	                        null,
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'container' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'row' },
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'col-sm-12 text-center' },
-	                                    _react2.default.createElement(
-	                                        'h3',
-	                                        null,
-	                                        ' Change Password '
-	                                    )
-	                                )
-	                            ),
-	                            _react2.default.createElement('hr', null),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'row' },
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { style: { margin: '0 auto' }, className: 'col-md-8 col-md-offset-2' },
-	                                    _react2.default.createElement(
-	                                        _formsyReact2.default.Form,
-	                                        { className: 'col-md-10', onValidSubmit: this.handleSubmit,
-	                                            onValid: this.enableButton, onInvalid: this.disableButton },
-	                                        _react2.default.createElement(_Input2.default, { className: 'form-group', name: 'oldpassword', title: 'Old Password', required: true,
-	                                            validations: 'minLength:2', validationError: 'Old Password is required.',
-	                                            type: 'password'
-	                                        }),
-	                                        _react2.default.createElement(_Input2.default, { className: 'form-group', name: 'newpassword', title: 'New Password', required: true,
-	                                            validations: 'minLength:5', validationError: 'New Password is required.',
-	                                            type: 'password'
-	                                        }),
-	                                        _react2.default.createElement(_Input2.default, { className: 'form-group', name: 'confirmpassword',
-	                                            title: 'Confirm Password', required: true, type: 'password',
-	                                            validations: 'equalsField:newpassword',
-	                                            validationError: 'Confirm new password '
-	                                        }),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'form-group' },
-	                                            _react2.default.createElement(
-	                                                'button',
-	                                                { disabled: !this.state.canSubmit, id: 'submit-btn', type: 'submit',
-	                                                    className: 'form-control btn btn-lg' },
-	                                                'Submit'
-	                                            )
-	                                        )
 	                                    )
 	                                )
 	                            )
