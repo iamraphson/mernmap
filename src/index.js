@@ -13,6 +13,7 @@ import Login from './components/Login/Index';
 import EditAccount from './components/Account/EditIndex';
 import Account from './components/Account/index';
 import Reset from './components/Account/ResetPaasword';
+import ChangePassword from './components/Account/ChangePassword';
 import Project from './components/Project/Index';
 import ProjectDetails from './components/Project/ProjectDetails';
 import Job from './components/Jobs/Index';
@@ -35,6 +36,7 @@ render(
             <Route path="user/create" component={SignUp} />
             <Route path="auth/login" component={Login} />
             <Route path="reset-password" component={Reset} />
+            <Route path="change-password" component={ChangePassword} />
             <Route path="projects" component={Project} />
             <Route path="jobs" component={Job} />
             <Route path="mern-developers" component={Developer} />
