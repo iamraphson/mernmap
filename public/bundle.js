@@ -30256,7 +30256,8 @@
 	    GET_DEVELOPERS: null,
 	    GET_DEVELOPER: null,
 	    RESET: null,
-	    CHANGE: null
+	    CHANGE: null,
+	    CONTACT: null
 	});
 
 /***/ },
@@ -85258,6 +85259,14 @@
 
 	var _formsyReact2 = _interopRequireDefault(_formsyReact);
 
+	var _ContactStore = __webpack_require__(/*! ../stores/ContactStore */ 431);
+
+	var _ContactStore2 = _interopRequireDefault(_ContactStore);
+
+	var _ContactAction = __webpack_require__(/*! ../actions/ContactAction */ 432);
+
+	var _ContactAction2 = _interopRequireDefault(_ContactAction);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -85276,6 +85285,14 @@
 	        _classCallCheck(this, Contact);
 
 	        var _this = _possibleConstructorReturn(this, (Contact.__proto__ || Object.getPrototypeOf(Contact)).call(this));
+
+	        _this.componentDidMount = function () {
+	            _ContactStore2.default.addChangeListener(_this.handleReset, 'reset');
+	        };
+
+	        _this.componentWillUnmount = function () {
+	            _ContactStore2.default.removeChangeListener(_this.handleReset, 'reset');
+	        };
 
 	        _this.handleSubmit = function (data) {
 	            console.log(data);
@@ -85408,6 +85425,79 @@
 	}(_react2.default.Component);
 
 	exports.default = Contact;
+
+/***/ },
+/* 431 */
+/*!************************************!*\
+  !*** ./src/stores/ContactStore.js ***!
+  \************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _BaseStore = __webpack_require__(/*! ./BaseStore */ 272);
+
+	var _BaseStore2 = _interopRequireDefault(_BaseStore);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var AppConstants = __webpack_require__(/*! ../constants/AppConstants */ 257),
+	    AppDispatcher = __webpack_require__(/*! ../dispatcher/AppDispatcher */ 262); /**
+	                                                             * Created by Raphson on 10/22/16.
+	                                                             */
+
+
+	if (!Object.assign) {
+	    Object.assign = __webpack_require__(/*! object-assign */ 5);
+	}
+	var ContactStore = Object.assign({}, _BaseStore2.default, {
+	    contactResult: null,
+
+	    setContactResult: function setContactResult(contactResult) {
+	        this.contactResult = contactResult;
+	        this.emitChange('contact');
+	    },
+	    getContactResult: function getContactResult() {
+	        return this.contactResult;
+	    }
+	});
+
+	AppDispatcher.register(function (action) {
+	    switch (action.actionType) {
+	        case AppConstants.CONTACT:
+	            ContactStore.setContactResult(action.data);
+	            break;
+	        default:
+	        // no default action
+	    }
+	    return true;
+	});
+
+	module.exports = ContactStore;
+
+/***/ },
+/* 432 */
+/*!**************************************!*\
+  !*** ./src/actions/ContactAction.js ***!
+  \**************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	/**
+	 * Created by Raphson on 10/22/16.
+	 */
+	/**
+	 * Created by Raphson on 9/24/16.
+	 */
+	var AppConstants = __webpack_require__(/*! ../constants/AppConstants */ 257),
+	    BaseActions = __webpack_require__(/*! ./BaseActions */ 261);
+
+	module.exports = {
+	    contact: function contact(contactPayload) {
+	        BaseActions.post('/api/contact', contactPayload, AppConstants.CONTACT);
+	    }
+	};
 
 /***/ }
 /******/ ]);

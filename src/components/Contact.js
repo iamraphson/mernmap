@@ -8,6 +8,8 @@ import { Link } from 'react-router';
 import MyTextarea from './forms/Textarea';
 import MyInput from './forms/Input';
 import Formsy from 'formsy-react';
+import ContactStore from '../stores/ContactStore';
+import ContactAction from '../actions/ContactAction';
 
 export default class Contact extends React.Component{
     constructor(){
@@ -15,6 +17,14 @@ export default class Contact extends React.Component{
         this.state = {
             canSubmit: false
         }
+    }
+
+    componentDidMount = () => {
+        ContactStore.addChangeListener(this.handleReset, 'reset');
+    }
+
+    componentWillUnmount = () => {
+        ContactStore.removeChangeListener(this.handleReset, 'reset');
     }
 
     handleSubmit = (data) => {
