@@ -10,6 +10,7 @@ module.exports = function(app){
     app.post('/api/login', userCtrl.auth);
     app.post('/api/register', userCtrl.registerUser);
     app.post('/api/password', userCtrl.resetUserPassword);
+    app.put('/api/password', token.ensureAuthenticated, userCtrl.changePassword);
     app.get('/api/me', token.ensureAuthenticated, userCtrl.getCurrentLoggedUser);
     app.put('/api/me', token.ensureAuthenticated, userCtrl.updateLoggedInUserDetail);
 

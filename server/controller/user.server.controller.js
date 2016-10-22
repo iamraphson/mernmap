@@ -165,6 +165,27 @@ module.exports = {
         });
     },
 
+    changePassword: (req, res) => {
+        User.findById(req.user, (err, user) => {
+            if(err){
+                return res.status(404).json({message : 'user\s detail not found'})
+            }
+
+            user.comparePassword(req.body.oldPassword, function(err, isMatch){
+                if(!isMatch){
+                    return res.status(401).json({message : "Invalid Password"});
+                }
+
+                user.password = req.body.newPassword;
+                user.save(function(err) {
+                    if (err) throw err;
+                    console.log('password updated');
+                    return res.status(200).json({success: true, message: "Password Changed"});
+                });
+            });
+        });
+    },
+
     resetUserPassword : (req, res) =>{
         let userEmail = req.body.email;
 
@@ -200,7 +221,7 @@ module.exports = {
                         console.log(response.statusCode);
                         console.log(response.body);
                         console.log(response.headers);
-                        console.log('User successfully updated!');
+                        console.log('mail sent!');
                         return res.status(200).json({success: true, message: "New password was sent to your email!"});
                     });
                 });
