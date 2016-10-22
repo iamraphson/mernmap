@@ -30243,7 +30243,8 @@
 	    GET_JOBS: null,
 	    GET_DEVELOPERS: null,
 	    GET_DEVELOPER: null,
-	    RESET: null
+	    RESET: null,
+	    CHANGE: null
 	});
 
 /***/ },
@@ -64264,6 +64265,10 @@
 
 	    resetPasssword: function resetPasssword(reset) {
 	        BaseActions.post('/api/password', reset, AppConstants.RESET);
+	    },
+
+	    changePassword: function changePassword(changePayload, token) {
+	        BaseActions.put('/api/password', changePayload, AppConstants.CHANGE, token);
 	    }
 	};
 
