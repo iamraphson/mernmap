@@ -6,7 +6,9 @@ var secrets = require('./secrets');
 
 var db = mongoose.connection;
 mongoose.Promise = global.Promise;
+console.log(secrets.db);
 mongoose.connect(secrets.db);
+
 
 module.exports = {
     dbconnect : function(){
