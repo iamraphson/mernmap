@@ -40,7 +40,7 @@ export default class SignUp extends React.Component{
 
     handleSignup = () => {
         let data = UserStore.getSignupResult();
-        if(data.success){
+        if(data.data.success){
             Alert.success(data.data.message, { position: 'top-right',  effect: 'bouncyflip'});
             hashHistory.push('auth/login');
         } else {
