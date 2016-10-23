@@ -56,7 +56,8 @@
     "sendgrid": "^4.7.0",
     "sendgrid-nodejs": "*",
     "slug": "^0.9.1",
-    "superagent": "^2.3.0"
+    "superagent": "^2.3.0",
+    "bower": "latest"
   },
   "devDependencies": {
     "babel": "*",
