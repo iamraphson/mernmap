@@ -2,7 +2,7 @@
  * Created by Raphson on 9/24/16.
  */
 import React from 'react';
-import { Link,  } from 'react-router';
+import { Link, hashHistory } from 'react-router';
 import Alert from 'react-s-alert';
 import MyInput from '../forms/Input';
 import NavBar from '../NavBar/index';
