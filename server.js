@@ -48,8 +48,7 @@ if(process.env.NODE_ENV === "production"){
             //Request was Via Secure HTTP protocol
             next();
         } else {
-            next();
-            //res.direct('http://' + req.headers.host + req.url);
+            res.redirect('http://' + req.headers.host + req.url);
         }
     })
 }
